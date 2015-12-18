@@ -1,0 +1,46 @@
+/* CSS declarations go here */
+.right-section {
+    background-color: #F9F7F9;
+    height: 100vh;   
+}
+
+.mid-section {
+    background-color:#fff;
+    height: 100vh;
+    padding: 2vh 1vh 0px 1vh;    
+}
+
+.left-section {
+    background-color:#363534;
+    height: 100vh;
+    padding: 2vh 1vh 0px 1vh;    
+}
+
+.ui.header.whitetext {
+    color: #fff;
+}
+
+.ui.header.whitetext .sub.header.whitetext {
+    color: #fff;
+}
+
+.title {
+    height: 20%;
+}
+
+.ui.steps .step {
+    background: none;
+    color:#fff;
+}
+
+.ui.steps .step.active {
+    color:#363534;
+}
+
+.highlight {
+    background-color:#E7E6E8;
+}
+
+.lowlight {
+    background-color:#F1EFF1; 
+}
