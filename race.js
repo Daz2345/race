@@ -1,26 +1,10 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
-
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
-    }
-  });
-
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
-  });
-}
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
-
-
 Scenarios = new Mongo.Collection("scenarios");
+
+if (Meteor.isClient) {
+Template.tableRow.helpers({
+    scenarios: function () {
+      // Show newest tasks at the top
+      return Scenarios.find({}, {sort: {createdAt: -1}});
+    }
+  });
+}

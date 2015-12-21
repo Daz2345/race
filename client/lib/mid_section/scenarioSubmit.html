@@ -1,27 +1,44 @@
 <template name="scenarioSubmit">
-    <div class="ui modal">
-      <i class="close icon"></i>
-      <!--<div class="header">-->
-      <!--  Profile Picture-->
-      <!--</div>-->
-      <!--<div class="image content">-->
-      <!--  <div class="ui medium image">-->
-      <!--    <img src="/images/avatar/large/chris.jpg">-->
-      <!--  </div>-->
-      <!--  <div class="description">-->
-      <!--    <div class="ui header">We've auto-chosen a profile image for you.</div>-->
-      <!--    <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>-->
-      <!--    <p>Is it okay to use this photo?</p>-->
-      <!--  </div>-->
-      <!--</div>-->
-      <div class="actions">
-        <div class="ui red deny button">
-          Cancel
+    <div class="ui large modal scenario">
+        <!--<i class="close icon"></i>-->
+        <div class="header">Create New Scenario</div>
+        <div class="content">
+            {{ > scenarioForm}}
+        </div>            
+        <div class="actions">
+            <div class="ui red deny button">Cancel</div>
+            <div class="ui positive right labeled icon button"><i class="checkmark icon"></i>Create Scenario</div>                   
         </div>
-        <div class="ui positive right labeled icon button">
-          Create Scenario
-          <i class="checkmark icon"></i>
-        </div>
-      </div>
     </div>
+</template>
+
+<template name="scenarioForm">
+    <form class="ui form scenario">
+        <div class="field">
+            <label>Name</label>
+            <input type="text" name="name">
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea rows="1" name="description"></textarea>
+        </div>
+        <div class="ui two column grid">
+            <div class="column">
+                <div class="field">
+                    <label>Products</label>
+                    <textarea rows="10" name="products"></textarea>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label>Stores</label>
+                    <textarea rows="10" name="stores"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="ui checkbox">
+            <input type="checkbox" name="private">
+            <label>Private Scenario?</label>                    
+        </div>                
+    </form>    
 </template>

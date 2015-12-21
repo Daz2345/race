@@ -54,7 +54,7 @@
           Created
         </th>
         <th>
-          ID
+          CreatedBy
         </th>
         <th>
           Name
@@ -78,13 +78,15 @@
 </template>
 
 <template name="tableRow">
+  {{#each scenarios}}
   <tr>
     <td class="collapsing">
-      <i class="calendar icon"></i> {{created}}
+      <i class="calendar icon"></i> {{createdAt}}
     </td>
-    <td class="collapsing">{{_id}}</td>
+    <td class="collapsing">{{createdBy}}</td> 
     <td class="collapsing">{{name}}</td>    
-    <td>{{scenarioDescription}}</td>
+    <td>{{description}}</td>
     <td class="collapsing">{{scenarioRuns.count}}</td>    
   </tr>
+  {{/each}}
 </template>

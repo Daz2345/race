@@ -1,8 +1,9 @@
 <template name="right">
   <div class="three wide column">
     <div class="right-section section">
-      {{ > scenarioData}}
       {{ > statistics}}
+      {{ > scenarioData}}
+
     </div>
   </div>
 </template>
@@ -13,7 +14,6 @@
     {{ > scenarioName}}    
     {{ > dateRange}}
     {{ > productCount}}
-    {{ > storeCount}}
     
 </template>
 
@@ -24,11 +24,6 @@
 
 <template name="productCount">
     Product Count
-    <br>
-</template>
-
-<template name="storeCount">
-    Store Count
     <br>
 </template>
 

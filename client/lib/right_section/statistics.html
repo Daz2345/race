@@ -1,41 +1,54 @@
 <template name="statistics">
-    <div class="ui two statistics">
-        <div class="grey statistic highlight">
-          <div class="value">
-            All
-          </div>
-          <div class="label">
-            Stores
-          </div>
-        </div>
+  <div class="ui two tiny statistics">
+    {{ > storesStat}} 
+    {{ > npdStat}}
+  </div>
+  <div class="ui two tiny statistics">
+    {{ > delistStat}} 
+    {{ > salesStat}}
+  </div>
+</template>
 
-        <div class="grey statistic lowlight">
-          <div class="value">
-            22
-          </div>
-          <div class="label">
-            NPD
-          </div>
-        </div>
-      </div>
+<template name="storesStat">
+  <div class="grey statistic highlight">
+    <div class="value">
+      All
+    </div>
+    <div class="">
+      Stores
+    </div>
+  </div>
+</template>
 
-      <div class="ui two statistics">
-        <div class="grey statistic lowlight">
-          <div class="value">
-            3
-          </div>
-          <div class="label">
-            Delisted
-          </div>
-        </div>
+<template name="npdStat">
+  <div class="grey statistic lowlight">
+    <div class="value">
+      22
+    </div>
+    <div class="">
+      NPD
+    </div>
+  </div>
+</template>
 
-        <div class="grey statistic highlight">
-          <div class="value">
-            0.5m
-          </div>
-          <div class="label">
-            Expected Sales
-          </div>
-        </div>
-      </div>
+<template name="delistStat">
+  <div class="grey statistic lowlight">
+    <div class="value">
+      3
+    </div>
+    <div class="">
+      Delisted
+    </div>
+  </div>
+</template>
+
+<template name="salesStat">
+  <div class="grey statistic highlight">
+    <div class="tiny value">
+      0.5m
+    </div>
+    <div class="">
+      Sales
+    </div>
+  </div>
 </template>
