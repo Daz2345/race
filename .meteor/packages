@@ -22,3 +22,9 @@ semantic:ui
 flemay:less-autoprefixer
 momentjs:moment
 aldeed:template-extension
+kadira:flow-router
+kadira:blaze-layout
+useraccounts:semantic-ui
+accounts-password
+useraccounts:flow-routing
+harrison:papa-parse

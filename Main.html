@@ -1,25 +1,10 @@
-<head>
-  <title>PRICERANGER by dunnhumby</title>
-</head>
-
-<body>
-
-  {{> layout}}
-
-</body>
-
-
 <template name="layout">
-  <div class="ui grid full-screen">
-    <div class="equal height row">
-      {{> left}}
-      {{> mid}} 
-      {{> right}}
-    </div>
+  <div class="ui grid">
+
+      {{> Template.dynamic template=left}}
+      {{> Template.dynamic template=main}}
+
+      {{ > scenarioSubmit }}
+
   </div>
 </template>
-
-
-
-
-

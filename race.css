@@ -7,25 +7,29 @@
 .mid-section {
     background-color:#fff;
     height: 100vh;
-    padding: 2vh 1vh 0px 1vh;    
 }
 
 .left-section {
     background-color:#363534;
     height: 100vh;
-    padding: 2vh 1vh 0px 1vh;    
+    /*min-width:230px! important;*/
 }
 
-.ui.header.whitetext {
-    color: #fff;
-}
-
-.ui.header.whitetext .sub.header.whitetext {
-    color: #fff;
+.whitetext {
+    color: #fff! important;
 }
 
 .title {
-    height: 20%;
+    padding-top:10%;
+    max-height: 20%;
+}
+
+.menuContainer {
+    height:60%;
+}
+
+.ui.inverted.menu {
+    background-color:#363534;
 }
 
 .ui.steps .step {
@@ -38,9 +42,29 @@
 }
 
 .highlight {
-    background-color:#E7E6E8;
+    background-color:#E7E6E8! important;
 }
 
 .lowlight {
-    background-color:#F1EFF1; 
+    background-color:#F1EFF1! important;
 }
+
+.blank-col-padding {
+    padding-right:2rem! important;
+}
+.blank-row-padding {
+    padding-bottom:0rem! important;
+}
+
+.ui.horizontal.segments > .segment {
+    border:none!important;
+}
+
+.ui.segments {
+    border:none!important;
+    box-shadow:none!important;
+}
+
+/*.pusher {*/
+/*    left:210px;*/
+/*}*/

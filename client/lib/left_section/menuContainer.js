@@ -1,0 +1,16 @@
+Template.menuContainer.helpers({
+  pathForScenarios: function() {
+    var path = FlowRouter.path("scenarios");
+    return path;
+  },
+  pathForScenarioRuns: function() {
+    var path = FlowRouter.path("scenarioRunsAll");
+    return path;
+  },
+  scenariosCount: function() {
+    return Scenarios.find({}).count()
+  },
+  scenarioRunsCount: function() {
+    return ScenarioRuns.find({}).count()
+  }
+});

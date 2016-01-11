@@ -1,0 +1,85 @@
+<template name="scenarioRun">
+  <div class="ten wide column">
+    <div class="mid-section">
+      {{ > scenarioRuns_table}}
+    </div>
+  </div>
+</template>
+
+<template name="scenarioRun_table">
+    <!--{{ > tableHeader}}-->
+    {{ > tableSearch}}
+    <table class="ui selectable celled striped table blue">
+        {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}
+    </table>
+</template>
+
+<template name="scenarioRunFooter">
+<tfoot class="full-width">
+    <tr>
+      
+      <th colspan="6">
+        {{ > addNewProduct}}
+        {{ > pagination}}
+      </th>
+    </tr>
+  </tfoot>  
+</template>
+
+<template name="addNewProduct">
+  
+</template>
+
+<template name="scenarioRunHeader">
+    <thead>
+      <tr>
+        <th>
+          Product TPN
+        </th>
+        <th>
+          Description
+        </th>        
+        <th>
+          Current Sales
+        </th>
+        <th>
+          Current Price
+        </th>
+        <th>
+          Estimated Sales
+        </th>
+        <th>
+          Estimated Price
+        </th>
+        <th>
+          NPD
+        </th>    
+        <th>
+          Delist
+        </th>         
+      </tr>
+    </thead>
+</template>
+
+<template name="scenarioRunBody">
+  <tbody>  
+  {{#each products}}
+    {{ > scenarioRunRow}}
+  {{/each}}
+  </tbody>    
+</template>
+
+<template name="scenarioRunRow">
+
+    <tr>
+        <td class="collapsing">{{tpn}}</td>
+        <td class="collapsing">{{description}}</td>
+        <td class="collapsing">{{currentSales}}</td>
+        <td class="collapsing">{{currentPrice}}</td>
+        <td class="collapsing">{{estimatedSales}}</td>
+        <td class="collapsing">{{estimatedPrice}}</td>
+        <td class="collapsing">{{npd}}</td> 
+        <td class="collapsing">{{delist}}</td>        
+    </tr>
+
+</template>

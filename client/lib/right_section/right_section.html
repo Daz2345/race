@@ -1,38 +1,21 @@
-<template name="right">
+<template name="scenarioSummary">
   <div class="three wide column">
-    <div class="right-section section">
-      {{ > statistics}}
+    <div class="right-section">
+      <!--{{ > statistics}}-->
       {{ > scenarioData}}
-
     </div>
   </div>
 </template>
 
 <template name="scenarioData">
 
-    {{ > scenarioID}}
-    {{ > scenarioName}}    
-    {{ > dateRange}}
-    {{ > productCount}}
-    
-</template>
-
-<template name="dateRange">
-    Date Range
+    Scenario Id : {{scenario._id}}
     <br>
-</template>
-
-<template name="productCount">
-    Product Count
+    Scenario Name : {{scenario.name}}    
+    <br>    
+    Date Range : {{dateRange}}
     <br>
-</template>
-
-<template name="scenarioID">
-    Scenario ID
+    Created : {{formatDate scenario.createdAt}}
     <br>
-</template>
-
-<template name="scenarioName">
-    Name
-    <br>
+    Created By : {{scenario.createdBy}}    
 </template>

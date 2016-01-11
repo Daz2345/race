@@ -1,45 +1,9 @@
-<template name="menu">
-
-  <div class="ui vertical fluid menu">
-    <a class="transparent item">
-      Scenarios
-    </a>
-    <a class="item">
-      Scenario Runs
-    </a>
-    <div class="ui dropdown item">
-      <i class="dropdown icon"></i>
-      Display Options
-      <div class="menu">
-        <div class="header">Text Size</div>
-        <a class="item">Small</a>
-        <a class="item">Medium</a>
-        <a class="item">Large</a>
-      </div>
-    </div>
-  </div>
-
-</template>
-
-<template name="logo">
-  <img class="ui centered medium image" src="https://dhpulse-daz2345.c9.io/img/dhlogo.png" alt="dhPulse">
-</template>
-
 <template name="left">
-  <div class="three wide column">
-    <div class="left-section">
+  <div class="three wide blank-row-padding column">
+    <div class="left-section wrapper">
       {{ > title}} 
-      <!--{{ > menu}}-->
+      {{ > menuContainer}}
+      <!--{{ > user}}-->
     </div>
-  </div>
-</template>
-
-<template name="title">
-  <div class="title">
-    {{ > logo}}
-    <h1 class="ui header center aligned whitetext">
-          PRICERANGER
-          <div class="sub header whitetext">Range and Price Scenario Tester</div>
-      </h1>
   </div>
 </template>

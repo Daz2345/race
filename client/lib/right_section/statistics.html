@@ -1,8 +1,8 @@
 <template name="statistics">
   <div class="ui two tiny statistics">
-    {{ > storesStat}} 
-    {{ > npdStat}}
-  </div>
+      {{ > storesStat}}
+      {{ > npdStat}}
+  </div>  
   <div class="ui two tiny statistics">
     {{ > delistStat}} 
     {{ > salesStat}}
@@ -11,10 +11,10 @@
 
 <template name="storesStat">
   <div class="grey statistic highlight">
-    <div class="value">
-      All
+    <div class="tiny value">
+      {{storesCount}}
     </div>
-    <div class="">
+    <div class="top attached label">
       Stores
     </div>
   </div>
@@ -23,10 +23,10 @@
 <template name="npdStat">
   <div class="grey statistic lowlight">
     <div class="value">
-      22
+      {{productCount}}
     </div>
-    <div class="">
-      NPD
+    <div class="top attached label">
+      Products
     </div>
   </div>
 </template>
@@ -34,9 +34,9 @@
 <template name="delistStat">
   <div class="grey statistic lowlight">
     <div class="value">
-      3
+      {{delistCount}}
     </div>
-    <div class="">
+    <div class="top attached label">
       Delisted
     </div>
   </div>
@@ -47,7 +47,7 @@
     <div class="tiny value">
       0.5m
     </div>
-    <div class="">
+    <div class="top attached label">
       Sales
     </div>
   </div>
