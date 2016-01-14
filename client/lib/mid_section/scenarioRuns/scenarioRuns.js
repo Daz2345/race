@@ -1,13 +1,40 @@
 Template.scenarioRuns.events({
     'click .createscenariorun': function(e) {
-        var routeName = "createScenarioRun";
-        var scenarioIdVal = FlowRouter.getParam("scenarioId");     
-        console.log(scenarioIdVal);        
-        var path = FlowRouter.url(routeName, {"scenarioId" : scenarioIdVal});
-        console.log(path);
-        // FlowRouter.go(path);
+        var routeName = "createScenarioRun",
+            scenarioId = FlowRouter.getParam("scenarioId"),
+            params = {"scenarioId" : scenarioId};     
+        FlowRouter.go(routeName, params);
+    },
+    'click .phChartIcon' : function(e) {
+        Session.set("currentScenarioRun", this);
+        var chartIsShowing = Session.get("phChartShow");
+        if (chartIsShowing) {
+            Session.set("phChartCSS", "display:none;");
+            Session.set("currentScenarioRun", null);  
+            Session.set("phChartShow", !chartIsShowing);
+            //remove chart
+            d3.select("svg").remove();  
+        } else {    
+            var y = e.pageY - 20,
+                chartWidth = 480,
+                screenWidth = $('body').width(),
+                midSectionWidth = $('.mid-section').width(),
+                x = e.pageX - chartWidth - (screenWidth - midSectionWidth);
+            Session.set("phChartShow", !chartIsShowing);
+            Session.set("phChartCSS", "display:block;top:" + y + "px;left:" + x + "px;");
+        }
     }
 });
+
+Template.scenarioRuns.created = function(){
+  this.autorun(() => {
+    this.subscribe('Scenario.public', FlowRouter.getParam("scenarioId"));
+    this.subscribe('ScenarioRuns.all.public');
+  });    
+    Session.set("phChartCSS", "display:none;");
+    Session.set("phChartShow", false);
+    Session.set("currentScenarioRun", null);
+};
 
 Template.scenarioRunsBody.helpers({
     scenarioRuns: function() {
@@ -61,6 +88,11 @@ Template.scenarioRunsRow.helpers({
     },
     totalSales: function() {
         return this.totalSales | 0;
+    },
+    chartIcon: function() {
+        if (this.products) {
+            return "<i class='bar chart icon phChartIcon'></i>";
+        }
     }
   });
   

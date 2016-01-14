@@ -18,7 +18,8 @@ Template.scenarioSubmit.hooks({
         var scenarioForm = document.getElementById('scenarioForm');
         var dateRanges = scenarioForm.elements["dateRange"].value;
         
-        readFile(scenarioForm.elements['priceStrat'].files[0], "priceStrat");
+        readFile(scenarioForm.elements['priceStrat_ce'].files[0], "priceStrat_ce");
+        readFile(scenarioForm.elements['priceStrat_de'].files[0], "priceStrat_de");
         readFile(scenarioForm.elements['npEvaluation'].files[0], "npEvaluation");
         readFile(scenarioForm.elements['shelfReview'].files[0], "shelfReview");
         
@@ -26,10 +27,12 @@ Template.scenarioSubmit.hooks({
           name : scenarioForm.elements["name"].value,
           dateStart : dateRanges.substring(0,10),
           dateEnd : dateRanges.substring(13,23),
+          dateRange: dateRanges,
           description : scenarioForm.elements["description"].value,
-          stores : extractListWithHeader("storeID", scenarioForm.elements["stores"].value),
-          products : extractListWithHeader("TPN", scenarioForm.elements["products"].value),
-          priceStrat : Session.get('priceStrat'),
+          stores : extractListWithHeader("store_code", (scenarioForm.elements["stores"].value.length() > 0) ? scenarioForm.elements["stores"].value : "All"),
+          products : extractListWithHeader("tpn", scenarioForm.elements["products"].value),
+          priceStrat_ce : Session.get('priceStrat_ce'),
+          priceStrat_de : Session.get('priceStrat_de'),
           npEvaluation : Session.get('npEvaluation'),
           shelfReview : Session.get('shelfReview'),
           status : 0,
@@ -40,22 +43,29 @@ Template.scenarioSubmit.hooks({
         
         console.log(scenario);
         
-        Scenarios.insert(scenario);
-        scenarioForm.reset();
-        
-        return true;
-        
+        Meteor.call('Scenarios.methods.Insert', {
+          scenario
+        }, (err, res) => {
+          if (err) {
+            alert(err);
+          }
+          else {
+          scenarioForm.reset();
+          return true;  
+          }
+        });
+
       }
     });
   }
 });
 
-Template.layout.events({
-    'click .createScenario': function(e) {
-        $('.ui.modal.scenario')
-            .modal('show');
-    }
-});
+// Template.layout.events({
+//     'click .createScenario': function(e) {
+//         $('.ui.modal.scenario')
+//             .modal('show');
+//     }
+// });
 
 function extractListWithHeader(header, list){
   list = header + "\n" + list;

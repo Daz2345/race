@@ -1,12 +1,12 @@
 <template name="scenarioSubmit">
-    <div class="ui modal scenario">
-        <!--<i class="close icon"></i>-->
+    <div class="ui large modal scenarioSubmitModal">
+        <i class="close icon"></i>
         <div class="header">Create New Scenario</div>
         <div class="content">
             {{ > scenarioForm}}
         </div>
         <div class="actions">
-            <div class="ui red deny button">Cancel</div>
+            <!--<div class="ui red deny button">Cancel</div>-->
             <div class="ui positive right labeled icon button"><i class="checkmark icon"></i>Create Scenario</div>
         </div>
     </div>
@@ -32,13 +32,19 @@
             <label>Description</label>
             <textarea rows="1" name="description"></textarea>
         </div>
-        <div class="ui three column grid">
+        <div class="ui four column grid">
             <div class="column">
                 <div class="field">
-                    <label>Price Strat Export</label>
-                    <input id="priceStrat" name="priceStrat" class="ui input" type="file" accept=".csv" required=true>
+                    <label>Price Strat Cross Elasticity Export</label>
+                    <input id="priceStrat_ce" name="priceStrat" class="ui input" type="file" accept=".csv" required=true>
                 </div>
             </div>
+            <div class="column">
+                <div class="field">
+                    <label>Price Strat Direct Elasticity Export</label>
+                    <input id="priceStrat_de" name="priceStrat" class="ui input" type="file" accept=".csv" required=true>
+                </div>
+            </div>            
             <div class="column">
                 <div class="field">
                     <label>NP Evaluation Export</label>
@@ -60,36 +66,9 @@
                 </div>
             </div>
             <div class="column">
-                <div class="inline fields">
-                    <label for="stores">Select stores:</label>
-                    <div class="field">
-                      <div class="ui radio checkbox">
-                        <input type="radio" name="stores" tabindex="0" class="hidden">
-                        <label>All</label>
-                      </div>
-                    </div>
-                    <div class="field">
-                      <div class="ui radio checkbox">
-                        <input type="radio" name="stores" tabindex="0" class="hidden">
-                        <label>Main</label>
-                      </div>
-                    </div>
-                    <div class="field">
-                      <div class="ui radio checkbox">
-                        <input type="radio" name="stores" tabindex="0" class="hidden">
-                        <label>Express</label>
-                      </div>
-                    </div>
-                    <div class="field">
-                      <div class="ui radio checkbox">
-                        <input type="radio" name="stores" tabindex="0" class="hidden">
-                        <label>Custom</label>
-                      </div>
-                    </div>
-                  </div>
                 <div class="field">
                     <label>Custom Stores List</label>
-                    <textarea rows="7" name="storesCustom" required=true></textarea>
+                    <textarea rows="10" name="stores" required=true></textarea>
                 </div>
             </div>
         </div>

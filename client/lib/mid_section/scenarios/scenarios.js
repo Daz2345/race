@@ -1,10 +1,3 @@
-Template.createScenario.events({
-    'click .createscenario': function(e) {
-        $('.ui.large.modal')
-            .modal('show');
-    }
-});
-
 Template.registerHelper('formatDate', function(date) {
   return moment(date).format('H:mm - DD-MM-YYYY');
 });
@@ -46,3 +39,9 @@ Template.scenariosRow.helpers({
     //     }
     // }
   });
+  
+ Template.scenariosTable.onCreated(function() {
+  this.autorun(() => {
+    this.subscribe('Scenarios.all.public');
+  });
+});

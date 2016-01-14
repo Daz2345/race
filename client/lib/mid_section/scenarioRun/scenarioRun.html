@@ -1,14 +1,14 @@
 <template name="scenarioRun">
-  <div class="ten wide column">
+  <div class="thirteen wide column">
     <div class="mid-section">
-      {{ > scenarioRuns_table}}
+      {{ > scenarioRunTable}}
     </div>
   </div>
 </template>
 
-<template name="scenarioRun_table">
+<template name="scenarioRunTable">
     <!--{{ > tableHeader}}-->
-    {{ > tableSearch}}
+        {{ > addNewProductButton}}    
     <table class="ui selectable celled striped table blue">
         {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}
     </table>
@@ -18,44 +18,37 @@
 <tfoot class="full-width">
     <tr>
       
-      <th colspan="6">
-        {{ > addNewProduct}}
-        {{ > pagination}}
+      <th colspan="7">
+
       </th>
     </tr>
   </tfoot>  
 </template>
 
-<template name="addNewProduct">
-  
-</template>
 
 <template name="scenarioRunHeader">
-    <thead>
+    <thead class="single line">
       <tr>
-        <th>
-          Product TPN
+        <th class="center aligned">
+          TPN
         </th>
-        <th>
+        <th class="left aligned">
           Description
         </th>        
-        <th>
-          Current Sales
+        <th class="center aligned">
+          Scenario Sales
         </th>
-        <th>
-          Current Price
+        <th class="center aligned">
+          Scenario Price
         </th>
-        <th>
+        <th class="center aligned">
           Estimated Sales
         </th>
-        <th>
+        <th class="center aligned">
           Estimated Price
         </th>
-        <th>
-          NPD
-        </th>    
-        <th>
-          Delist
+        <th class="center aligned">
+          Delist?
         </th>         
       </tr>
     </thead>
@@ -72,14 +65,13 @@
 <template name="scenarioRunRow">
 
     <tr>
-        <td class="collapsing">{{tpn}}</td>
-        <td class="collapsing">{{description}}</td>
-        <td class="collapsing">{{currentSales}}</td>
-        <td class="collapsing">{{currentPrice}}</td>
-        <td class="collapsing">{{estimatedSales}}</td>
-        <td class="collapsing">{{estimatedPrice}}</td>
-        <td class="collapsing">{{npd}}</td> 
-        <td class="collapsing">{{delist}}</td>        
+        <td class="collapsing center aligned">{{TPN}}</td>
+        <td class="left aligned">{{description}}</td>
+        <td class="collapsing center aligned">{{currentSales}}</td>
+        <td class="collapsing center aligned">{{currentPrice}}</td>
+        <td class="collapsing center aligned"><div class="ui fluid input"><input type="text" name="estimated-sales" placeholder={{currentSales}}></div></td>
+        <td class="collapsing center aligned"><div class="ui fluid input"><input type="text" name="estimated-price" placeholder={{currentPrice}}></div></td>
+        <td class="collapsing center aligned"><input type="checkbox"></td>        
     </tr>
 
 </template>

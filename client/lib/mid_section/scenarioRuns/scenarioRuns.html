@@ -2,15 +2,16 @@
   <div class="thirteen wide column blank-row-padding blank-col-padding">
     <div class="mid-section">
       {{ > scenarioRuns_table}}
+      {{ > priceHeirarchyChart}}
     </div>
   </div>
 </template>
 
 <template name="scenarioRuns_table">
-    <!--{{ > tableHeader}}-->
+    {{ > tableHeader}}
     {{ > scenarioRunControls}}
     <table class="ui selectable celled striped table red">
-        {{ > scenarioRunsHeader}} {{ > scenarioRunsBody}} {{ > scenarioRunsFooter}}
+        {{ > scenarioRunsHeader}} {{ > scenarioRunsBody}} {{ > scenarioRunsFooter}} 
     </table>
 </template>
 
@@ -18,8 +19,8 @@
 <tfoot class="full-width">
     <tr>
       <th>Total Runs:</th>
-      <th>{{runCount}}</th>
-      <th colspan="5">
+      <th  class="center aligned">{{runCount}}</th>
+      <th colspan="6">
         {{ > pagination}}
       </th>
     </tr>
@@ -52,7 +53,10 @@
         </th>        
         <th>
           Total Sales
-        </th>          
+        </th>   
+        <th>
+          £ Chart
+        </th>               
         <th>
           Ready?
         </th>        
@@ -83,6 +87,7 @@
     <td class="collapsing center aligned">{{delisted}}</td>
     <td class="collapsing center aligned">{{npd}}</td>
     <td class="collapsing center aligned">{{totalSales}}</td>
+    <td class="collapsing center aligned">{{{chartIcon}}}</td>
     <td class="collapsing center aligned">{{{runStatus}}}</td>
   </tr>
 
