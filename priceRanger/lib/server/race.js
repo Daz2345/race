@@ -1,0 +1,5 @@
+// IPWhitelist();
+
+SimpleRest.configure({
+  collections: []
+});

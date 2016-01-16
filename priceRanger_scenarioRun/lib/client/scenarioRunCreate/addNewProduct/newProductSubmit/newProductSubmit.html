@@ -1,0 +1,65 @@
+<template name="newProductSubmitModal">
+    <div class="ui modal newProductSubmitModal">
+        <i class="close icon"></i>
+        <div class="header">Add New Product</div>
+        <div class="content">
+            {{ > newProductForm}}
+        </div>
+        <div class="actions">
+            <!--<div class="ui red deny button">Cancel</div>-->
+            <div class="ui positive right labeled icon button"><i class="checkmark icon"></i>Add Product</div>
+        </div>
+    </div>
+</template>
+
+<template name="newProductForm">
+    <form id="newProductSubmit" class="ui form newProductSubmit submit">
+        <div class="ui two column grid">
+            <div class="column">
+                <div class="field">
+                    <label>TPN:</label>
+                    <input type="text" name="tpn" required=true>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label for="performance">Similar Products:</label>
+                    <select name="similarProducts" multiple="" class="ui fluid search floating dropdown similar">
+                        <option value="">Similar Products</option>
+                        {{#each products}} {{ > similarProduct}} {{/each}}
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        <div class="grouped fields">
+            <label for="performance">Performance:</label>
+            <div class="field">
+                <div class="ui radio checkbox high">
+                    <input type="radio" name="performance" tabindex="0" class="hidden">
+                    <label>High</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox medium">
+                    <input type="radio" name="performance" tabindex="0" class="hidden">
+                    <label>Medium</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox low">
+                    <input type="radio" name="performance" tabindex="0" class="hidden">
+                    <label>Low</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>
+
+<template name="similarProduct">
+    <option value={{tpn}} data-value={{tpn}}>{{tpn}} - {{description}} - {{price}}</option>
+</template>

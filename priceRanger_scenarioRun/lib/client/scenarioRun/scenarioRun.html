@@ -1,0 +1,69 @@
+<template name="scenarioRun">
+  
+    <!--{{ > tableHeader}}-->
+    <h1 class="ui header">Results for Scenario Run - {{runName}}</h1>    
+      {{ > scenarioRunTable}}
+
+</template>
+
+<template name="scenarioRunTable">
+    {{#if Template.subscriptionsReady}}
+    <table class="ui selectable celled striped table blue">
+        {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}
+    </table>
+  {{else}}
+  {{>loader}}
+  {{/if}}    
+</template>
+
+<template name="scenarioRunFooter">
+<tfoot class="full-width">
+    <tr>
+      
+      <th colspan="5">
+
+      </th>
+    </tr>
+  </tfoot>  
+</template>
+
+
+<template name="scenarioRunHeader">
+    <thead class="single line">
+      <tr>
+        <th class="center aligned">
+          TPN
+        </th>
+        <th class="left aligned">
+          Description
+        </th>        
+        <th class="center aligned">
+          Sales
+        </th>
+        <th class="center aligned">
+          Price
+        </th>
+        <th class="center aligned">
+          Delisted
+        </th>         
+      </tr>
+    </thead>
+</template>
+
+<template name="scenarioRunBody">
+  <tbody>  
+  {{#each products}}
+    {{ > scenarioRunRow}}
+  {{/each}}
+  </tbody>    
+</template>
+
+<template name="scenarioRunRow">
+    <tr>
+        <td class="collapsing center aligned">{{tpn}}</td>
+        <td class="left aligned">{{description}}</td>
+        <td class="collapsing center aligned">{{sales}}</td>
+        <td class="collapsing center aligned">{{price}}</td>
+        <td class="collapsing center aligned">{{delisted}}</td>        
+    </tr>
+</template>

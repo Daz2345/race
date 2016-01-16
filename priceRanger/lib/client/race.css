@@ -1,0 +1,109 @@
+/* CSS declarations go here */
+.right-section {
+    background-color: #F9F7F9;
+    height: 100%;   
+}
+
+.menu-list {
+    width:90%;
+    margin-left:5%;
+}
+
+.main-section {
+    /*width: calc(100% - 258px);*/
+    padding-left:265px;
+    padding-right:5px;
+}
+
+.left-section {
+    background-color:#363534;
+    height:100%;
+}
+
+.whitetext {
+    color: #fff! important;
+}
+
+.title {
+    padding-top:10%;
+    max-height: 20%;
+}
+
+.menuContainer {
+    height:60%;
+}
+
+.ui.inverted.menu {
+    background-color:#363534;
+}
+
+.ui.steps .step {
+    background: none;
+    color:#fff;
+}
+
+.ui.steps .step.active {
+    color:#363534;
+}
+
+.highlight {
+    background-color:#E7E6E8! important;
+}
+
+.lowlight {
+    background-color:#F1EFF1! important;
+}
+
+.blank-col-padding {
+    padding-right:2rem! important;
+}
+.blank-row-padding {
+    padding-bottom:0rem! important;
+}
+
+.ui.horizontal.segments > .segment {
+    border:none!important;
+}
+
+.ui.segments {
+    border:none!important;
+    box-shadow:none!important;
+}
+
+/*.pusher {*/
+/*    left:210px;*/
+/*}*/
+
+.ui.fluid.small.input {
+    width:100px! important;
+}
+
+.phChart {
+    font-size: 10px;
+    position: absolute;
+    z-index: 10000;
+    background-color: #fff;
+    -webkit-box-shadow: 4px 4px 10px 0px rgba(52,53,54,0.35);
+    -moz-box-shadow: 4px 4px 10px 0px rgba(52,53,54,0.35);
+    box-shadow: 4px 4px 10px 0px rgba(52,53,54,0.35);
+    border: 1px solid rgba(34,36,38,0.15);
+}
+
+div.tooltip {	
+    position: absolute;
+}
+
+.bar rect {
+  fill: steelblue;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  fill: #fff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
