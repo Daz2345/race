@@ -31,3 +31,5 @@ meteorhacks:picker
 d3js:d3
 underscore
 reactive-var
+simple:rest
+simonrycroft:ip-whitelist
