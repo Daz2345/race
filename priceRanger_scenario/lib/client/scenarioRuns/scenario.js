@@ -17,9 +17,7 @@ Template.scenario.events({
         } else {    
             var y = e.pageY - 20,
                 chartWidth = 480,
-                screenWidth = $('body').width(),
-                midSectionWidth = $('.mid-section').width(),
-                x = e.pageX - chartWidth - (screenWidth - midSectionWidth);
+                x = e.pageX - chartWidth;
             phChartShow.set(!chartIsShowing);
             phChartCSS.set("display:block;top:" + y + "px;left:" + x + "px;");
         }
@@ -68,24 +66,16 @@ Template.scenarioRunsRow.helpers({
         }
     },
     delisted: function() {
-        if (this.products !== undefined) {
-            return this.products.delisted;
-        } else {
-            return 0;
-        }
+        return this.delisted || 0;
     },
     npd: function() {
-        if (this.products !== undefined) {
-            return this.products.npd;
-        } else {
-            return 0;
-        }
+        return this.npd || 0;
     },
     totalSales: function() {
         return this.totalSales | 0;
     },
     chartIcon: function() {
-        if (this.products) {
+        if (this.products !== undefined) {
             return "<i class='bar chart icon link phChartIcon'></i>";
         }
     }

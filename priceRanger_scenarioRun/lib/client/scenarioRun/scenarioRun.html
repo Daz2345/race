@@ -1,19 +1,19 @@
 <template name="scenarioRun">
   
-    <!--{{ > tableHeader}}-->
-    <h1 class="ui header">Results for Scenario Run - {{runName}}</h1>    
+    {{ > tableHeader}}
+    {{#if Template.subscriptionsReady}}
       {{ > scenarioRunTable}}
-
+  {{else}}
+  {{>loader}}
+  {{/if}}   
 </template>
 
 <template name="scenarioRunTable">
-    {{#if Template.subscriptionsReady}}
+
     <table class="ui selectable celled striped table blue">
         {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}
     </table>
-  {{else}}
-  {{>loader}}
-  {{/if}}    
+ 
 </template>
 
 <template name="scenarioRunFooter">
@@ -64,6 +64,6 @@
         <td class="left aligned">{{description}}</td>
         <td class="collapsing center aligned">{{sales}}</td>
         <td class="collapsing center aligned">{{price}}</td>
-        <td class="collapsing center aligned">{{delisted}}</td>        
+        <td class="collapsing center aligned">{{delistedVal}}</td>        
     </tr>
 </template>

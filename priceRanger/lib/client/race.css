@@ -20,6 +20,11 @@
     height:100%;
 }
 
+.loaderHeight {
+    top:50%;
+
+}
+
 .whitetext {
     color: #fff! important;
 }
@@ -35,6 +40,12 @@
 
 .ui.inverted.menu {
     background-color:#363534;
+}
+
+#user {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .ui.steps .step {

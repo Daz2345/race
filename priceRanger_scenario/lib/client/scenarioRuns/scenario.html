@@ -7,7 +7,7 @@
 
 <template name="scenarioRuns_table">
   {{#if Template.subscriptionsReady}}
-    <table class="ui selectable celled striped table red">
+    <table class="ui selectable celled very compact striped table red">
         {{ > scenarioRunsHeader}} {{ > scenarioRunsBody}} {{ > scenarioRunsFooter}} 
     </table>
   {{else}}
@@ -21,7 +21,7 @@
       <th>Total Runs:</th>
       <th  class="center aligned">{{runCount}}</th>
       <th colspan="6">
-        {{ > pagination}}
+        {{> paginationBar itemsPerPage=10 window=5 count='scenario_scenarioRuns'}}
       </th>
     </tr>
   </tfoot>  
@@ -65,7 +65,7 @@
       </a>
     </td>
     <td class="collapsing">
-        by {{createdBy}}<br>@ {{formatDate createdAt}}
+        {{createdBy}}<br>{{formatDate createdAt}}
     </td>
     <td>{{description}}</td>
     <td class="collapsing center aligned">{{delisted}}</td>

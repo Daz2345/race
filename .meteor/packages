@@ -33,3 +33,8 @@ underscore
 reactive-var
 simple:rest
 simonrycroft:ip-whitelist
+msavin:mongol
+tmeasday:publish-counts
+miguelalarcos:flow-router-pagination
+tdamsma:meteor-accounts-ldap
+manuel:reactivearray

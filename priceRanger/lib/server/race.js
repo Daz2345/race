@@ -1,4 +1,4 @@
-// IPWhitelist();
+IPWhitelist();
 
 SimpleRest.configure({
   collections: []

@@ -1,12 +1,22 @@
 Template.registerHelper('formatDate', function(date) {
-  return moment(date).format('H:mm - DD-MM-YYYY');
+  return moment(date).format('HH:mm - DD-MM-YYYY');
 });
 
-Template.scenariosTable.helpers({
+Template.scenariosBody.helpers({
     scenarios: function () {
       // Show newest tasks at the top
       return Scenarios.find({}, {sort: {createdAt: -1}});
-    }    
+    }
+});
+
+Template.scenarios.helpers({
+    isReady: function(sub) {
+    if(sub) {
+      return FlowRouter.subsReady(sub);
+    } else {
+      return FlowRouter.subsReady();
+    }
+  }
 });
 
 Template.scenariosRow.helpers({

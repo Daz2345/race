@@ -1,19 +1,28 @@
 Template.tableHeader.helpers({
     header: function() {
-        var headerVal = FlowRouter.getRouteName();
-        var Title = headerVal.toProperCase();
-        var scenarioId = FlowRouter.getParam("scenarioId");
-        var Scenario = Scenarios.findOne({_id: scenarioId});
-        
-        switch (headerVal) {
+        var route = FlowRouter.getRouteName(),
+         Title = route.toProperCase(),
+         scenarioId = FlowRouter.getParam("scenarioId"),
+         Scenario = Scenarios.findOne({_id: scenarioId});
+         
+         if (route === "") {
+                 
+         }
+
+        switch (route) {
+            case "scenarioRunsAll":
+                return "All Scenario Runs";
+                break;            
             case "scenario":
                 return "Scenario Runs for - " + Scenario.name.toProperCase();    
                 break;
             case "scenarios":
-                return Title;    
+                return 'All ' + Title;    
                 break;
             case "scenarioRun":
-                return Title;    
+                var scenarioRunId = FlowRouter.getParam("runId"),
+                ScenarioRun = ScenarioRuns.findOne({_id: scenarioRunId});
+                return "Scenario Run - " + ScenarioRun.runName.toProperCase();    
                 break;               
         }
 

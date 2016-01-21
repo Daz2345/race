@@ -1,7 +1,7 @@
 Template.addNewProductButton.events({
     'click .addNewProductButton': function(e) {
         $('.ui.form.newProductSubmit.submit')
-            .form('reset');
+            .form('clear');
         
         $('.ui.modal.newProductSubmitModal')
             .modal('show');

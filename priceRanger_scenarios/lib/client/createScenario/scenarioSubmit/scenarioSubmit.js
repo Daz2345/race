@@ -15,47 +15,56 @@ Template.scenarioSubmit.hooks({
       },
       onApprove: function () {
         
-        var scenarioForm = document.getElementById('scenarioForm');
-        var dateRanges = scenarioForm.elements["dateRange"].value;
-        var storesVal;
+        var scenarioForm = document.getElementById('scenarioForm'),
+         dateRanges = scenarioForm.elements["dateRange"].value,
+         storesVal, priceStrat_ceVal, priceStrat_deVal, npEvaluationVal, shelfReviewVal, scenarioObj;
+         
         if (scenarioForm.elements["stores"].value.length > 0) {
           storesVal = extractListWithHeader("store_code", scenarioForm.elements["stores"].value);
         } else {
           storesVal = "All";
         }
         
-        readFile(scenarioForm.elements['priceStrat_ce'].files[0], "priceStrat_ce");
-        readFile(scenarioForm.elements['priceStrat_de'].files[0], "priceStrat_de");
-        readFile(scenarioForm.elements['npEvaluation'].files[0], "npEvaluation");
-        readFile(scenarioForm.elements['shelfReview'].files[0], "shelfReview");
-        
-        var scenarioObj = {
-          name : scenarioForm.elements["name"].value,
-          dateStart : dateRanges.substring(0,10),
-          dateEnd : dateRanges.substring(13,23),
-          dateRange: dateRanges,
-          description : scenarioForm.elements["description"].value,
-          stores : storesVal,
-          products : extractListWithHeader("tpn", scenarioForm.elements["products"].value),
-          priceStrat_ce : Session.get("priceStrat_ce"),
-          priceStrat_de : Session.get("priceStrat_de"),
-          npEvaluation : Session.get("npEvaluation"),
-          shelfReview : Session.get("shelfReview")
-        };
+        readFile(scenarioForm.elements['priceStrat_ce'].files[0], function(e) {
+          priceStrat_ceVal = extractList(e.target.result);
 
-        console.log(scenarioObj);
-        
-        Meteor.call('Scenarios.methods.insert', scenarioObj, function(err, res){
-          if (err) {
-            alert(err);
-          }
-          else {
-            scenarioForm.reset();
-            FlowRouter.go('/scenarios');            
-            return true;  
-          }
+          readFile(scenarioForm.elements['priceStrat_de'].files[0], function(e) {
+            priceStrat_deVal = extractList(e.target.result);
+
+            readFile(scenarioForm.elements['npEvaluation'].files[0], function(e) {
+              npEvaluationVal = extractList(e.target.result);
+
+              readFile(scenarioForm.elements['shelfReview'].files[0], function(e) {
+                shelfReviewVal = extractList(e.target.result);
+
+                scenarioObj = {
+                  name: scenarioForm.elements["name"].value,
+                  dateStart: dateRanges.substring(0, 10),
+                  dateEnd: dateRanges.substring(13, 23),
+                  dateRange: dateRanges,
+                  description: scenarioForm.elements["description"].value,
+                  stores: storesVal,
+                  products: extractListWithCustomHeader("tpn", scenarioForm.elements["products"].value),
+                  priceStrat_ce: priceStrat_ceVal,
+                  priceStrat_de: priceStrat_deVal,
+                  npEvaluation: npEvaluationVal,
+                  shelfReview: shelfReviewVal
+                };
+
+                Meteor.call('Scenarios.methods.insert', scenarioObj, function(err, res){
+                  if (err) {
+                    alert(err);
+                  }
+                  else {
+                    scenarioForm.reset();
+                    FlowRouter.go('/scenarios');            
+                    return true;  
+                  }
+                });                
+              });
+            });
+          });
         });
-
       }
     });
   }
@@ -68,7 +77,7 @@ Template.scenarioSubmit.hooks({
 //     }
 // });
 
-function extractListWithHeader(header, list){
+function extractListWithCustomHeader(header, list){
   list = header + "\n" + list;
   return Papa.parse(list, {
       header: true, 
@@ -83,12 +92,9 @@ function extractListWithHeader(header, list){
   }).data;
 }
   
-  function readFile(file, keyName) {
+  function readFile(file, onLoadCallback) {
     var reader = new FileReader();
-    reader.onload = function(e) {
-      var dataVal = extractList(e.target.result);
-      Session.set(keyName, dataVal);
-    };
+    reader.onload = onLoadCallback;
     reader.readAsText(file);
   }
 

@@ -8,16 +8,14 @@ Template.menuContainer.helpers({
     return path;
   },
   scenariosCount: function() {
-    return Scenarios.find().count()
+    return '***';
   },
   scenarioRunsCount: function() {
-    return ScenarioRuns.find().count()
+    return '***';
   }
 });
 
 Template.menuContainer.onCreated(function() {
-  this.autorun(() => {
-    this.subscribe('Scenarios.all.public');
-    this.subscribe('ScenarioRuns.all.public');
-  });
+    // scenariosCount = new ReactiveVar(Scenarios.find().count());
+    // scenarioRunsCount = new ReactiveVar(ScenarioRuns.find().count());
 });

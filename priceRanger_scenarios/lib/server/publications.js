@@ -6,10 +6,12 @@ Meteor.publish('Scenarios.all.basic', function() {
 
   }, {
     fields: Scenarios.basic,
-    limit: 200,
-    sort: {createdAt: 1}
+    // limit: 200,
+    // sort: {createdAt: 1}
   });
 });
+
+
 Meteor.publish('Scenarios.all.withProducts', function() {
   return Scenarios.find({
 
@@ -18,4 +20,23 @@ Meteor.publish('Scenarios.all.withProducts', function() {
     limit: 200,
     sort: {createdAt: 1}
   });
+});
+
+
+Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit) {
+  Counts.publish(this, 'total_scenarios', Scenarios.find())
+ 
+  if (skip < 0) {skip = 0}
+  var options = {};
+  options.fields = Scenarios.basic
+
+
+  if(skip != 0) {
+    options.skip = skip;
+  }
+  options.limit = limit;
+  if (options.limit > 10)  {options.limit = 10}
+  options.sort = {createdAt: 1};
+
+  return Scenarios.find({}, options)
 });

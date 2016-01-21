@@ -1,69 +1,97 @@
 <template name="scenarioRunCreate">
-      <!--{{ > tableHeader}}-->
-    <h1 class="ui header">Create Scenario Run for - {{scenario.name}}</h1>    
-        {{ > addNewProductButton}}  
-        <div><br></div>
-      {{ > scenarioRunCreateTable}}
+  <!--{{ > tableHeader}}-->
+  <h1 class="ui header">Create Scenario Run for - {{scenario.name}}</h1>
+  <div class="actions">
+    {{ > addNewProductButton}}
+    {{> submitScenarioRun}}
+  </div>
+  <div>
+    <br>
+  </div>
+  <form id="scenarioRunCreateForm" class="ui form scenarioRunCreate" autocomplete="off">
+    <div class="ui grid">
+      <div class="five wide column">
+        <div class="field">
+          <label>Scenario Run Name</label>
+          <input type="text" name="name" required=true>
+        </div>
+      </div>
+      <div class="eleven wide column">
+        <div class="field">
+          <label>Scenario Run Description</label>
+          <input type="text" name="description" required=true>
+        </div>
+      </div>
+    </div>
+    {{#if isReady}} {{ > scenarioRunCreateTable}} {{else}}
+
+    {{> loader}}
+    
+    {{/if}}
+  </form>
 </template>
 
 <template name="scenarioRunCreateTable">
-    {{#if Template.subscriptionsReady}}
-    <form class="ui form scenarioRunCreate">
-      <table class="ui selectable celled striped table blue">
-          {{ > scenarioRunCreateHeader}} {{ > scenarioRunCreateBody}} {{ > scenarioRunCreateFooter}}
-      </table>
-    </form>
-      {{else}}
-  <p>Loading...</p>
-  {{/if}}
+
+  <table class="ui selectable celled striped unstackable very compact table blue">
+    {{ > scenarioRunCreateHeader}} {{ > scenarioRunCreateBody}} {{ > scenarioRunCreateFooter}}
+  </table>
+
 </template>
 
 <template name="scenarioRunCreateFooter">
-<tfoot class="full-width">
+  <tfoot class="full-width">
     <tr>
       <th colspan="7">
       </th>
     </tr>
-  </tfoot>  
+  </tfoot>
 </template>
 
-
 <template name="scenarioRunCreateHeader">
-    <thead class="single line">
-      <tr>
-        <th class="center aligned">
-          TPN
-        </th>
-        <th class="left aligned">
-          Description
-        </th>        
-        <th class="center aligned">
-          Sales
-        </th>
-        <th class="center aligned">
-          Price
-        </th>
-        <th class="center aligned">
-          Delist?
-        </th>         
-      </tr>
-    </thead>
+  <thead class="single line">
+    <tr>
+      <th class="center aligned">
+        TPN
+      </th>
+      <th class="left aligned">
+        Description
+      </th>
+      <th class="center aligned">
+        Sales
+      </th>
+      <th class="center aligned">
+        Price
+      </th>
+      <th class="center aligned">
+        Delist?
+      </th>
+    </tr>
+  </thead>
 </template>
 
 <template name="scenarioRunCreateBody">
-  <tbody>  
-  {{#each products}}
-    {{ > scenarioRunCreateRow}}
-  {{/each}}
-  </tbody>    
+  <tbody>
+    {{#each products}} {{ > scenarioRunCreateRow}} {{/each}}
+  </tbody>
 </template>
 
 <template name="scenarioRunCreateRow">
-    <tr class={{tpn}}>
-        <td id="tpn" class="collapsing center aligned">{{tpn}}</td>
-        <td id="description" class="left aligned">{{description}}</td>
-        <td id="sales" class="collapsing center aligned">{{sales}}</td>
-        <td id="price" class="collapsing center vertical aligned"><div class="ui fluid small input price {{tpn}}"><input id="priceField" type="number" step=0.01 min="0" placeholder={{price}} name="{{tpn}}" class="price{{tpn}}"></div></td>
-        <td id="delist" class="collapsing center vertical aligned"><div class="ui center aligned checkbox delist{{tpn}}"><input type="checkbox" name="{{tpn}}" tabindex="0"></div></td>        
-    </tr>
+  <tr class={{tpn}}>
+    <td id="tpn" class="collapsing center aligned">{{tpn}}</td>
+    <td id="description" class="left aligned">{{description}}</td>
+    <td id="sales" class="collapsing center aligned">{{sales}}</td>
+    <td id="price" class="collapsing center vertical aligned {{disableIfDelisted}}">
+      <div class="ui fluid small compact input">
+        <input id="priceField" type="number" step=0.01 min="0" placeholder={{price}} name="{{tpn}}" class="ui price price{{tpn}}">
+      </div>
+    </td>
+    <td id="delist" class="collapsing center vertical aligned">
+      <div class="ui center aligned">
+        <div class="ui center aligned checkbox delist{{tpn}}">
+          <input type="checkbox" name="{{tpn}}" tabindex="0">
+        </div>
+      </div>
+    </td>
+  </tr>
 </template>

@@ -13,17 +13,44 @@
 </template>
 
 <template name="newProductForm">
-    <form id="newProductSubmit" class="ui form newProductSubmit submit">
+    <form id="newProductSubmit" class="ui form newProductSubmit submit" autocomplete="off">
         <div class="ui two column grid">
+            
             <div class="column">
-                <div class="field">
+                <div class="field {{tpnShowError}}">
                     <label>TPN:</label>
-                    <input type="text" name="tpn" required=true>
+                    <input id="tpn" type="text" name="tpn" required=true>
                 </div>
+                <div class="field {{priceShowError}}">
+                    <label>Price:</label>
+                    <input id="price" type="number" step=0.01 min="0" name="price" required=true>
+                </div>
+                <div id="performance" class="grouped fields {{performanceShowError}}">
+                    <label for="performance">Performance:</label>
+                    <div class="field">
+                        <div class="ui radio checkbox high">
+                            <input id="performance" type="radio" data-value="high" name="performance" tabindex="0" class="hidden">
+                            <label>High</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox medium">
+                            <input id="performance" type="radio" data-value="medium" name="performance" tabindex="0" class="hidden">
+                            <label>Medium</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox low">
+                            <input id="performance" type="radio" data-value="low" name="performance" tabindex="0" class="hidden">
+                            <label>Low</label>
+                        </div>
+                    </div>
+                </div>                
             </div>
+
             <div class="column">
                 <div class="field">
-                    <label for="performance">Similar Products:</label>
+                    <label for="similarProducts">Similar Products:</label>
                     <select name="similarProducts" multiple="" class="ui fluid search floating dropdown similar">
                         <option value="">Similar Products</option>
                         {{#each products}} {{ > similarProduct}} {{/each}}
@@ -31,35 +58,19 @@
                 </div>
             </div>
         </div>
-        
-        
-        
-        
-        
-        <div class="grouped fields">
-            <label for="performance">Performance:</label>
-            <div class="field">
-                <div class="ui radio checkbox high">
-                    <input type="radio" name="performance" tabindex="0" class="hidden">
-                    <label>High</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui radio checkbox medium">
-                    <input type="radio" name="performance" tabindex="0" class="hidden">
-                    <label>Medium</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui radio checkbox low">
-                    <input type="radio" name="performance" tabindex="0" class="hidden">
-                    <label>Low</label>
-                </div>
-            </div>
-        </div>
+    
     </form>
+        {{#if validationErrorsVal}}
+        <div class="ui error message">
+            <ul class="list">
+                {{{tpnError}}}
+                {{{priceError}}}
+                {{{performanceError}}}      
+            </ul>
+        </div>        
+        {{/if}}          
 </template>
 
 <template name="similarProduct">
-    <option value={{tpn}} data-value={{tpn}}>{{tpn}} - {{description}} - {{price}}</option>
+    <option value={{tpn}} data-value={{tpn}}>{{description}} - {{price}}</option>
 </template>

@@ -1,6 +1,18 @@
 Template.scenarioRunBody.helpers({
     products: function() {
-        return ScenarioRuns.findOne({_id : FlowRouter.getParam("runId")}).products;
+        var runIdVal = FlowRouter.getParam("runId"),
+            scenarioIdVal = FlowRouter.getParam("scenarioId"),
+            allProducts = ScenarioRuns.findOne({_id : runIdVal, scenarioId: scenarioIdVal}).products
+            // odds = _.reject(allProducts, function(product){ return product.delisted === true; });    
+        return allProducts;
+    }
+});
+
+Template.scenarioRunRow.helpers({
+    delistedVal: function() {
+        if (this.delisted) {
+            return "x";
+        }
     }
 });
 

@@ -1,13 +1,12 @@
 <template name="user">
-    <a href={{userAccount}}>
+    {{#if currentUser}}
         <div id="user">
             <h2 class="ui center aligned icon header">
                 <i class="grey user icon"></i>
                 <div class="content whitetext">
-                    {{userName}}
-                    {{signin}}
+                    {{currentUser.username}}
                 </div>
             </h2>
         </div>
-    </a>
+    {{/if}}
 </template>

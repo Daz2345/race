@@ -61,5 +61,8 @@ Meteor.methods({
         };
         
         scenario._id = Scenarios.insert(scenario);
+    },
+    'Scenarios.methods.increaseRuns' : function(scenarioId) {
+        Scenarios.update({_id : scenarioId},{$inc:{runs:1}});
     }
 });

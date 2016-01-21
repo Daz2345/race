@@ -13,7 +13,7 @@
 </template>
 
 <template name="scenarioForm">
-    <form id="scenarioForm" class="ui form scenario submit">
+    <form id="scenarioForm" class="ui form scenario submit" autocomplete="off">
         <div class="ui two column grid">
             <div class="column">
                 <div class="field">
@@ -36,25 +36,25 @@
             <div class="column">
                 <div class="field">
                     <label>Price Strat Cross Elasticity Export</label>
-                    <input id="priceStrat_ce" name="priceStrat" class="ui input" type="file" accept=".csv" required=true>
+                    <input name="priceStrat_ce" class="ui input" type="file" accept=".csv" required=true>
                 </div>
             </div>
             <div class="column">
                 <div class="field">
                     <label>Price Strat Direct Elasticity Export</label>
-                    <input id="priceStrat_de" name="priceStrat" class="ui input" type="file" accept=".csv" required=true>
+                    <input name="priceStrat_de" class="ui input" type="file" accept=".csv" required=true>
                 </div>
             </div>            
             <div class="column">
                 <div class="field">
                     <label>NP Evaluation Export</label>
-                    <input id="npEvaluation" name="npEvaluation" class="ui input" type="file" accept=".csv" required=true>
+                    <input name="npEvaluation" class="ui input" type="file" accept=".csv" required=true>
                 </div>
             </div>
             <div class="column">
                 <div class="field">
                     <label>Shelf Review Export</label>
-                    <input id="shelfReview" name="shelfReview" class="ui input" type="file" accept=".csv" required=true>
+                    <input name="shelfReview" class="ui input" type="file" accept=".csv" required=true>
                 </div>
             </div>
         </div>

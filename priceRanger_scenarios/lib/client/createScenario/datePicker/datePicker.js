@@ -1,4 +1,5 @@
 Template.createScenario.onRendered(function() {
+    $('.daterangepicker').remove();
     this.$('.datetimepicker').daterangepicker({
         format: 'DD/MM/YYYY',
         startDate: moment().subtract(52, 'weeks'),
