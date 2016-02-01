@@ -57,6 +57,10 @@
     color:#363534;
 }
 
+#priceField {
+    text-align: center;
+}
+
 .highlight {
     background-color:#E7E6E8! important;
 }
@@ -117,4 +121,8 @@ div.tooltip {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+.pushin {
+    padding-left:20px! important;
 }

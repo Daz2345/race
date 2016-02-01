@@ -6,6 +6,9 @@ Template.scenario.events({
         FlowRouter.go(routeName, params);
     },
     'click .phChartIcon' : function(e) {
+        
+        console.log(e);
+        
         currentScenarioRun.set(this);
         var chartIsShowing = phChartShow.get();
         if (chartIsShowing) {
@@ -15,9 +18,10 @@ Template.scenario.events({
             //remove chart
             d3.select("svg").remove();  
         } else {    
-            var y = e.pageY - 20,
+            var y = e.clientY - 20,
                 chartWidth = 480,
-                x = e.pageX - chartWidth;
+                mainPadding = $('.main-section').css('padding-left').replace('px',''),
+                x = e.clientX - chartWidth - mainPadding;
             phChartShow.set(!chartIsShowing);
             phChartCSS.set("display:block;top:" + y + "px;left:" + x + "px;");
         }
@@ -52,16 +56,16 @@ Template.scenarioRunsRow.helpers({
       return path;
     },
     runStatus: function() {
-        var run = this;
-        switch (run.status) {
+        var scenarioRun = this;
+        switch (scenarioRun.status) {
         case -1:
-            return "<i class='red dont icon'></i>";
+            return "error disabled";
             break;
         case 0:
-            return "<div class='ui basic segment'><div class='ui active mini loader'></div></div>";
+            return "warning disabled";
             break;
         case 1:
-            return "<i class='green checkmark icon'></i>";
+            return "";
             break;
         }
     },
@@ -86,4 +90,15 @@ Template.scenarioRunsRow.helpers({
         var scenarioIdVal = FlowRouter.getParam("scenarioId");          
         return ScenarioRuns.find({"scenarioId" : scenarioIdVal}).count();            
       }
+  });
+  
+    Template.scenarioRuns_table.helpers({
+    isReady: function(sub) {
+        if (sub) {
+            return FlowRouter.subsReady(sub);
+        }
+        else {
+            return FlowRouter.subsReady();
+        }
+    }
   })

@@ -15,71 +15,115 @@ Template.scenarioRunCreate.helpers({
 });
 
 Template.scenarioRunCreate.events({
-        'click .submitScenarioRun': function(e) {
-        var scenarioRunForm = document.getElementById('scenarioRunCreateForm');
+    'click .submitScenarioRun': function(e) {
+        var scenarioRunForm = document.getElementById('scenarioRunCreateForm'),
+            ScenarioRunProductsVal = scenarioRunProducts.get();
 
-        var ScenarioRunProductsVal = scenarioRunProducts.get()
+        function productsSetup(element, index, list) {
+            // if its not a new product or the the product has not been delisted then its simply the same as before
+            if (!element.npd && !element.delisted && !element.new_price) {
+                element.new_price = element.price;
+            }
+            if (!element.npd) {
+                element.npd = false;
+            }
+            element.sales = 0,
+            element.spend = 0,
+            element.quantity = 0;
+        }
+
+        _.each(ScenarioRunProductsVal, productsSetup);
 
         var scenarioRunObj = {
-          scenarioName : Scenarios.findOne({_id : FlowRouter.getParam("scenarioId")}).name,    
-          runName : scenarioRunForm.elements["name"].value,
-          description : scenarioRunForm.elements["description"].value,
-          products : ScenarioRunProductsVal,
-          delisted : _.where(ScenarioRunProductsVal,{delisted : true}).length,
-          npd : _.where(ScenarioRunProductsVal,{npd : true}).length
+            scenarioName: Scenarios.findOne({
+                _id: FlowRouter.getParam("scenarioId")
+            }).name,
+            runName: scenarioRunForm.elements["name"].value,
+            description: scenarioRunForm.elements["description"].value,
+            products: ScenarioRunProductsVal
         };
 
-        console.log(scenarioRunObj);
         var routeName = "scenario",
             scenarioId = FlowRouter.getParam("scenarioId"),
-            params = {"scenarioId" : scenarioId};  
-            
-        Meteor.call('ScenarioRuns.methods.insert', scenarioRunObj, scenarioId, function(err, res){
-          if (err) {
-            alert(err);
-          }
-          else {
-            Meteor.call('Scenarios.methods.increaseRuns', scenarioId, function(err, res){
-              if (err) {
+            params = {
+                "scenarioId": scenarioId
+            };
+
+        Meteor.call('ScenarioRuns.methods.insert', scenarioRunObj, scenarioId, function(err, res) {
+            if (err) {
                 alert(err);
-              }
-              else {
-                scenarioRunForm.reset();
-                FlowRouter.go(routeName, params);
-              }
-            });  
-          }
-        });  
-       
-        
-        }
+            }
+            else {
+                Meteor.call('Scenarios.methods.runCount', scenarioId, function(err, res) {
+                    if (err) {
+                        alert(err);
+                    }
+                    else {
+                        scenarioRunForm.reset();
+                        FlowRouter.go(routeName, params);
+                    }
+                });
+            }
+        });
+    }
 });
 
 Template.scenarioRunCreateBody.helpers({
     products: function() {
-        var productsVal = scenarioRunProducts.get()
-        //Need to sort to by sales when available
-        return _.sortBy(productsVal, 'tpn');
+        return scenarioRunProducts.get();
     }
 });
 
-Template.scenarioRunCreate.onCreated(function(){
-    scenarioRunProducts = new ReactiveVar(Scenarios.findOne({_id : FlowRouter.getParam("scenarioId")}).products);
-})
+Template.scenarioRunCreate.onCreated(function() {
+    FlowRouter.subsReady("liveScenario", function () {
+        var ProductsObj = Scenarios.findOne({_id: FlowRouter.getParam("scenarioId")}).products,
+            ProductsObjSorted = ProductsObj.sort(function(a, b) {return b.sales - a.sales;});
+        
+        scenarioRunProducts = new ReactiveVar(ProductsObjSorted);
+    });
+});
+
+Template.scenarioRunCreateRow.hooks({
+    rendered: function() {
+        $('.ui.checkbox')
+            .checkbox();
+    }
+});
+
+Template.scenarioRunCreateFooter.helpers({
+    productsCount: function() {
+        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; });        
+        return products.length;
+    },
+    quantitySum : function (){
+        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; });
+        return _.reduce(products, function(quantityTotal, product){return quantityTotal + product.quantity; }, 0);
+    },
+    salesSum: function (){
+        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; });        
+        return _.reduce(products, function(salesTotal, product){ return salesTotal + product.sales;}, 0);        
+    },
+    priceAverage: function (){
+        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; }),       
+         sales = _.reduce(products, function(priceTotal, product){ return priceTotal + product.sales;}, 0),
+         quantity = _.reduce(products, function(quantityTotal, product){return quantityTotal + product.quantity; }, 0);
+        return sales/quantity;
+    },
+    delistCount: function (){
+        return _.where(scenarioRunProducts.get(), {delisted: true}).length
+    }    
+});
 
 Template.scenarioRunCreateBody.hooks({
     rendered: function() {
-        
-        scenarioRunProducts.set(Scenarios.findOne({_id : FlowRouter.getParam("scenarioId")}).products)
-        
+
         $('.ui.checkbox')
             .checkbox({
                 onChange: function() {
 
                     function delistProduct(element, index, list) {
                         if (element.tpn === productTPN) {
-                            products[index].delisted = delistVal;
-                            products[index].price = scenarioRunProducts.get()[index].price;
+                            element.delisted = delistVal;
                         }
                     }
                     var productTPN = parseInt(this.name, 10),
@@ -90,22 +134,22 @@ Template.scenarioRunCreateBody.hooks({
                     scenarioRunProducts.set(products);
                 }
             });
-        $(".ui.price").blur(function() {
+        $(".ui.new_price").blur(function() {
             function updatePrice(element, index, list) {
                 if (element.tpn === productTPN) {
-                    products[index].price = priceVal;
+                    element.new_price = priceVal;
                 }
             }
 
-            var productTPN = parseInt(this.name, 10);
-            var priceVal = $('.price' + this.name).val();
-                priceVal = parseFloat(priceVal);
-                
-            var products = scenarioRunProducts.get();
+            var productTPN = parseInt(this.name, 10),
+                priceVal = $('.new_price' + this.name).val(),
+                products = scenarioRunProducts.get();
 
-            console.log(products);
-            
+            priceVal = parseFloat(priceVal);
+
             _.each(products, updatePrice);
+
+
             scenarioRunProducts.set(products);
 
         });
@@ -113,14 +157,17 @@ Template.scenarioRunCreateBody.hooks({
 });
 
 Template.scenarioRunCreateRow.helpers({
-    price: function() {
+    priceVal: function() {
         if (this.price === undefined) {
             return 0.00;
         }
     },
-    disableIfDelisted: function(){
+    disableIfDelisted: function() {
         if (this.delisted) {
             return "disabled";
-        }        
+        }
+    },
+    new_priceVal: function() {
+        return (this.new_price === undefined) ? this.price : this.new_price;
     }
 });

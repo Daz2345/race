@@ -3,8 +3,14 @@ Template.priceHeirarchyChart.hooks({
         Tracker.autorun(function(){
         if (currentScenarioRun.get() !== null){
 
-        var values = _.pluck(currentScenarioRun.get().products, "price")
-        
+        function delistedProducts(product){
+            return product.delisted == true;
+        }
+
+        var products = currentScenarioRun.get().products,
+            liveProducts = _.reject(products, delistedProducts),
+            values = _.pluck(liveProducts, "new_price");
+
             function draw(w,h,arr,buckets,xax,yax){
             
                 //remove

@@ -1,16 +1,21 @@
 Meteor.methods({
     'ScenarioRuns.methods.insert' : function(scenarioRunObj, scenarioIdVal) {
 
+        var delistedCountVal = _.where(scenarioRunObj.products,{delisted:true}).length
+            npdCountVal = _.where(scenarioRunObj.products,{npd:true}).length;
+            
         var scenariorun = {
             scenarioId: scenarioIdVal,
             scenarioName: scenarioRunObj.scenarioName,
-            runName: scenarioRunObj.name,
+            runName: scenarioRunObj.runName,
             description: scenarioRunObj.description,
             products: scenarioRunObj.products,
+            delisted: delistedCountVal,
+            npd: npdCountVal,
             status: 0,
             createdBy: "DarrenI",
-            createdAt: new Date(),
-            delisted: _.where(scenarioRunObj.products,{delisted:true}).length
+            userId : "",            
+            createdAt: new Date()
         };
         
         scenariorun._id = ScenarioRuns.insert(scenariorun);

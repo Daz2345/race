@@ -22,9 +22,6 @@ momentjs:moment
 aldeed:template-extension
 kadira:flow-router
 kadira:blaze-layout
-useraccounts:semantic-ui
-accounts-password
-useraccounts:flow-routing
 harrison:papa-parse
 meteorhacks:fast-render
 meteorhacks:picker
@@ -36,5 +33,14 @@ simonrycroft:ip-whitelist
 msavin:mongol
 tmeasday:publish-counts
 miguelalarcos:flow-router-pagination
-tdamsma:meteor-accounts-ldap
+hive:accounts-ldap
 manuel:reactivearray
+useraccounts:core
+useraccounts:semantic-ui
+accounts-password
+useraccounts:flow-routing
+numeral:numeral
+numeral:languages
+natestrauser:animate-css
+meteorhacks:cluster
+axw:json2csv

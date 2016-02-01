@@ -42,27 +42,21 @@
 Meteor.methods({
     'Scenarios.methods.insert' : function(scenarioObj) {
 
-        var scenario = {
-          name : scenarioObj.name,
-          dateStart : scenarioObj.dateStart,
-          dateEnd : scenarioObj.dateEnd,
-          dateRange: scenarioObj.dateRange,
-          description : scenarioObj.description,
-          stores : scenarioObj.stores,
-          products : scenarioObj.products,
-          priceStrat_ce : scenarioObj.priceStrat_ce,
-          priceStrat_de : scenarioObj.priceStrat_de,
-          npEvaluation : scenarioObj.npEvaluation,
-          shelfReview : scenarioObj.shelfReview,
+        var scenarioExtend = {
           status : 0,
+          productsCount : scenarioObj.products.length,
           createdAt : new Date(),
           createdBy : "Darren",
+          userId: Meteor.user()._id,
           runs: 0
         };
         
+        var scenario = _.extend(scenarioObj, scenarioExtend);
+        
         scenario._id = Scenarios.insert(scenario);
     },
-    'Scenarios.methods.increaseRuns' : function(scenarioId) {
-        Scenarios.update({_id : scenarioId},{$inc:{runs:1}});
+    'Scenarios.methods.runCount' : function(scenarioIdVal) {
+        var runCount = ScenarioRuns.find({scenarioId : scenarioIdVal}).count() + 1;
+        Scenarios.update({_id : scenarioIdVal},{$set:{runs:runCount}},{upsert:true});
     }
 });

@@ -1,7 +1,3 @@
-Template.registerHelper('formatDate', function(date) {
-  return moment(date).format('HH:mm - DD-MM-YYYY');
-});
-
 Template.scenariosBody.helpers({
     scenarios: function () {
       // Show newest tasks at the top
@@ -45,17 +41,10 @@ Template.scenariosRow.helpers({
             break;
         }
     }
-    // nameLink: function() {
-    //     if (status = 1) {
-    //          '<td class="collapsing"><a href={{pathForScenario}}>{{name}}</a></td>'
-    //     } else {
-    //         '<td class="collapsing">{{name}}</td>'
-    //     }
-    // }
   });
   
-//  Template.scenariosTable.onCreated(function() {
-//   this.autorun(() => {
-//     this.subscribe('Scenarios.all.public');
-//   });
-// });
+    Template.scenariosFooter.helpers({
+      scenariosCount: function(){
+        return Counts.get('total_scenarios');            
+      }
+  });

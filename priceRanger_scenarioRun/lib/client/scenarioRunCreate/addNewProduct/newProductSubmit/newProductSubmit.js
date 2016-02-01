@@ -2,17 +2,17 @@ var newProductSubmitModalForm;
 
 Template.newProductSubmitModal.hooks({
   rendered: function() {
-    Session.set('tpnPrompt', undefined);
-    Session.set('performancePrompt', undefined);
-    Session.set('pricePrompt', undefined);
-    Session.set('validationErrors', 0);
-    
-    var products = scenarioRunProducts.get();
+    createError('tpnPrompt', undefined);
+    createError('performancePrompt', undefined);
+    createError('pricePrompt', undefined);
 
     newProductSubmitModalForm = $('.ui.form.newProductSubmit.submit');
 
     $('.ui.radio.checkbox')
       .checkbox();
+
+    $('.tabular.menu .item')
+      .tab();
 
     $('.ui.dropdown.similar')
       .dropdown({
@@ -28,62 +28,118 @@ Template.newProductSubmitModal.hooks({
         return true;
       },
       onApprove: function() {
+        if ($('.ui.top.attached.tabular.menu .item.active').html() === "Single") {
 
-        var performanceVal = "";
-        if ($('.ui.checkbox.low').checkbox('is checked')) {
-          performanceVal = "low";
-        }
-        if ($('.ui.checkbox.medium').checkbox('is checked')) {
-          performanceVal = "medium";
-        }
-        if ($('.ui.checkbox.high').checkbox('is checked')) {
-          performanceVal = "high";
-        }
+          var performanceVal = $( "input:checked" ).val();
+          // if ($('.ui.checkbox.low').checkbox('is checked')) {
+          //   performanceVal = "LOW";
+          // }
+          // if ($('.ui.checkbox.medium').checkbox('is checked')) {
+          //   performanceVal = "MEDIUM";
+          // }
+          // if ($('.ui.checkbox.high').checkbox('is checked')) {
+          //   performanceVal = "HIGH";
+          // }
 
-        var tpnVal = parseInt(newProductSubmitModalForm.form('get value', 'tpn'), 10),
-          productTPNs = _.pluck(scenarioRunProducts.get(), 'tpn'),
-          tpnExists = _.contains(productTPNs, tpnVal);
+  console.log(performanceVal);
 
-        if (newProductSubmitModalForm.form('get value', 'tpn') != "" &&
-          newProductSubmitModalForm.form('get value', 'price') != "" &&
-          performanceVal != "" &&
-          !tpnExists) {
+          if (newProductSubmitModalForm.form('get value', 'price') != "" && performanceVal != "") {
 
-          Session.set('tpnPrompt', undefined);
-          Session.set('performancePrompt', undefined);
-          Session.set('pricePrompt', undefined);
-          Session.set('validationErrors', 0);
+            Session.set('performancePrompt', undefined);
+            Session.set('pricePrompt', undefined);
+            Session.set('validationErrors', 0);
 
-          var product = {
-            tpn: newProductSubmitModalForm.form('get value', 'tpn'),
-            similar: newProductSubmitModalForm.form('get value', 'similarProducts'),
-            price: newProductSubmitModalForm.form('get value', 'price'),
-            performance: performanceVal,
-            npd: true
-          };
+            var products = scenarioRunProducts.get(),
+              tpnVal = _.where(products, {
+                "npd": true
+              }).length + 100;
 
-          products.push(product);
-          scenarioRunProducts.set(products);
-          $form.form('clear');
+            var similarTPNS = newProductSubmitModalForm.form('get value', 'similarProducts');
+            for(var i=0; i<similarTPNS.length;i++) similarTPNS[i] = parseInt(similarTPNS[i], 10);
+            
+            
+            var product = {
+              tpn: parseInt(tpnVal, 10),
+              description: newProductSubmitModalForm.form('get value', 'description'),
+              similar: similarTPNS,
+              new_price: parseFloat(newProductSubmitModalForm.form('get value', 'price')),
+              performance: performanceVal,
+              sales: 0,
+              price: 0,
+              quantity: 0,
+              npd: true
+            };
 
-          return true;
+            products.push(product);
+            var productsSorted = _.sortBy(products, 'sales');
+
+            scenarioRunProducts.set(productsSorted);
+            newProductSubmitModalForm.form('clear');
+
+            return true;
+          }
+          else {
+            if (performanceVal == "") {
+              createError('performancePrompt', "<li>Please select an expected performance</li>");
+            }
+
+            if (newProductSubmitModalForm.form('get value', 'price') == "") {
+              createError('pricePrompt', "<li>Please enter a price</li>");
+            }
+
+            return false;
+          }
         }
         else {
-          if (performanceVal == "") {
-            Session.set('performancePrompt', "<li>Please select an expected performance</li>");
-            increaseErrorCount();
+          var inputProducts = $('.inputProducts').val(),
+          productsObj = Papa.parse(inputProducts, {header: true, dynamicTyping: true}).data;
+
+          console.log(inputProducts);
+          console.log(productsObj);
+
+          var products = scenarioRunProducts.get()
+
+          function insertProduct(element, index, list) {
+
+            tpnVal = _.where(products, {
+              "npd": true
+            }).length + 100;
+
+            var similarVal = [];
+            
+            if (element.Substitute1 !== "")
+              similarVal.push(element.Substitute1);
+
+            if (element.Substitute2 !== "")
+              similarVal.push(element.Substitute2);
+
+            if (element.Substitute3 !== "")
+              similarVal.push(element.Substitute3);
+              
+            var product = {
+              tpn: tpnVal,
+              description: element.Description,
+              similar: similarVal,
+              new_price: element.Price,
+              performance: element.Performance,
+              sales: 0,
+              price: 0,
+              quantity: 0,
+              npd: true
+            };
+            products.push(product);
+
           }
 
-          if (newProductSubmitModalForm.form('get value', 'price') == "") {
-            Session.set('pricePrompt', "<li>Please enter a price</li>");
-            increaseErrorCount();
-          }
+          productsObj.forEach(insertProduct)
 
-          if (newProductSubmitModalForm.form('get value', 'tpn') == "") {
-            Session.set('tpnPrompt', "<li>Please enter a valid TPN</li>");
-            increaseErrorCount();
-          }
-          return false;
+          var productsSorted = _.sortBy(products, 'sales');
+
+          scenarioRunProducts.set(productsSorted);
+          newProductSubmitModalForm.form('clear');
+
+          return true;
+
         }
       }
     });
@@ -92,9 +148,7 @@ Template.newProductSubmitModal.hooks({
 
 Template.newProductForm.helpers({
   products: function() {
-    return Scenarios.findOne({
-      _id: FlowRouter.getParam("scenarioId")
-    }).products;
+    return scenarioRunProducts.get();
   },
   performanceError: function() {
     return Session.get('performancePrompt');
@@ -112,65 +166,54 @@ Template.newProductForm.helpers({
       return 'error';
     }
   },
-  tpnError: function() {
-    return Session.get('tpnPrompt');
-  },
-  tpnShowError: function() {
-    if (Session.get('tpnPrompt') !== undefined) {
-      return 'error';
-    }
-  },
   validationErrorsVal: function() {
-    console.log(Session.get('validationErrors'));
     return Session.get('validationErrors') > 0;
   }
 });
 
-Template.newProductSubmitModal.events({
-  'keyup #tpn, blur #tnp': function(event) {
-    event.preventDefault();
-    var tpnVal = parseInt(newProductSubmitModalForm.form('get value', 'tpn'), 10),
-      productTPNs = _.pluck(scenarioRunProducts.get(), 'tpn');
-    if (!isNaN(tpnVal)) {
-      if (_.contains(productTPNs, tpnVal)) {
-        Session.set('tpnPrompt', '<li>Please enter a tpn that does not already exist in the Scenario</li>');
-        increaseErrorCount();
-      }
-      else {
-        Session.set('tpnPrompt', undefined);
-        decreaseErrorCount();       
-      }
+Template.newProductSubmitModal.helpers({
+  plural: function(){
+    if ($('.ui.top.attached.tabular.menu .item.active').html() === "Single") {
+      return "";
     } else {
-        Session.set('tpnPrompt', undefined);
-        decreaseErrorCount();       
-      }
-  },
-  'keyup #price': function(event) {
-    event.preventDefault();
-    var price = newProductSubmitModalForm.form('get value', 'price');
-    if (!isNaN(price)) {
-      Session.set('pricePrompt', '<li>Please enter a price</li>');
-      increaseErrorCount();
-    } else {
-      Session.set('pricePrompt', undefined);      
-      decreaseErrorCount();      
-    }
-  },
-  'click #performance': function(event) {
-    event.preventDefault();
-    if ($('.ui.checkbox').checkbox('is checked')) {
-      Session.set('performancePrompt', undefined);
+      return "s";
     }
   }
 });
 
-function increaseErrorCount() {
-  Session.set('validationErrors', Session.get('validationErrors') + 1); 
+
+Template.newProductSubmitModal.events({
+  // 'keyup #tpn, blur #tnp': function(event) {
+  //   event.preventDefault();
+  //   var tpnVal = parseInt(newProductSubmitModalForm.form('get value', 'tpn'), 10),
+  //     productTPNs = _.pluck(scenarioRunProducts.get(), 'tpn');
+  //   if (!isNaN(tpnVal)) {
+  //     (_.contains(productTPNs, tpnVal)) ? createError('tpnPrompt', '<li>Please enter a tpn that does not already exist in the Scenario</li>') : createError('tpnPrompt', undefined);
+  //   }
+  // },
+  'keyup #price': function(event) {
+    event.preventDefault();
+    var price = newProductSubmitModalForm.form('get value', 'price');
+    (isNaN(price) || price == '') ? createError('pricePrompt', "<li>Please enter a price</li>"): createError('pricePrompt', undefined);
+  },
+  'click #performance': function(event) {
+    event.preventDefault();
+    if ($('.ui.checkbox').checkbox('is checked')) {
+      createError('performancePrompt', undefined);
+    }
+  }
+});
+
+function errorCount() {
+  var errorPerformance = Session.get('performancePrompt') != undefined,
+    errorPrice = Session.get('pricePrompt') != undefined;
+
+  Session.set('validationErrors', errorPerformance + errorPrice);
 }
-function decreaseErrorCount() {
-  if((Session.get('validationErrors') - 1) < 0) {
-    Session.set('validationErrors', 0);
-  } else {
-  Session.set('validationErrors', Session.get('validationErrors') - 1);
-}
+
+function createError(errorVar, errorVal) {
+  if (Session.get(errorVar) !== errorVal) {
+    Session.set(errorVar, errorVal);
+    errorCount();
+  }
 }

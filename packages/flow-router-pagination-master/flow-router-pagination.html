@@ -1,0 +1,26 @@
+<template name="paginationBar">
+    {{#if isRequired}}
+    <div class="ui right floated pagination menu">
+        {{#if showMinus}}
+            <a class="icon item first-button first">
+                <i class="left chevron icon"></i>
+            </a>
+            <a class="icon item minus-button minus">
+                <i class="minus icon"></i>
+            </a>
+        {{/if}} 
+        {{#each pages this.count}}
+            <a page="{{this}}" class="item page-button change-page {{selected}}">{{pageNumber}}</a>
+        <!--<label page="{{this}}" class="page-button change-page {{selected}}">{{pageNumber}}</label>-->
+        {{/each}} 
+        {{#if showPlus this.count}}
+            <a class="icon item plus-button plus">
+                <i class="plus icon"></i>
+            </a>
+            <a class="icon item last-button last">
+                <i class="right chevron icon"></i>
+            </a>
+        {{/if}}
+    </div>
+    {{/if}}
+</template>

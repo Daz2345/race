@@ -1,69 +1,82 @@
 <template name="scenarioRun">
-  
-    {{ > tableHeader}}
-    {{#if Template.subscriptionsReady}}
-      {{ > scenarioRunTable}}
-  {{else}}
-  {{>loader}}
-  {{/if}}   
+  {{#if isReady}} {{ > tableHeader}}
+
+  <div class="ui top attached compact basic horizontal segments">
+    <div class="ui basic compact right aligned segment">
+      {{ > exportScenarioRun}}
+    </div>
+  </div>
+
+
+  <div class="animated fadeIn">
+    {{ > scenarioRunTable}}
+  </div>
+  {{else}} {{>loader}} {{/if}}
+</template>
+
+<template name="exportScenarioRun">
+  <div class="ui primary labeled icon button exportScenarioRun">
+    <i class="download icon"></i> Download
+  </div>
 </template>
 
 <template name="scenarioRunTable">
-
-    <table class="ui selectable celled striped table blue">
-        {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}
-    </table>
- 
+  <table class="ui selectable celled striped table blue">
+    {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}
+  </table>
 </template>
 
 <template name="scenarioRunFooter">
-<tfoot class="full-width">
+  <tfoot class="full-width">
     <tr>
-      
-      <th colspan="5">
-
+      <th colspan="7">
       </th>
     </tr>
-  </tfoot>  
+  </tfoot>
 </template>
 
-
 <template name="scenarioRunHeader">
-    <thead class="single line">
-      <tr>
-        <th class="center aligned">
-          TPN
-        </th>
-        <th class="left aligned">
-          Description
-        </th>        
-        <th class="center aligned">
-          Sales
-        </th>
-        <th class="center aligned">
-          Price
-        </th>
-        <th class="center aligned">
-          Delisted
-        </th>         
-      </tr>
-    </thead>
+  <thead class="single line">
+    <tr>
+      <th class="center aligned">
+        TPN
+      </th>
+      <th class="left aligned">
+        Description
+      </th>
+      <th class="center aligned">
+        Sales
+      </th>
+      <th class="center aligned">
+        Quantity
+      </th>
+      <th class="center aligned">
+        Scenario Price
+      </th>
+      <th class="center aligned">
+        New Price
+      </th>
+      <th class="center aligned">
+        Delisted
+      </th>
+    </tr>
+  </thead>
 </template>
 
 <template name="scenarioRunBody">
-  <tbody>  
-  {{#each products}}
-    {{ > scenarioRunRow}}
-  {{/each}}
-  </tbody>    
+  <tbody>
+    {{#each products}} {{ > scenarioRunRow}} {{/each}}
+  </tbody>
 </template>
 
 <template name="scenarioRunRow">
-    <tr>
-        <td class="collapsing center aligned">{{tpn}}</td>
-        <td class="left aligned">{{description}}</td>
-        <td class="collapsing center aligned">{{sales}}</td>
-        <td class="collapsing center aligned">{{price}}</td>
-        <td class="collapsing center aligned">{{delistedVal}}</td>        
-    </tr>
+  <tr>
+    <td class="collapsing center aligned">{{tpn}}</td>
+    <td class="left aligned">{{description}}</td>
+    <td class="collapsing center aligned">{{sales}}</td>
+    <td class="collapsing center aligned">{{quantity}}</td>
+    <td class="collapsing center aligned">{{price}}</td>
+    <td class="collapsing center aligned">{{new_price}}</td>
+    <td class="collapsing center aligned">{{delistedVal}}</td>
+  </tr>
 </template>

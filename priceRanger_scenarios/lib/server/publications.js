@@ -11,6 +11,16 @@ Meteor.publish('Scenarios.all.basic', function() {
   });
 });
 
+Meteor.publish('Scenarios.lastTen', function() {
+  return Scenarios.find({
+
+  }, {
+    fields: Scenarios.basic,
+    limit: 10,
+    sort: {createdAt: -1}
+  });
+});
+
 
 Meteor.publish('Scenarios.all.withProducts', function() {
   return Scenarios.find({
@@ -18,12 +28,12 @@ Meteor.publish('Scenarios.all.withProducts', function() {
   }, {
     fields: Scenarios.withProducts,
     limit: 200,
-    sort: {createdAt: 1}
+    sort: {createdAt: -1}
   });
 });
 
 
-Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit) {
+Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit, userIdVal) {
   Counts.publish(this, 'total_scenarios', Scenarios.find())
  
   if (skip < 0) {skip = 0}
@@ -36,7 +46,16 @@ Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit) {
   }
   options.limit = limit;
   if (options.limit > 10)  {options.limit = 10}
-  options.sort = {createdAt: 1};
+  options.sort = {createdAt: -1};
 
-  return Scenarios.find({}, options)
+  var query = {};
+  if (userIdVal !== undefined)
+    query = {userId: userIdVal};
+
+  return Scenarios.find(query, options)
 });
+
+Meteor.publish('Scenarios.all.Count', function() {
+  Counts.publish(this, 'total_scenarios', Scenarios.find());
+  Counts.publish(this, 'total_scenariosToRun', Scenarios.find({status:0}));
+})

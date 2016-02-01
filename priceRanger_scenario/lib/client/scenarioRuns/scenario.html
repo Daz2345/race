@@ -6,7 +6,7 @@
 </template>
 
 <template name="scenarioRuns_table">
-  {{#if Template.subscriptionsReady}}
+  {{#if isReady}}
     <table class="ui selectable celled very compact striped table red">
         {{ > scenarioRunsHeader}} {{ > scenarioRunsBody}} {{ > scenarioRunsFooter}} 
     </table>
@@ -28,7 +28,7 @@
 </template>
 
 <template name="createScenarioRunButton">
-        <div class="ui primary compact labeled icon button createscenariorun">
+        <div class="ui primary labeled icon button createscenariorun">
           <i class="write icon"></i> New Scenario Run
         </div>    
 </template>
@@ -43,7 +43,6 @@
         <th>NPD</th>        
         <th>Total Sales</th>   
         <th>£ Chart</th>               
-        <th>Ready?</th>        
       </tr>
     </thead>
 </template>
@@ -58,7 +57,7 @@
 
 <template name="scenarioRunsRow">
 
-  <tr>
+  <tr class="{{runStatus}}">
     <td class="collapsing">
       <a href={{pathForScenarioRun}}> 
         {{runName}}
@@ -72,7 +71,6 @@
     <td class="collapsing center aligned">{{npd}}</td>
     <td class="collapsing center aligned">{{totalSales}}</td>
     <td class="collapsing center aligned">{{{chartIcon}}}</td>
-    <td class="collapsing center aligned">{{{runStatus}}}</td>
   </tr>
 
 </template>

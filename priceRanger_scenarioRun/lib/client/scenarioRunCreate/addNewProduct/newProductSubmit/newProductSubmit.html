@@ -2,24 +2,48 @@
     <div class="ui modal newProductSubmitModal">
         <i class="close icon"></i>
         <div class="header">Add New Product</div>
-        <div class="content">
-            {{ > newProductForm}}
+
+        <div class="ui top attached tabular active menu">
+            <a class="item active" data-tab="single">Single</a>
+            <a class="item" data-tab="multiple">Multiple</a>
         </div>
+
+        <div class="ui tab active" data-tab="single">
+            <div class="ui basic segment">
+                {{ > newProductForm}}
+            </div>
+        </div>
+        <div class="ui tab" data-tab="multiple">
+            <div class="ui basic segment">
+                <div class="ui form">
+                    <div class="field">
+                        <label>Products</label>
+                        <div class="ui warning">
+                            <div class="header">
+                                Still to be completed!
+                            </div>
+                        </div>
+                        <textarea class="inputProducts">Description,Performance,Price,Substitute1,Substitute2,Substitute3</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="actions">
-            <!--<div class="ui red deny button">Cancel</div>-->
-            <div class="ui positive right labeled icon button"><i class="checkmark icon"></i>Add Product</div>
+            <div class="ui positive right labeled icon button"><i class="checkmark icon"></i>Add Product{{plural}}</div>
         </div>
+
     </div>
 </template>
 
 <template name="newProductForm">
     <form id="newProductSubmit" class="ui form newProductSubmit submit" autocomplete="off">
         <div class="ui two column grid">
-            
+
             <div class="column">
-                <div class="field {{tpnShowError}}">
-                    <label>TPN:</label>
-                    <input id="tpn" type="text" name="tpn" required=true>
+                <div class="field">
+                    <label>Description:</label>
+                    <input id="description" type="text" name="description" required=true>
                 </div>
                 <div class="field {{priceShowError}}">
                     <label>Price:</label>
@@ -29,23 +53,23 @@
                     <label for="performance">Performance:</label>
                     <div class="field">
                         <div class="ui radio checkbox high">
-                            <input id="performance" type="radio" data-value="high" name="performance" tabindex="0" class="hidden">
-                            <label>High</label>
+                            <input id="performanceHigh" type="radio" value="high" name="performance" tabindex="0" class="hidden">
+                            <label for="performanceHigh">High</label>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui radio checkbox medium">
-                            <input id="performance" type="radio" data-value="medium" name="performance" tabindex="0" class="hidden">
-                            <label>Medium</label>
+                            <input id="performanceMedium" type="radio" value="medium" name="performance" tabindex="0" class="hidden">
+                            <label for="performanceMedium">Medium</label>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui radio checkbox low">
-                            <input id="performance" type="radio" data-value="low" name="performance" tabindex="0" class="hidden">
-                            <label>Low</label>
+                            <input id="performanceLow" type="radio" value="low" name="performance" tabindex="0" class="hidden">
+                            <label for="performanceLow">Low</label>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
 
             <div class="column">
@@ -58,17 +82,15 @@
                 </div>
             </div>
         </div>
-    
+
     </form>
-        {{#if validationErrorsVal}}
-        <div class="ui error message">
-            <ul class="list">
-                {{{tpnError}}}
-                {{{priceError}}}
-                {{{performanceError}}}      
-            </ul>
-        </div>        
-        {{/if}}          
+    {{#if validationErrorsVal}}
+    <div class="ui error message">
+        <ul class="list">
+            {{{tpnError}}} {{{priceError}}} {{{performanceError}}}
+        </ul>
+    </div>
+    {{/if}}
 </template>
 
 <template name="similarProduct">

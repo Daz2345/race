@@ -1,27 +1,10 @@
 {
     "ldap": {
-        "debug": true,
-        "domain": "http://race-daz2345.c9users.io/",
-        "baseDn": "DC=dunnhumby,DC=university,DC=edu",
-        "url": "ldap://gb-doc-svb-0111.dunnhumby.co.uk:389",
-        "bindCn": "CN=test,DC=com",
-        "bindPassword": "secret",
-        "autopublishFields": [
-            "displayName",
-            "givenName",
-            "department",
-            "employeeNumber",
-            "mail",
-            "title",
-            "address",
-            "phone"
-        ],
-        "groupMembership": [
-            "Employees",
-            "Administrators",
-            "Editors"
-        ]
-    },
+    "serverDn": "OU=Retail,OU=Standard,OU=Users,OU=UK,DC=dunnhumby,DC=co,DC=uk",
+    "serverUrl": "ldap://gb-slo-svv-1100.dunnhumby.co.uk:389",
+    "whiteListedFields": [ "displayName", "givenName", "department", "employeeNumber", "mail", "title", "address", "phone", "memberOf"],
+    "autopublishFields": [ "displayName", "department", "mail", "title", "address", "phone"]
+  },
     "ipWhitelist": [
         "201.85.114.32",
         "201.85.114.33",
