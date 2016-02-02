@@ -19,17 +19,17 @@ Template.scenarioRunCreate.events({
         var scenarioRunForm = document.getElementById('scenarioRunCreateForm'),
             ScenarioRunProductsVal = scenarioRunProducts.get();
 
+        var isValid = $('.ui.form.scenarioRunCreate').form('is valid');
+
+        if (isValid) {
         function productsSetup(element, index, list) {
-            // if its not a new product or the the product has not been delisted then its simply the same as before
+            // if its not a new product or the the product has not been delisted and it does not have a new price then its simply the same as before
             if (!element.npd && !element.delisted && !element.new_price) {
                 element.new_price = element.price;
             }
             if (!element.npd) {
                 element.npd = false;
             }
-            element.sales = 0,
-            element.spend = 0,
-            element.quantity = 0;
         }
 
         _.each(ScenarioRunProductsVal, productsSetup);
@@ -39,7 +39,7 @@ Template.scenarioRunCreate.events({
                 _id: FlowRouter.getParam("scenarioId")
             }).name,
             runName: scenarioRunForm.elements["name"].value,
-            description: scenarioRunForm.elements["description"].value,
+            description: scenarioRunForm.elements["runDescription"].value,
             products: ScenarioRunProductsVal
         };
 
@@ -65,6 +65,9 @@ Template.scenarioRunCreate.events({
                 });
             }
         });
+        } else {
+            $('.ui.form.scenarioRunCreate').form('validate form');
+        }
     }
 });
 
@@ -81,6 +84,32 @@ Template.scenarioRunCreate.onCreated(function() {
         
         scenarioRunProducts = new ReactiveVar(ProductsObjSorted);
     });
+});
+
+Template.scenarioRunCreate.hooks({
+    rendered: function() {
+        $('.ui.form.scenarioRunCreate')
+            .form({
+                fields: {
+                    name: {
+                        identifier: 'name',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Please enter a Scenario run name'
+                        }]
+                    },
+                    runDescription: {
+                        identifier: 'runDescription',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Please enter a description'
+                        }]
+                    },                    
+                },
+                on: 'blur',
+                revalidate: true
+            });
+    }
 });
 
 Template.scenarioRunCreateRow.hooks({

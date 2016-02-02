@@ -6,9 +6,6 @@ Template.scenario.events({
         FlowRouter.go(routeName, params);
     },
     'click .phChartIcon' : function(e) {
-        
-        console.log(e);
-        
         currentScenarioRun.set(this);
         var chartIsShowing = phChartShow.get();
         if (chartIsShowing) {

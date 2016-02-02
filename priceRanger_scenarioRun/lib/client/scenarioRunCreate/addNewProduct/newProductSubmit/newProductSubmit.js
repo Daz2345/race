@@ -5,6 +5,7 @@ Template.newProductSubmitModal.hooks({
     createError('tpnPrompt', undefined);
     createError('performancePrompt', undefined);
     createError('pricePrompt', undefined);
+    Session.set('plural',"");
 
     newProductSubmitModalForm = $('.ui.form.newProductSubmit.submit');
 
@@ -31,17 +32,6 @@ Template.newProductSubmitModal.hooks({
         if ($('.ui.top.attached.tabular.menu .item.active').html() === "Single") {
 
           var performanceVal = $( "input:checked" ).val();
-          // if ($('.ui.checkbox.low').checkbox('is checked')) {
-          //   performanceVal = "LOW";
-          // }
-          // if ($('.ui.checkbox.medium').checkbox('is checked')) {
-          //   performanceVal = "MEDIUM";
-          // }
-          // if ($('.ui.checkbox.high').checkbox('is checked')) {
-          //   performanceVal = "HIGH";
-          // }
-
-  console.log(performanceVal);
 
           if (newProductSubmitModalForm.form('get value', 'price') != "" && performanceVal != "") {
 
@@ -79,7 +69,7 @@ Template.newProductSubmitModal.hooks({
             return true;
           }
           else {
-            if (performanceVal == "") {
+            if (performanceVal === undefined) {
               createError('performancePrompt', "<li>Please select an expected performance</li>");
             }
 
@@ -107,14 +97,21 @@ Template.newProductSubmitModal.hooks({
 
             var similarVal = [];
             
-            if (element.Substitute1 !== "")
-              similarVal.push(element.Substitute1);
+            // to be checked if it works
+            
+            for (var i = 1; i < 4; i++) {
+              if (element.Substitute + i !== "")
+                similarVal.push(element.Substitute + i);
+            }
+            
+            // if (element.Substitute1 !== "")
+            //   similarVal.push(element.Substitute1);
 
-            if (element.Substitute2 !== "")
-              similarVal.push(element.Substitute2);
+            // if (element.Substitute2 !== "")
+            //   similarVal.push(element.Substitute2);
 
-            if (element.Substitute3 !== "")
-              similarVal.push(element.Substitute3);
+            // if (element.Substitute3 !== "")
+            //   similarVal.push(element.Substitute3);
               
             var product = {
               tpn: tpnVal,
@@ -173,24 +170,12 @@ Template.newProductForm.helpers({
 
 Template.newProductSubmitModal.helpers({
   plural: function(){
-    if ($('.ui.top.attached.tabular.menu .item.active').html() === "Single") {
-      return "";
-    } else {
-      return "s";
-    }
+    return Session.get('plural');
   }
 });
 
 
 Template.newProductSubmitModal.events({
-  // 'keyup #tpn, blur #tnp': function(event) {
-  //   event.preventDefault();
-  //   var tpnVal = parseInt(newProductSubmitModalForm.form('get value', 'tpn'), 10),
-  //     productTPNs = _.pluck(scenarioRunProducts.get(), 'tpn');
-  //   if (!isNaN(tpnVal)) {
-  //     (_.contains(productTPNs, tpnVal)) ? createError('tpnPrompt', '<li>Please enter a tpn that does not already exist in the Scenario</li>') : createError('tpnPrompt', undefined);
-  //   }
-  // },
   'keyup #price': function(event) {
     event.preventDefault();
     var price = newProductSubmitModalForm.form('get value', 'price');
@@ -200,6 +185,14 @@ Template.newProductSubmitModal.events({
     event.preventDefault();
     if ($('.ui.checkbox').checkbox('is checked')) {
       createError('performancePrompt', undefined);
+    }
+  },
+  'click .item': function(event) {
+    event.preventDefault();
+    if ($('.ui.top.attached.tabular.menu .item.active').html() === "Single") {
+      Session.set('plural',"");      
+    } else {
+      Session.set('plural',"s");    
     }
   }
 });

@@ -1,9 +1,11 @@
 <template name="scenarioRunCreate">
   <!--{{ > tableHeader}}-->
 
-    <h1 class="ui header">Create Scenario Run for - {{scenario.name}}</h1> {{ > CreateScenarioRunActions}}
+    <h1 class="ui header">Create Scenario Run for - {{scenario.name}}</h1> 
 
     <form id="scenarioRunCreateForm" class="ui form scenarioRunCreate" autocomplete="off">
+      {{ > CreateScenarioRunActions}}
+      <div class="ui error message"></div>
       {{ > CreateScenarioRunTextInputs}} 
       {{#if isReady}}
       <div class="animated fadeIn">
@@ -116,13 +118,13 @@
       <div class="five wide column">
         <div class="field">
           <label>Scenario Run Name</label>
-          <input type="text" name="name" required=true>
+          <input type="text" name="name">
         </div>
       </div>
       <div class="eleven wide column">
         <div class="field">
           <label>Scenario Run Description</label>
-          <input type="text" name="description" required=true>
+          <input type="text" name="runDescription">
         </div>
       </div>
     </div>

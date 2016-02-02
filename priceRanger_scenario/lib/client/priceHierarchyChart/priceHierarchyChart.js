@@ -110,7 +110,7 @@ Template.priceHeirarchyChart.hooks({
                                 .text(yax);
                 }
             }
-            draw(480,240,values,4,"Price Bands","TPN Count");
+            draw(480,240,values,5,"Price Bands","TPN Count");
               
         }
     });
