@@ -36,9 +36,10 @@ initLogin = function(e, tpl) {
     var username = $(tpl.find('input[name="ldap"]')).val();
     var password = $(tpl.find('input[name="password"]')).val();
     var result = Meteor.loginWithLdap(username, password, function() {
-      if (Meteor.userId())
+      if (Meteor.userId()) {
+        FlowRouter.go('home');
         return true;
-      else {
+      } else {
         firstAttempt = false;
         return false;
       }
