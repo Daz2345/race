@@ -2,10 +2,8 @@
     "ldap": {
     "serverDn": "OU=Retail,OU=Standard,OU=Users,OU=UK,DC=dunnhumby,DC=co,DC=uk",
     "serverUrl": "ldap://gb-slo-svv-1100.dunnhumby.co.uk:389",
-    "bindCn": "CN=Darren Impey,OU=Retail,OU=Standard,OU=Users,OU=UK,DC=dunnhumby,DC=co,DC=uk",
-    "bindPassword": "Welcome123",    
     "whiteListedFields": [ "displayName", "givenName", "department", "mail", "title", "memberOf"],
-    "autopublishFields": [ "displayName", "department", "mail", "title", "phone"]
+    "autopublishFields": [ "displayName", "department", "mail", "title"]
   },
     "ipWhitelist": [
         "201.85.114.32",

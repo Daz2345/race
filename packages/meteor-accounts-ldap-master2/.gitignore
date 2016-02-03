@@ -1,6 +1,0 @@
-.build*
-.DS_Store
-.npm/
-ldap_server.bk.js
-example/config/settings.json
-example/example.bat

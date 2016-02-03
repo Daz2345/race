@@ -1,31 +1,51 @@
 <template name="ldapLogin">
-{{#if currentUser}}
-  <div class="navbar-username" style="inline-block">Welcome, {{currentUser.givenName}}. <button class="btn" name="logout">Logout</button></div>
-{{else}}
-  {{#if loggingIn}}
-    <div class="logging-in">
-      Logging in...
-    </div>
+  {{#if currentUser}}
+    <div id="login-buttons-logout" class="login-button">Sign out</div>
   {{else}}
-    <form class="form-horizontal">
-      <div class="form-group">
-        <label for="ldap" class="col-xs-4 control-label">Username:</label>
-        <div class="col-xs-6">
-          <input type="text" name="ldap">
+    <div class="login-form login-password-form">
+      {{#if loggingIn}}
+        <div class="logging-in">
+          Logging in ...
         </div>
-      </div>
-      <div class="form-group">
-        <label for="password" class="col-xs-4 control-label">Password:</label>
-        <div class="col-xs-6">
-          <input type="password" name="password">
+      {{else}}
+        <div id="login-email-label-and-input">
+          <label for="ldap" id="login-email-label">Username or email</label>
+          <input id="login-email" type="text" name="ldap">
         </div>
-      </div>
-    </form>
-
-    <button type="button" class="btn btn-primary btn-login" name="login">Login</button>
-    {{#if failedLogin}}
-      <div class="loginError"><span style="color:red">Invalid Username or Password.</span></div>
-    {{/if}}
+        <div id="login-password-label-and-input">
+          <label for="password" id="login-password-label">Password</label>
+          <input id="login-password" type="password" name="password">
+        </div>
+        {{#if failedLogin}}
+          <div class="message error-message">
+            Invalid sign in details
+          </div>
+        {{/if}}
+        <div id="login-buttons-password" class="login-button login-button-form-submit" name="login">Sign in</div>
+      {{/if}}
+    </div>
   {{/if}}
-{{/if}}
+</template>
+
+<template name="ldapLoginButtons">
+  {{#if template}}
+    {{> Template.dynamic template=template data=this}}
+  {{else}}
+    <div id="login-buttons" class="login-buttons-dropdown-align-{{align}}">
+      <div class="login-link-and-dropdown-list login-form-sign-in">
+        {{#with currentUser}}
+          <a id="logged-in-username" class="login-link-text">{{usernameOrEmail}} ▾</a>
+        {{else}}
+          <a id="login-sign-in-link" class="login-link-text">Sign in ▾</a>
+        {{/with}}
+        {{#if showForm}}
+          <div id="login-dropdown-list" class="accounts-dialog">
+            <a class="login-close-text">Close</a>
+            <div class="login-close-text-clear"></div>
+            {{> ldapLogin}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
 </template>

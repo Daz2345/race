@@ -1,19 +1,24 @@
 Package.describe({
-  'summary': 'Meteor account login via LDAP using activedirectory.js',
-  'version': '0.1.4',
-  'git' : 'https://github.com/tdamsma/meteor-accounts-ldap',
-  'name' : 'tdamsma:meteor-accounts-ldap'
+  name : 'babrahams:accounts-ldap',
+  summary: 'Meteor account login via LDAP',
+  version: '0.5.0',
+  git : 'https://github.com/JackAdams/meteor-accounts-ldap',
+  documentation: 'README.md'
 });
 
-Npm.depends({'activedirectory' : '0.7.0'});
+Npm.depends({'ldapjs' : '0.7.1', 'connect' : '2.19.3'});
 
 Package.on_use(function (api) {
-  api.use(['coffeescript@1.0.10'], 'server');
-  api.use(['accounts-base@1.2.1'], ['client', 'server']);
-  api.imply('accounts-base@1.2.1', ['client', 'server']);
-  api.use(['templating@1.1.4','jquery@1.11.4'], 'client');
+  api.versionsFrom('1.1.0.2');
+  api.use(['routepolicy', 'webapp'], 'server');
+  api.use(['accounts-base', 'underscore', 'less@2.5.0_2'], ['client', 'server']);
+  api.use('accounts-password', 'server');
+  api.imply('accounts-base', ['client', 'server']);
+  api.use(['ui', 'templating', 'jquery', 'spacebars', 'reactive-var'], 'client');
   api.add_files([
     'ldap_client.html',
-    'ldap_client.js'], 'client');
+    'ldap_client.js',
+    'ldap_client.less'], 'client');
   api.add_files('ldap_server.js', 'server');
+  api.export('LDAP');
 });
