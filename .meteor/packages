@@ -33,7 +33,7 @@ simonrycroft:ip-whitelist
 msavin:mongol
 tmeasday:publish-counts
 miguelalarcos:flow-router-pagination
-hive:accounts-ldap
+tdamsma:accounts-ldap
 manuel:reactivearray
 useraccounts:core
 useraccounts:semantic-ui
