@@ -48,7 +48,7 @@ LDAP.bind = function (client, username, password) {
 LDAP.search = function (client, searchUsername) {
   //Search our previously bound connection. If the LDAP client isn't bound, this should throw an error.
   var opts = {
-    filter: '(&(cn='+searchUsername+')(objectClass=user))',
+    filter: '(&(sAMAccountName='+searchUsername+')(objectClass=user))',
     scope: 'sub',
     timeLimit: 2
   };
