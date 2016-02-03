@@ -81,6 +81,7 @@ function extractListWithCustomHeader(header, list){
   list = header + "\n" + list;
   return Papa.parse(list, {
       header: true, 
+      skipEmptyLines: true,
       dynamicTyping: true
   }).data;
 }
@@ -88,6 +89,7 @@ function extractListWithCustomHeader(header, list){
  function extractList(list){
   return Papa.parse(list, {
       header: true, 
+      skipEmptyLines: true,
       dynamicTyping: true
   }).data;
 }

@@ -13,8 +13,8 @@ Meteor.methods({
             delisted: delistedCountVal,
             npd: npdCountVal,
             status: 0,
-            createdBy: "DarrenI",
-            userId : "",            
+            createdBy : Meteor.user().username,
+            userId: Meteor.user()._id,          
             createdAt: new Date()
         };
         
