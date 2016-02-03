@@ -46,7 +46,7 @@ Meteor.methods({
           status : 0,
           productsCount : scenarioObj.products.length,
           createdAt : new Date(),
-          createdBy : Meteor.user().username,
+          createdBy : Meteor.user().displayName,
           userId: Meteor.user()._id,
           runs: 0
         };
