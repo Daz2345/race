@@ -16,17 +16,10 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
             if (content.scenarioUpdate.products !== undefined){
                 _.each(content.scenarioUpdate.products, shapeProducts);
             }
-            
-            var prodCountVal = 0;
-            
-            if (content.scenarioUpdate.products !== undefined) {
-                prodCountVal = content.scenarioUpdate.products.length;
-            }
-                
+
             var id = content.scenarioId,
                 update = {
                     products: content.scenarioUpdate.products,
-                    productsCount: prodCountVal,
                     message: content.scenarioUpdate.message || Scenarios.findOne({_id : content.scenarioId}).message,
                     status: content.scenarioUpdate.status,
                     updatedAt: new Date()
