@@ -1,7 +1,4 @@
 <template name="ldapLogin">
-{{#if currentUser}}
-  <div class="navbar-username" style="inline-block">Welcome, {{currentUser.username}}. <button class="btn" name="logout">Logout</button></div>
-{{else}}
   {{#if loggingIn}}
     <div class="logging-in">
       Logging in...
@@ -43,7 +40,6 @@
     </div>
   </div>    
   {{/if}}
-{{/if}}
 </template>
 
 

@@ -1,14 +1,11 @@
 <template name="user">
 
         <div id="user">
-            <h2 class="ui center aligned icon header">
+            <h2 class="ui white center aligned icon header">
                 <i class="grey user icon"></i>
-                <div class="content whitetext">
                     {{currentUser.givenName}}
-                </div>
-                
+                    <button class="ui small grey basic compact button" name="logout">Logout</button>            
             </h2>
-            <button class="ui small basic button" name="logout">Logout</button>
         </div>
 
 </template>
