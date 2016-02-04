@@ -1,19 +1,24 @@
-if (Meteor.isClient) {
-  Deps.autorun(function () {
-      Meteor.subscribe("userData");
-  });
-}
+  Meteor.startup(function() {
+    if (Meteor.isClient) {
+      Deps.autorun(function() {
+        Meteor.subscribe("userData");
+      });
+      Accounts.config({
+        forbidClientAccountCreation: true
+      });
+    }
 
-if (Meteor.isServer) {
-  Accounts.onLogin(function(info) {
-    console.log("onLogin fired");
-  });
-  Meteor.startup(function () {
-    // code to run on server at startup
-    Meteor.publish("userData", function () {
-      return Meteor.users.find();
-    });
-  });
-}
+    if (Meteor.isServer) {
 
-numeral.language('en-gb');
+      // code to run on server at startup
+      Meteor.publish("userData", function() {
+        return Meteor.users.find();
+      });
+
+    }
+
+
+    numeral.language('en-gb');
+
+  });
+  

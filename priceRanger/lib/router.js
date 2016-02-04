@@ -1,16 +1,16 @@
 var loggedIn = FlowRouter.group({
-//   triggersEnter: [
-//      function() {
-//       var route;
-//       if (!(Meteor.loggingIn() || Meteor.userId())) {
-//          route = FlowRouter.current();
-//          if (route.route.name !== 'signin') {
-//           Session.set('redirectAfterLogin', route.path);
-//          }
-//          return FlowRouter.go('signin');
-//       }
-//      }
-//   ]
+  triggersEnter: [
+     function() {
+      var route;
+      if (!(Meteor.loggingIn() || Meteor.userId())) {
+         route = FlowRouter.current();
+         if (route.route.name !== 'signin') {
+          Session.set('redirectAfterLogin', route.path);
+         }
+         return FlowRouter.go('signin');
+      }
+     }
+  ]
 });
 var exposed = FlowRouter.group({});
 
@@ -37,6 +37,6 @@ exposed.notFound = {
 exposed.route('/signin',{
     name: 'signin',
     action: function(params) {
-        BlazeLayout.render("login");
+        BlazeLayout.render("layout", {left: "left", main: "login"});
     }
 });
