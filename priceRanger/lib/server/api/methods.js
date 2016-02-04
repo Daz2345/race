@@ -4,10 +4,6 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
         url: '/api/scenarioupdate/',
         getArgsFromRequest: function (request) {
             var content = request.body;
-            
-            console.log(new Date());            
-            console.log('Scenario Update');
-            console.log(content);
 
             function shapeProducts(element, index, list){
                 element.price = parseFloat(element.price.toFixed(2)),
@@ -17,7 +13,7 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
                 element.description = element.description;
             }
             
-            var createdAt = Scenarios.findOne({_id : scenarioId}).createdAt;
+            var createdAt = Scenarios.findOne({_id : content.scenarioId}).createdAt;
             
             if (content.scenarioUpdate.products !== undefined)
                 _.each(content.scenarioUpdate.products, shapeProducts);
@@ -44,10 +40,6 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
         getArgsFromRequest: function (request) {
             var content = request.body;
 
-            // console.log(new Date());            
-            // console.log('ScenarioRun Update');
-            // console.log(content);
-            
             function shapeProducts(element, index, list){
                 element.price = parseFloat(element.price.toFixed(2)),
                 element.new_price = parseFloat(element.new_price.toFixed(2)),
@@ -58,6 +50,8 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
                 element.new_sales = parseFloat(element.new_sales.toFixed(2));
             }
             
+            var createdAt = ScenarioRuns.findOne({_id : content.scenarioRunId}).createdAt;            
+            
             if (content.scenarioRunUpdate.products !== undefined)            
                 _.each(content.scenarioRunUpdate.products, shapeProducts);
             
@@ -66,7 +60,8 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
                     products: content.scenarioRunUpdate.products,
                     message: content.scenarioRunUpdate.message ||  ScenarioRuns.find({_id : content.scenarioRunId}).message,
                     status: content.scenarioRunUpdate.status,
-                    updatedAt: new Date()
+                    updatedAt: new Date(),
+                    runTime: createdAt.diff(new Date(), 'hours')                    
                 };
             return [ id, update ];
         }
