@@ -70,12 +70,6 @@ Template.scenarioSubmit.hooks({
   }
 });
 
-// Template.layout.events({
-//     'click .createScenario': function(e) {
-//         $('.ui.modal.scenario')
-//             .modal('show');
-//     }
-// });
 
 function extractListWithCustomHeader(header, list){
   list = header + "\n" + list;

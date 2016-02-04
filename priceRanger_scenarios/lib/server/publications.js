@@ -34,7 +34,7 @@ Meteor.publish('Scenarios.all.withProducts', function() {
 
 
 Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit, userIdVal) {
-  Counts.publish(this, 'total_scenarios', Scenarios.find())
+
  
   if (skip < 0) {skip = 0}
   var options = {};
@@ -49,9 +49,11 @@ Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit, userIdVal) 
   options.sort = {createdAt: -1};
 
   var query = {};
-  if (userIdVal !== undefined)
-    query = {userId: userIdVal};
+  if (userIdVal !== undefined) {
+    query = {"userId": userIdVal};
+  }
 
+  Counts.publish(this, 'total_scenarios', Scenarios.find(query))
   return Scenarios.find(query, options)
 });
 
