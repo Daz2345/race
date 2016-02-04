@@ -49,7 +49,7 @@ Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit, userIdVal) 
   options.sort = {createdAt: -1};
 
   var query = {};
-  if (userIdVal !== undefined) {
+  if (userIdVal !== null) {
     query = {"userId": userIdVal};
   }
 
