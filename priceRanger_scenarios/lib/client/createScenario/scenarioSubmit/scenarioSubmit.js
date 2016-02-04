@@ -20,7 +20,7 @@ Template.scenarioSubmit.hooks({
          storesVal, priceStrat_ceVal, priceStrat_deVal, npEvaluationVal, shelfReviewVal, scenarioObj;
          
         if (scenarioForm.elements["stores"].value.length > 0) {
-          storesVal = extractListWithHeader("store_code", scenarioForm.elements["stores"].value);
+          storesVal = extractListWithCustomHeader("store_code", scenarioForm.elements["stores"].value);
         } else {
           storesVal = "All";
         }
