@@ -12,9 +12,7 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
                 element.sales = parseFloat(element.spend.toFixed(2)),
                 element.description = element.description;
             }
-            
-            var createdAt = Scenarios.findOne({_id : content.scenarioId}).createdAt;
-            
+
             if (content.scenarioUpdate.products !== undefined){
                 _.each(content.scenarioUpdate.products, shapeProducts);
             }
@@ -31,8 +29,7 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
                     productsCount: prodCountVal,
                     message: content.scenarioUpdate.message || Scenarios.findOne({_id : content.scenarioId}).message,
                     status: content.scenarioUpdate.status,
-                    updatedAt: new Date(),
-                    runTime: createdAt.diff(new Date(), 'hours')
+                    updatedAt: new Date()
                 };
 
             return [ id, update ];
@@ -57,8 +54,6 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
                 element.new_sales = parseFloat(element.new_sales.toFixed(2));
             }
             
-            var createdAt = ScenarioRuns.findOne({_id : content.scenarioRunId}).createdAt;            
-            
             if (content.scenarioRunUpdate.products !== undefined)            
                 _.each(content.scenarioRunUpdate.products, shapeProducts);
             
@@ -67,8 +62,7 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
                     products: content.scenarioRunUpdate.products,
                     message: content.scenarioRunUpdate.message ||  ScenarioRuns.findOne({_id : content.scenarioRunId}).message,
                     status: content.scenarioRunUpdate.status,
-                    updatedAt: new Date(),
-                    runTime: createdAt.diff(new Date(), 'hours')                    
+                    updatedAt: new Date()
                 };
             return [ id, update ];
         }
