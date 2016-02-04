@@ -15,14 +15,21 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
             
             var createdAt = Scenarios.findOne({_id : content.scenarioId}).createdAt;
             
-            if (content.scenarioUpdate.products !== undefined)
+            if (content.scenarioUpdate.products !== undefined){
                 _.each(content.scenarioUpdate.products, shapeProducts);
+            }
             
+            var prodCountVal = 0;
+            
+            if (content.scenarioUpdate.products !== undefined) {
+                prodCountVal = content.scenarioUpdate.products.length;
+            }
+                
             var id = content.scenarioId,
                 update = {
                     products: content.scenarioUpdate.products,
-                    productsCount: content.scenarioUpdate.products.length,
-                    message: content.scenarioUpdate.message || Scenarios.find({_id : scenarioId}).message,
+                    productsCount: prodCountVal,
+                    message: content.scenarioUpdate.message || Scenarios.findOne({_id : content.scenarioId}).message,
                     status: content.scenarioUpdate.status,
                     updatedAt: new Date(),
                     runTime: createdAt.diff(new Date(), 'hours')
@@ -58,7 +65,7 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
             var id = content.scenarioRunId,
                 update = {
                     products: content.scenarioRunUpdate.products,
-                    message: content.scenarioRunUpdate.message ||  ScenarioRuns.find({_id : content.scenarioRunId}).message,
+                    message: content.scenarioRunUpdate.message ||  ScenarioRuns.findOne({_id : content.scenarioRunId}).message,
                     status: content.scenarioRunUpdate.status,
                     updatedAt: new Date(),
                     runTime: createdAt.diff(new Date(), 'hours')                    
