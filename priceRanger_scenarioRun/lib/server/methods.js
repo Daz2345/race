@@ -14,7 +14,7 @@ Meteor.methods({
             npd: npdCountVal,
             status: 0,
             createdBy : Meteor.user().displayName,
-            userId: Meteor.user()._id,          
+            userId: Meteor.userId(),          
             createdAt: new Date()
         };
         
