@@ -1,9 +1,10 @@
 SimpleRest.configure({
-  collections: []
+    collections: []
 });
 
-Meteor.methods({
-    'getEnvironment' : function(){
-        return Meteor.Settings.public.mode;
-    }
-})
+// code to run on server at startup
+Meteor.publish("userData", function() {
+    return Meteor.users.find({
+        _id: this.userId
+    });
+});
