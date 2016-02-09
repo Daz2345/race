@@ -3,8 +3,8 @@ SimpleRest.configure({
 });
 
 // code to run on server at startup
-Meteor.publish("userData", function() {
-    return Meteor.users.find({
+Meteor.publish('userData', function() {
+    return Users.find({
         _id: this.userId
     });
 });
