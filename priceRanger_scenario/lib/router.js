@@ -1,17 +1,24 @@
-var loggedIn = FlowRouter.group({
-//   triggersEnter: [
-//      function() {
-//       var route;
-//       if (!(Meteor.loggingIn() || Meteor.userId())) {
-//          route = FlowRouter.current();
-//          if (route.route.name !== 'signin') {
-//           Session.set('redirectAfterLogin', route.path);
-//          }
-//          return FlowRouter.go('signin');
-//       }
-//      }
-//   ]
-});
+var loggedIn;
+
+if (Meteor.settings.public.mode === "production") {
+    loggedIn = FlowRouter.group({
+        triggersEnter: [
+            function() {
+                var route;
+                if (!(Meteor.loggingIn() || Meteor.userId())) {
+                    route = FlowRouter.current();
+                    if (route.route.name !== 'signin') {
+                        Session.set('redirectAfterLogin', route.path);
+                    }
+                    return FlowRouter.go('signin');
+                }
+            }
+        ]
+
+    });
+} else {
+    loggedIn = FlowRouter.group({});
+}
 
 // Scenario Runs
 
