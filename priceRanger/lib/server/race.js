@@ -2,9 +2,12 @@ SimpleRest.configure({
     collections: []
 });
 
-// code to run on server at startup
-Meteor.publish('userData', function() {
-    return Users.find({
-        _id: this.userId
+  Accounts.onLogin(function(info) {
+    console.log("onLogin fired");
+  });
+  Meteor.startup(function () {
+    // code to run on server at startup
+    Meteor.publish("userData", function () {
+      return Meteor.users.find();
     });
-});
+  });
