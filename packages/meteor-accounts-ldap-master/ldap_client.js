@@ -19,6 +19,7 @@ Meteor.loginWithLdap = function (username, password, callback) {
   Accounts.callLoginMethod({
     methodArguments: [{username: username, password: password, ldap: true}],
     validateResult: function (result) {
+      
     },
     userCallback: callback
   });
@@ -37,6 +38,7 @@ initLogin = function(e, tpl) {
     var password = $(tpl.find('input[name="password"]')).val();
     var result = Meteor.loginWithLdap(username, password, function() {
       if (Meteor.userId()) {
+        console.log("hello");
         FlowRouter.go('home');
         return true;
       } else {
