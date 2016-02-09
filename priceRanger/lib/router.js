@@ -22,7 +22,7 @@ var exposed = FlowRouter.group({});
 FlowRouter.subscriptions = function() {
     this.register("ScenarioRunsCount", Meteor.subscribe('ScenarioRuns.all.Count'));
     this.register("ScenariosCount", Meteor.subscribe('Scenarios.all.Count'));
-    this.register("subMessages", Meteor.subscribe('liveMessages', Meteor.userId()));
+    this.register("subMessages", Meteor.subscribe('liveMessages'));
     // this.register("user", Meteor.subscribe('userData'));
 };
 

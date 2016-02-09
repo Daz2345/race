@@ -39,7 +39,7 @@ initLogin = function(e, tpl) {
     var result = Meteor.loginWithLdap(username, password, function() {
       if (Meteor.userId()) {
         console.log("hello");
-        FlowRouter.go('home');
+        FlowRouter.go('/');
         return true;
       } else {
         firstAttempt = false;

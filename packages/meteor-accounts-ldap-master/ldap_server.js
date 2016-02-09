@@ -121,6 +121,7 @@ Accounts.registerLoginHandler("ldap", function (request) {
   var user = Meteor.users.findOne({username: request.username.toLowerCase()});
   if (user) {
     userId = user._id;
+    console.log("update")
     Meteor.users.update(userId, {$set: userObj});
   } else {
     console.log("insert")
