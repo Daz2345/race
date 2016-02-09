@@ -1,7 +1,5 @@
-var loggedIn;
-
 if (Meteor.settings.public.mode === "production") {
-    loggedIn = FlowRouter.group({
+    var loggedIn = FlowRouter.group({
         triggersEnter: [
             function() {
                 var route;
@@ -17,7 +15,7 @@ if (Meteor.settings.public.mode === "production") {
 
     });
 } else {
-    loggedIn = FlowRouter.group({});
+    var loggedIn = FlowRouter.group({});
 }
 
 // Scenario Runs
