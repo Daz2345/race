@@ -70,7 +70,6 @@ Template.scenarioSubmit.hooks({
   }
 });
 
-
 function extractListWithCustomHeader(header, list){
   list = header + "\n" + list;
   return Papa.parse(list, {

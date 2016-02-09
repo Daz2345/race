@@ -126,3 +126,9 @@ div.tooltip {
 .pushin {
     padding-left:20px! important;
 }
+
+.ui.blue.message {
+    bottom: 15px;
+    right: 15px;
+    position:fixed;
+}

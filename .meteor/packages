@@ -29,7 +29,6 @@ d3js:d3
 underscore
 reactive-var
 simple:rest
-simonrycroft:ip-whitelist
 msavin:mongol
 tmeasday:publish-counts
 miguelalarcos:flow-router-pagination

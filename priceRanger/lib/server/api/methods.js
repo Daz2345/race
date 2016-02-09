@@ -1,9 +1,23 @@
 Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
     Scenarios.update({_id : scenarioId}, {$set:scenarioUpdate});
+    if (scenarioUpdate.status > 0) {
+        var originalScenario = Scenarios.findOne({_id : scenarioId});
+        console.log("msg");
+        var messageVal = {
+            "scenarioId": scenarioId,
+            "userMessage": "'"+originalScenario.name+"' is now available",
+            "read": false,
+            "userId": originalScenario.userId
+        };
+        
+        Messages.insert(messageVal)
+    }
     },{
         url: '/api/scenarioupdate/',
         getArgsFromRequest: function (request) {
             var content = request.body;
+
+            var originalScenario = Scenarios.findOne({_id : content.scenarioId});
 
             function shapeProducts(element, index, list){
                 element.price = parseFloat(element.price.toFixed(2)),
@@ -19,8 +33,8 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
 
             var id = content.scenarioId,
                 update = {
-                    products: content.scenarioUpdate.products,
-                    message: content.scenarioUpdate.message || Scenarios.findOne({_id : content.scenarioId}).message,
+                    products: content.scenarioUpdate.products || originalScenario.products,
+                    message: content.scenarioUpdate.message || originalScenario.message || "",
                     status: content.scenarioUpdate.status,
                     updatedAt: new Date()
                 };
@@ -37,6 +51,8 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
         getArgsFromRequest: function (request) {
             var content = request.body;
 
+            var originalScenarioRun = ScenarioRuns.findOne({_id : content.scenarioRunId});
+
             function shapeProducts(element, index, list){
                 element.price = parseFloat(element.price.toFixed(2)),
                 element.new_price = parseFloat(element.new_price.toFixed(2)),
@@ -52,8 +68,8 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
             
             var id = content.scenarioRunId,
                 update = {
-                    products: content.scenarioRunUpdate.products,
-                    message: content.scenarioRunUpdate.message ||  ScenarioRuns.findOne({_id : content.scenarioRunId}).message,
+                    products: content.scenarioRunUpdate.products ||  originalScenarioRun.products,
+                    message: content.scenarioRunUpdate.message ||  originalScenarioRun.message,
                     status: content.scenarioRunUpdate.status,
                     updatedAt: new Date()
                 };

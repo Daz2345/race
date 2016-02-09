@@ -103,16 +103,7 @@ Template.newProductSubmitModal.hooks({
               if (element.Substitute + i !== "")
                 similarVal.push(element.Substitute + i);
             }
-            
-            // if (element.Substitute1 !== "")
-            //   similarVal.push(element.Substitute1);
 
-            // if (element.Substitute2 !== "")
-            //   similarVal.push(element.Substitute2);
-
-            // if (element.Substitute3 !== "")
-            //   similarVal.push(element.Substitute3);
-              
             var product = {
               tpn: tpnVal,
               description: element.Description,
@@ -128,7 +119,7 @@ Template.newProductSubmitModal.hooks({
 
           }
 
-          productsObj.forEach(insertProduct)
+          productsObj.forEach(insertProduct);
 
           var productsSorted = _.sortBy(products, 'sales');
 
