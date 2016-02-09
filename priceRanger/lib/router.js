@@ -26,7 +26,7 @@ FlowRouter.subscriptions = function() {
     this.register("ScenarioRunsCount", Meteor.subscribe('ScenarioRuns.all.Count'));
     this.register("ScenariosCount", Meteor.subscribe('Scenarios.all.Count'));
     if (Meteor.user()) {
-        this.register("subMessages", Meteor.subscribe('liveMessages', Meteor.User()._id));
+        this.register("subMessages", Meteor.subscribe('liveMessages', Meteor.user()._id));
     }
 };
 

@@ -6,6 +6,6 @@
     "autopublishFields": [ "displayName", "department", "mail", "title"]
   },
   "public" : {
-    "mode" : "production"
+    "mode" : "dev"
   }
 }
