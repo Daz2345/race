@@ -1,0 +1,79 @@
+<template name="scenarioRunsAll">
+  {{ > tableHeader}}
+  {{#if isReady}}
+  <div class="animated fadeIn">
+    {{ > scenarioRunsAll_table}}
+  </div>
+  {{/if}}
+  {{ > priceHeirarchyChart}}
+</template>
+
+<template name="scenarioRunsAll_table">
+  {{#if Template.subscriptionsReady}}
+    <table class="ui selectable celled striped very unstackable compact table red">
+        {{ > scenarioRunsAllHeader}} {{ > scenarioRunsAllBody}} {{ > scenarioRunsAllFooter}} 
+    </table>
+  {{else}}
+  {{>loader}}
+  {{/if}}    
+</template>
+
+<template name="scenarioRunsAllFooter">
+<tfoot class="full-width">
+    <tr>
+      <th>Total Runs:</th>
+      <th  class="center aligned">{{runCount}}</th>
+      <th colspan="7">
+        {{> paginationBar itemsPerPage=10 window=5 count='total_scenarioRuns'}}
+      </th>
+    </tr>
+  </tfoot>  
+</template>
+
+<template name="scenarioRunsAllHeader">
+    <thead>
+      <tr>
+        <th>Scenario Name</th>
+        <th>Run Name</th>
+        <th>Created</th>
+        <th>Description</th>
+        <th>Delisted</th>
+        <th>NPD</th>        
+        <th>Total Sales</th>   
+        <th>£ Chart</th>               
+      </tr>
+    </thead>
+</template>
+
+<template name="scenarioRunsAllBody">
+  <tbody>  
+  {{#each scenarioRuns}}
+    {{ > scenarioRunsAllRow}}
+  {{/each}}
+  </tbody>    
+</template>
+
+<template name="scenarioRunsAllRow">
+
+  <tr class="{{runStatus}}">
+    <td class="collapsing">
+      <a href={{pathForScenario}}> 
+        {{scenarioName}}
+      </a>
+    </td>
+    <td class="collapsing">
+      <a href={{pathForScenarioRun}}> 
+        {{runName}}
+      </a>
+    </td>
+    <td class="collapsing">
+        {{createdBy}}<br>{{formatDate createdAt}}
+    </td>
+    <td>{{description}}</td>
+    <td class="collapsing center aligned">{{delisted}}</td>
+    <td class="collapsing center aligned">{{npd}}</td>
+    <td class="collapsing center aligned">{{totalSales}}</td>
+    <td class="collapsing center aligned">{{{chartIcon}}}</td>
+  </tr>
+
+</template>

@@ -1,0 +1,76 @@
+<template name="scenarioSubmit">
+    <div class="ui large modal scenarioSubmitModal">
+        <i class="close icon"></i>
+        <div class="header">Create New Scenario</div>
+        <div class="content">
+            {{ > scenarioForm}}
+        </div>
+        <div class="actions">
+            <!--<div class="ui red deny button">Cancel</div>-->
+            <div class="ui positive right labeled icon button"><i class="checkmark icon"></i>Create Scenario</div>
+        </div>
+    </div>
+</template>
+
+<template name="scenarioForm">
+    <form id="scenarioForm" class="ui form scenario submit" autocomplete="off">
+        <div class="ui two column grid">
+            <div class="column">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="name" required=true>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label>Date Range</label>
+                    <input name="dateRange" class="ui floating dropdown datetimepicker" type="text" required=true>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea rows="1" name="description"></textarea>
+        </div>
+        <div class="ui four column grid">
+            <div class="column">
+                <div class="field">
+                    <label>Price Strat Cross Elasticity Export</label>
+                    <input name="priceStrat_ce" class="ui input" type="file" accept=".csv" required=true>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label>Price Strat Direct Elasticity Export</label>
+                    <input name="priceStrat_de" class="ui input" type="file" accept=".csv" required=true>
+                </div>
+            </div>            
+            <div class="column">
+                <div class="field">
+                    <label>NP Evaluation Export</label>
+                    <input name="npEvaluation" class="ui input" type="file" accept=".csv" required=true>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label>Shelf Review Export</label>
+                    <input name="shelfReview" class="ui input" type="file" accept=".csv" required=true>
+                </div>
+            </div>
+        </div>
+        <div class="ui two column grid">
+            <div class="column">
+                <div class="field">
+                    <label>Products</label>
+                    <textarea rows="10" name="products" required=true></textarea>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label>Custom Stores List</label>
+                    <textarea rows="10" name="stores" required=true></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</template>

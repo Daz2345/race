@@ -1,0 +1,77 @@
+<template name="scenarios">
+
+  {{ > tableHeader}} 
+  {{ > scenarioControls}}
+  <div>
+  {{#if isReady}} 
+      <div class="animated fadeIn">
+      {{ > scenariosTable}} 
+  </div>
+  {{else}} 
+    {{>loader}} 
+  {{/if}}
+  </div>
+</template>
+
+<template name="scenariosTable">
+  <table class="ui selectable celled striped unstackable very compact table blue">
+    {{ > scenariosHeader}} 
+    {{ > scenariosBody}}
+    {{ > scenariosFooter}}
+  </table>
+</template>
+
+
+<template name="scenariosBody">
+    <tbody>
+      {{#each scenarios}} 
+        {{ > scenariosRow}} 
+      {{/each}}
+    </tbody>
+</template>
+
+<template name="scenariosFooter">
+  <tfoot class="full-width">
+    <tr>
+      <th colspan="5">
+        {{> paginationBar itemsPerPage=10 window=5 count='total_scenarios'}}
+      </th>
+    </tr>
+  </tfoot>  
+</template>
+
+<template name="scenariosHeader">
+    <thead>
+      <tr>
+        <th>
+          Created
+        </th>
+        <th>
+          Name
+        </th>        
+        <th>
+          Description
+        </th>
+        <th>
+          Products
+        </th>        
+        <th>
+          Runs
+        </th>        
+      </tr>
+    </thead>
+</template>
+
+<template name="scenariosRow">
+
+    <tr class={{status}}>
+        <td class="collapsing">
+            {{createdBy}}<br>{{formatDate createdAt}}
+        </td>
+        <td class="collapsing"><a href={{pathForScenario}}>{{name}}</a></td>
+        <td>{{description}}</td>
+        <td class="collapsing center aligned">{{productsCount}}</td>
+        <td class="collapsing center aligned">{{runs}}</td>
+    </tr>
+
+</template>
