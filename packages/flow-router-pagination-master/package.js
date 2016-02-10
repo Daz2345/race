@@ -11,16 +11,16 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.2');
   api.use('jquery');
   api.use('templating');
-  api.addFiles('flow-router-pagination.html', 'client');
-  api.addFiles('flow-router-pagination.css', 'client');
-  api.addFiles('flow-router-pagination.js', 'client');
+  api.addAssets(['flow-router-pagination.html',
+  'flow-router-pagination.css',
+  'flow-router-pagination.js'], 
+  ['client']);
 });
 
 //Package.onTest(function(api) {
 //  api.use('tinytest');
 //  api.use('miguelalarcos:flow-router-pagination');
-//  api.addFiles('flow-router-pagination-tests.js');
+//  api.addAssets('flow-router-pagination-tests.js');
 //});

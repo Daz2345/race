@@ -4,42 +4,12 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-base             # Packages every Meteor app needs to have
-mobile-experience       # Packages for a great mobile UX
-mongo                   # The database Meteor supports right now
-blaze-html-templates    # Compile .html files into Meteor Blaze views
-session                 # Client-side reactive dictionary for your app
-jquery                  # Helpful client-side library
-tracker                 # Meteor's client-side reactive programming library
+priceranger:core
 
-standard-minifiers      # JS/CSS minifiers run for production mode
-es5-shim                # ECMAScript 5 compatibility for older browsers.
-ecmascript              # Enable ECMAScript2015+ syntax in app code
-
-semantic:ui
-flemay:less-autoprefixer
-momentjs:moment
-aldeed:template-extension
-kadira:flow-router
-kadira:blaze-layout
-harrison:papa-parse
-meteorhacks:fast-render
-meteorhacks:picker
-d3js:d3
-underscore
-reactive-var
-simple:rest
-msavin:mongol
-tmeasday:publish-counts
-miguelalarcos:flow-router-pagination
-hive:accounts-ldap
-manuel:reactivearray
-useraccounts:core
-useraccounts:semantic-ui
-accounts-password
-useraccounts:flow-routing
-numeral:numeral
-numeral:languages
-natestrauser:animate-css
-meteorhacks:cluster
-axw:json2csv
+priceranger:api
+priceranger:user
+priceranger:scenarios
+priceranger:scenario
+priceranger:scenarioruns
+priceranger:scenariorun
+priceranger:messages
