@@ -2,8 +2,7 @@
     "ldap": {
     "serverDn": "OU=UK,DC=dunnhumby,DC=co,DC=uk",
     "serverUrl": "ldap://gb-slo-svv-1100.dunnhumby.co.uk:389",
-    "whiteListedFields": [ "displayName", "givenName", "department", "mail", "title", "memberOf"],
-    "autopublishFields": [ "displayName", "department", "mail", "title"]
+    "whiteListedFields": [ "displayName", "givenName", "department", "mail", "title", "memberOf"]
   },
   "public" : {
     "mode" : "production"

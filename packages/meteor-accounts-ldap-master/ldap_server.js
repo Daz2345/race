@@ -130,7 +130,7 @@ Accounts.registerLoginHandler("ldap", function (request) {
   if(Meteor.settings.ldap.autopublishFields) {
     Accounts.addAutopublishFields({
       forLoggedInUser: Meteor.settings.ldap.autopublishFields,
-      forOtherUsers: Meteor.settings.ldap.autopublishFields
+      // forOtherUsers: Meteor.settings.ldap.autopublishFields
     });
   }
   var stampedToken = Accounts._generateStampedLoginToken();

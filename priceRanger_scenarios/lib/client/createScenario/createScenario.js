@@ -1,6 +1,6 @@
 Template.createScenario.events({
     'click .createScenarioButton': function(e) {
-        $('.ui.large.modal.scenarioSubmitModal')
+        $('.ui.small.modal.scenarioSubmitModal')
             .modal('show');
     }
 });
