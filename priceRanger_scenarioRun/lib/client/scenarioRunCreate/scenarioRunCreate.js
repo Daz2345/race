@@ -178,7 +178,6 @@ Template.scenarioRunCreateBody.hooks({
 
             _.each(products, updatePrice);
 
-
             scenarioRunProducts.set(products);
 
         });

@@ -5,6 +5,6 @@
     "whiteListedFields": [ "displayName", "givenName", "department", "mail", "title", "memberOf"]
   },
   "public" : {
-    "mode" : "production"
+    "mode" : "dev"
   }
 }
