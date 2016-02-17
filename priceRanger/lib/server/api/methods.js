@@ -1,17 +1,16 @@
 Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
     Scenarios.update({_id : scenarioId}, {$set:scenarioUpdate});
-    if (scenarioUpdate.status > 0) {
-        var originalScenario = Scenarios.findOne({_id : scenarioId});
-        console.log("msg");
-        var messageVal = {
-            "scenarioId": scenarioId,
-            "userMessage": "'"+originalScenario.name+"' is now available",
-            "read": false,
-            "userId": originalScenario.userId
-        };
+    // if (scenarioUpdate.status > 0) {
+    //     var originalScenario = Scenarios.findOne({_id : scenarioId});
+    //     var messageVal = {
+    //         "scenarioId": scenarioId,
+    //         "userMessage": "'"+originalScenario.name+"' is now available",
+    //         "read": false,
+    //         "userId": originalScenario.userId
+    //     };
         
-        Messages.insert(messageVal)
-    }
+    //     Messages.insert(messageVal)
+    // }
     },{
         url: '/api/scenarioupdate/',
         getArgsFromRequest: function (request) {
@@ -45,6 +44,10 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
             if (content.scenarioUpdate.status !== undefined)                      
                 update.status = content.scenarioUpdate.status;
 
+            console.log('ScenarioUpdate via API');
+            console.log(id);
+            console.log(update);
+            
             return [ id, update ];
         }
     }
@@ -85,6 +88,10 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
 
             if (content.scenarioRunUpdate.status !== undefined)                      
                 update.status = content.scenarioRunUpdate.status;
+
+            console.log('ScenarioRunUpdate via API');
+            console.log(id);
+            console.log(update);
                 
             return [ id, update ];
         }
