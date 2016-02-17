@@ -27,7 +27,7 @@ Template.scenarioRunCreate.events({
     },
     'click .button.submitScenarioRun': function(e) {
         var scenarioRunForm = document.getElementById('scenarioRunCreateForm');
-            // ScenarioRunProductsVal = scenarioRunProducts.find().fetch();
+            ScenarioRunProductsVal = scenarioRunProducts.find().fetch();
 
         var isValid = $('.ui.form.scenarioRunCreate').form('is valid');
 
@@ -50,7 +50,7 @@ Template.scenarioRunCreate.events({
             }).name,
             runName: scenarioRunForm.elements["name"].value,
             description: scenarioRunForm.elements["runDescription"].value,
-            products: ScenarioRunProducts
+            products: ScenarioRunProductsVal
         };
 
         var routeName = "scenario",
