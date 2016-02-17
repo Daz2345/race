@@ -1,9 +1,12 @@
+scenarioRunProducts = new Mongo.Collection(null);
+
 Template.scenarioRunCreate.helpers({
     scenario: function() {
         return Scenarios.findOne({
             _id: FlowRouter.getParam("scenarioId")
         });
     },
+
     isReady: function(sub) {
         if (sub) {
             return FlowRouter.subsReady(sub);
@@ -15,24 +18,31 @@ Template.scenarioRunCreate.helpers({
 });
 
 Template.scenarioRunCreate.events({
-    'click .submitScenarioRun': function(e) {
-        var scenarioRunForm = document.getElementById('scenarioRunCreateForm'),
-            ScenarioRunProductsVal = scenarioRunProducts.get();
+    'click .reactive-table tbody tr :checkbox': function(e) {
+        scenarioRunProducts.update({_id:this._id},{$set:{delisted: !this.delisted}})
+    },
+    'change .ui.new_price': function(e) {
+        var priceVal = parseFloat($('.new_price' + this._id).val());
+        scenarioRunProducts.update({_id : this._id}, {$set:{new_price : priceVal}});
+    },
+    'click .button.submitScenarioRun': function(e) {
+        var scenarioRunForm = document.getElementById('scenarioRunCreateForm');
+            // ScenarioRunProductsVal = scenarioRunProducts.find().fetch();
 
         var isValid = $('.ui.form.scenarioRunCreate').form('is valid');
 
         if (isValid) {
-        function productsSetup(element, index, list) {
-            // if its not a new product or the the product has not been delisted and it does not have a new price then its simply the same as before
-            if (!element.npd && !element.delisted && !element.new_price) {
-                element.new_price = element.price;
-            }
-            if (!element.npd) {
-                element.npd = false;
-            }
-        }
+        // function productsSetup(element, index, list) {
+        //     // if its not a new product or the the product has not been delisted and it does not have a new price then its simply the same as before
+        //     if (!element.npd && !element.delisted && !element.new_price) {
+        //         element.new_price = element.price;
+        //     }
+        //     if (!element.npd) {
+        //         element.npd = false;
+        //     }
+        // }
 
-        _.each(ScenarioRunProductsVal, productsSetup);
+        // _.each(ScenarioRunProductsVal, productsSetup);
 
         var scenarioRunObj = {
             scenarioName: Scenarios.findOne({
@@ -40,7 +50,7 @@ Template.scenarioRunCreate.events({
             }).name,
             runName: scenarioRunForm.elements["name"].value,
             description: scenarioRunForm.elements["runDescription"].value,
-            products: ScenarioRunProductsVal
+            products: ScenarioRunProducts
         };
 
         var routeName = "scenario",
@@ -71,18 +81,25 @@ Template.scenarioRunCreate.events({
     }
 });
 
-Template.scenarioRunCreateBody.helpers({
-    products: function() {
-        return scenarioRunProducts.get();
-    }
-});
+// Template.scenarioRunCreateBody.helpers({
+//     products: function() {
+//         return scenarioRunProducts.find({},{sort:{sales:-1}});
+//     }
+// });
 
 Template.scenarioRunCreate.onCreated(function() {
-    FlowRouter.subsReady("liveScenario", function () {
-        var ProductsObj = Scenarios.findOne({_id: FlowRouter.getParam("scenarioId")}).products,
-            ProductsObjSorted = ProductsObj.sort(function(a, b) {return b.sales - a.sales;});
-        
-        scenarioRunProducts = new ReactiveVar(ProductsObjSorted);
+    FlowRouter.subsReady("liveScenario", function() {
+
+        scenarioRunProducts.remove({});
+
+        var prods = Scenarios.findOne({
+            _id: FlowRouter.getParam("scenarioId")
+        }).products;
+
+        _.each(prods, function(doc) {
+            doc.new_price = doc.price;
+            scenarioRunProducts.insert(doc);
+        });
     });
 });
 
@@ -104,98 +121,99 @@ Template.scenarioRunCreate.hooks({
                             type: 'empty',
                             prompt: 'Please enter a description'
                         }]
-                    },                    
-                },
-                on: 'blur',
-                revalidate: true
+                    },
+                }
             });
     }
 });
 
-Template.scenarioRunCreateRow.hooks({
-    rendered: function() {
-        $('.ui.checkbox')
-            .checkbox();
-    }
-});
+// Template.reactiveTable.hooks({
+//     rendered: function() {
+//         $('.ui.checkbox').checkbox();
+//     }
+// });
 
-Template.scenarioRunCreateFooter.helpers({
+Template.scenarioRunCreateSummary.helpers({
     productsCount: function() {
-        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; });        
-        return products.length;
+        return scenarioRunProducts.find({delisted:{$not:true}}).count();
     },
     quantitySum : function (){
-        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; });
+        var products = scenarioRunProducts.find({delisted:{$not:true}}).fetch();
         return _.reduce(products, function(quantityTotal, product){return quantityTotal + product.quantity; }, 0);
     },
     salesSum: function (){
-        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; });        
+        var products = scenarioRunProducts.find({delisted:{$not:true}}).fetch();        
         return _.reduce(products, function(salesTotal, product){ return salesTotal + product.sales;}, 0);        
     },
     priceAverage: function (){
-        var products = _.reject(scenarioRunProducts.get(), function(product){ return product.delisted == true; }),       
+        var products = scenarioRunProducts.find({delisted:{$not:true}}).fetch(),       
          sales = _.reduce(products, function(priceTotal, product){ return priceTotal + product.sales;}, 0),
          quantity = _.reduce(products, function(quantityTotal, product){return quantityTotal + product.quantity; }, 0);
         return sales/quantity;
     },
     delistCount: function (){
-        return _.where(scenarioRunProducts.get(), {delisted: true}).length
-    }    
-});
-
-Template.scenarioRunCreateBody.hooks({
-    rendered: function() {
-
-        $('.ui.checkbox')
-            .checkbox({
-                onChange: function() {
-
-                    function delistProduct(element, index, list) {
-                        if (element.tpn === productTPN) {
-                            element.delisted = delistVal;
-                        }
-                    }
-                    var productTPN = parseInt(this.name, 10),
-                        delistVal = $('.ui.checkbox.delist' + this.name).checkbox('is checked'),
-                        products = scenarioRunProducts.get();
-
-                    _.each(products, delistProduct);
-                    scenarioRunProducts.set(products);
-                }
-            });
-        $(".ui.new_price").blur(function() {
-            function updatePrice(element, index, list) {
-                if (element.tpn === productTPN) {
-                    element.new_price = priceVal;
-                }
-            }
-
-            var productTPN = parseInt(this.name, 10),
-                priceVal = $('.new_price' + this.name).val(),
-                products = scenarioRunProducts.get();
-
-            priceVal = parseFloat(priceVal);
-
-            _.each(products, updatePrice);
-
-            scenarioRunProducts.set(products);
-
-        });
+        return scenarioRunProducts.find({delisted: true}).count()
+    },
+    npdCount: function (){
+        return scenarioRunProducts.find({npd: true}).count()
     }
 });
 
-Template.scenarioRunCreateRow.helpers({
-    priceVal: function() {
-        if (this.price === undefined) {
-            return 0.00;
-        }
-    },
+Template.newPriceElement.helpers({
     disableIfDelisted: function() {
-        if (this.delisted) {
+        if (this.delisted) 
             return "disabled";
-        }
     },
-    new_priceVal: function() {
-        return (this.new_price === undefined) ? this.price : this.new_price;
+});
+
+Template.scenarioRunCreateTable.helpers({
+    settings: function() {
+        return {
+            collection: scenarioRunProducts,
+            rowsPerPage: 20,
+            showFilter: false,
+            showNavigation: 'auto',
+            showRowCount: true,
+            fields: [{
+                key: 'tpn',
+                label: "TPN",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.tpnElement
+            }, {
+                key: 'description',
+                label: "Description",
+                headerClass: 'left aligned',
+                sortable: false,
+                tmpl: Template.descriptionElement
+            }, {
+                key: 'quantity',
+                label: "QTY",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.quantityElement
+            }, {
+                key: 'sales',
+                label: "Sales",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.salesElement,
+                sortOrder: 1,
+                sortDirection: 'descending'
+            }, {
+                key: 'price',
+                label: "Current Price",
+                headerClass: 'center aligned collapsing point',                
+                tmpl: Template.currentPriceElement
+            }, {
+                key: 'new_price',
+                label: "New Price",
+                headerClass: 'center aligned collapsing point',                
+                tmpl: Template.newPriceElement
+            }, {
+                key: 'delisted',
+                label: "Delisted",
+                headerClass: 'center aligned collapsing point',                
+                tmpl: Template.delistedElement
+            }]
+        };
     }
 });
+

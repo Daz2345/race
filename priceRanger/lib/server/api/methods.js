@@ -33,11 +33,17 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
 
             var id = content.scenarioId,
                 update = {
-                    products: content.scenarioUpdate.products || originalScenario.products,
-                    message: content.scenarioUpdate.message || originalScenario.message || "",
-                    status: content.scenarioUpdate.status,
-                    updatedAt: new Date()
+                    updatedAt:  new Date()
                 };
+            
+            if (content.scenarioUpdate.products !== undefined)     
+                update.products = content.scenarioUpdate.products;
+                
+            if (content.scenarioUpdate.message !== undefined)                  
+                update.message = content.scenarioUpdate.message;
+
+            if (content.scenarioUpdate.status !== undefined)                      
+                update.status = content.scenarioUpdate.status;
 
             return [ id, update ];
         }
@@ -68,11 +74,18 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
             
             var id = content.scenarioRunId,
                 update = {
-                    products: content.scenarioRunUpdate.products ||  originalScenarioRun.products,
-                    message: content.scenarioRunUpdate.message ||  originalScenarioRun.message,
-                    status: content.scenarioRunUpdate.status,
-                    updatedAt: new Date()
+                    updatedAt:  new Date()
                 };
+            
+            if (content.scenarioRunUpdate.products !== undefined)     
+                update.products = content.scenarioRunUpdate.products;
+                
+            if (content.scenarioRunUpdate.message !== undefined)                  
+                update.message = content.scenarioRunUpdate.message;
+
+            if (content.scenarioRunUpdate.status !== undefined)                      
+                update.status = content.scenarioRunUpdate.status;
+                
             return [ id, update ];
         }
     }

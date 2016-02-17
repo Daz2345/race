@@ -1,6 +1,6 @@
 Template.userToggle.events({
     'click .toggle': function(e) {
-        var checked = $('.ui.checkbox').checkbox('is checked');
+        var checked = $('.ui.checkbox.toggle').checkbox('is checked');
         if (Meteor.user()) {
             if (checked) {
                 FlowRouter.setQueryParams({

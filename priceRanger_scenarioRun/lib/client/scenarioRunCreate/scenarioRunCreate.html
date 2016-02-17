@@ -1,132 +1,97 @@
 <template name="scenarioRunCreate">
-  <!--{{ > tableHeader}}-->
-
     <h1 class="ui header">Create Scenario Run for - {{scenario.name}}</h1> 
-
     <form id="scenarioRunCreateForm" class="ui form scenarioRunCreate" autocomplete="off">
       {{ > CreateScenarioRunActions}}
       <div class="ui error message"></div>
       {{ > CreateScenarioRunTextInputs}} 
       {{#if isReady}}
-      <div class="animated fadeIn">
         {{ > scenarioRunCreateTable}}
-      </div>
       {{else}} 
-        {{> loader}} 
+        {{ > loader}} 
       {{/if}}
     </form>
-
 </template>
 
 <template name="scenarioRunCreateTable">
-  <table class="ui selectable celled striped unstackable very compact table blue">
-    {{> scenarioRunCreateHeader}} 
-    {{> scenarioRunCreateBody}} 
-    {{> scenarioRunCreateFooter}}
-  </table>
+  {{> reactiveTable settings=settings}}
 </template>
 
-<template name="scenarioRunCreateFooter">
-  <tfoot class="full-width">
-    <tr>
-      <th>Summary</th>        
-      <th class="center aligned">{{productsCount}}</th> 
-      <th class="center aligned">{{formatNoDecimals quantitySum}}</th>      
-      <th class="center aligned">{{formatCurrencyNoDecimals salesSum}}</th>
-      <th class="center aligned">{{formatCurrency priceAverage}}</th>
-      <th></th>
-      <th class="center aligned">{{delistCount}}</th>
-    </tr>
-  </tfoot>
-</template>
-
-<template name="scenarioRunCreateHeader">
-  <thead class="single line">
-    <tr>
-      <th class="center aligned">
-        TPN
-      </th>
-      <th class="left aligned">
-        Description
-      </th>
-      <th class="center aligned">
-        Quantity
-      </th>
-      <th class="center aligned">
-        Sales
-      </th>
-      <th class="center aligned">
-        Current Price
-      </th>
-      <th class="center aligned">
-        New Price
-      </th>
-      <th class="center aligned">
-        Delist?
-      </th>
-    </tr>
-  </thead>
-</template>
-
-<template name="scenarioRunCreateBody">
-  <tbody>
-    {{#each products}} {{ > scenarioRunCreateRow}} {{/each}}
-  </tbody>
-</template>
-
-<template name="scenarioRunCreateRow">
-  <tr class="ui compact">
-    <td id="tpn" class="collapsing center aligned">{{tpn}}</td>
-    <td id="description" class="left aligned">{{description}}</td>
-    <td id="quantity" class="collapsing center aligned">{{formatNoDecimals quantity}}</td>
-    <td id="sales" class="collapsing center aligned">{{formatCurrencyNoDecimals sales}}</td>
-    <td id="price" class="collapsing center aligned">{{formatCurrency price}}</td>
-    <td id="new_price" class="collapsing center vertical aligned {{disableIfDelisted}}">
-      <div class="ui fluid small collapsing compact center aligned input">
-        <input id="priceField" type="number" step=0.01 min="0" value={{new_priceVal}} name="{{tpn}}" class="ui new_price new_price{{tpn}}">
-      </div>
-    </td>
-    <td id="delist" class="collapsing center vertical aligned">
-      <div class="ui center aligned">
-        <div class="ui checkbox center vertical aligned delist{{tpn}}">
-          <input type="checkbox" name="{{tpn}}" tabindex="0">
-        </div>
-      </div>
-    </td>
-  </tr>
+<template name="scenarioRunCreateSummary">
+  <h1>Summary</h1>
+  <div class="ui list">
+    <div class="item">Total Products : {{productsCount}}</div>
+    <div class="item">Quantity Sold : {{formatNoDecimals quantitySum}} </div>
+    <div class="item">Sales : {{formatCurrencyNoDecimals salesSum}}</div>
+    <div class="item">Average Price : {{formatCurrency priceAverage}}</div>
+    <div class="item">Delisted : {{delistCount}}</div>
+    <div class="item">NPD : {{npdCount}}</div>
+  </div>
 </template>
 
 <template name="CreateScenarioRunActions">
-
-  <div class="ui  horizontal basic compact segments">
-    <div class="ui basic compact segment">
+  <div class="ui horizontal basic compact segments">
+    <div>
       {{ > addNewProductButton}}
     </div>
-    <div class="ui basic compact segment">
-
+    <div>
     </div>
-    <div class="ui basic compact right aligned segment">
+    <div class="ui right aligned">
       {{> submitScenarioRun}}
     </div>
   </div>
-
 </template>
 
 <template name="CreateScenarioRunTextInputs">
-  <div class="ui basic segment">
-    <div class="ui grid">
-      <div class="five wide column">
-        <div class="field">
-          <label>Scenario Run Name</label>
-          <input type="text" name="name">
-        </div>
+  <div class="ui grid">
+    <div class="five wide column">
+      <div class="field">
+        <label>Scenario Run Name</label>
+        <input type="text" name="name">
       </div>
-      <div class="eleven wide column">
-        <div class="field">
-          <label>Scenario Run Description</label>
-          <input type="text" name="runDescription">
-        </div>
+    </div>
+    <div class="eleven wide column">
+      <div class="field">
+        <label>Scenario Run Description</label>
+        <input type="text" name="runDescription">
       </div>
     </div>
   </div>
+</template>
+
+<template name="delistedElement">
+  <div id="delist" class="collapsing center aligned">
+      <input type="checkbox" name="{{_id}}" tabindex="0">
+  </div>
+</template>
+
+<template name="quantityElement">
+  <div id="quantity" class="collapsing center aligned {{disableIfDelisted}}">
+    {{formatNoDecimals quantity}} 
+  </div>
+</template>
+
+<template name="salesElement">
+  <div id="sales" class="collapsing center aligned {{disableIfDelisted}}">
+    {{formatCurrencyNoDecimals sales}}
+  </div>
+</template>
+    
+<template name="currentPriceElement">
+  <div id="price" class="collapsing center aligned {{disableIfDelisted}}">
+    {{formatCurrency price}}
+  </div>
+</template>    
+
+<template name="newPriceElement">
+  <div class="ui fluid transparent input {{disableIfDelisted}}">
+    <input id="priceField" type="number" step=0.01 min="0" value={{new_price}} name="{{_id}}" class="ui new_price new_price{{_id}}">
+  </div>
+</template>
+
+<template name="tpnElement">
+  <div id="tpn" class="collapsing center aligned {{disableIfDelisted}}">{{tpn}}</div>
+</template>
+
+<template name="descriptionElement">
+  <div id="description" class="left aligned {{disableIfDelisted}}">{{description}}</div>
 </template>

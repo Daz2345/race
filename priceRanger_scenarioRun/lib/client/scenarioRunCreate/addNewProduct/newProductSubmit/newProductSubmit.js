@@ -9,16 +9,9 @@ Template.newProductSubmitModal.hooks({
 
     newProductSubmitModalForm = $('.ui.form.newProductSubmit.submit');
 
-    $('.ui.radio.checkbox')
-      .checkbox();
-
-    $('.tabular.menu .item')
-      .tab();
-
-    $('.ui.dropdown.similar')
-      .dropdown({
-        maxSelections: 3
-      });
+    $('.ui.radio.checkbox').checkbox();
+    $('.tabular.menu .item').tab();
+    $('.ui.dropdown.similar').dropdown({maxSelections: 3});
 
     var modal = $(this.firstNode);
 
@@ -39,14 +32,10 @@ Template.newProductSubmitModal.hooks({
             Session.set('pricePrompt', undefined);
             Session.set('validationErrors', 0);
 
-            var products = scenarioRunProducts.get(),
-              tpnVal = _.where(products, {
-                "npd": true
-              }).length + 100;
+            var tpnVal = scenarioRunProducts.find({npd:true}).count() + 100;
 
             var similarTPNS = newProductSubmitModalForm.form('get value', 'similarProducts');
             for(var i=0; i<similarTPNS.length;i++) similarTPNS[i] = parseInt(similarTPNS[i], 10);
-            
             
             var product = {
               tpn: parseInt(tpnVal, 10),
@@ -60,75 +49,71 @@ Template.newProductSubmitModal.hooks({
               npd: true
             };
 
-            products.push(product);
-            var productsSorted = _.sortBy(products, 'sales');
+            scenarioRunProducts.insert(product);
 
-            scenarioRunProducts.set(productsSorted);
             newProductSubmitModalForm.form('clear');
 
             return true;
           }
           else {
-            if (performanceVal === undefined) {
+            if (performanceVal === undefined) 
               createError('performancePrompt', "<li>Please select an expected performance</li>");
-            }
-
-            if (newProductSubmitModalForm.form('get value', 'price') == "") {
+            
+            if (newProductSubmitModalForm.form('get value', 'price') == "") 
               createError('pricePrompt', "<li>Please enter a price</li>");
-            }
-
+            
             return false;
           }
         }
-        else {
-          var inputProducts = $('.inputProducts').val(),
-          productsObj = Papa.parse(inputProducts, {header: true, dynamicTyping: true}).data;
+        // else {
+        //   var inputProducts = $('.inputProducts').val(),
+        //   productsObj = Papa.parse(inputProducts, {header: true, dynamicTyping: true}).data;
 
-          console.log(inputProducts);
-          console.log(productsObj);
+        //   console.log(inputProducts);
+        //   console.log(productsObj);
 
-          var products = scenarioRunProducts.get()
+        //   var products = scenarioRunProducts.get()
 
-          function insertProduct(element, index, list) {
+        //   function insertProduct(element, index, list) {
 
-            tpnVal = _.where(products, {
-              "npd": true
-            }).length + 100;
+        //     tpnVal = _.where(products, {
+        //       "npd": true
+        //     }).length + 100;
 
-            var similarVal = [];
+        //     var similarVal = [];
             
-            // to be checked if it works
+        //     // to be checked if it works
             
-            for (var i = 1; i < 4; i++) {
-              if (element.Substitute + i !== "")
-                similarVal.push(element.Substitute + i);
-            }
+        //     for (var i = 1; i < 4; i++) {
+        //       if (element.Substitute + i !== "")
+        //         similarVal.push(element.Substitute + i);
+        //     }
 
-            var product = {
-              tpn: tpnVal,
-              description: element.Description,
-              similar: similarVal,
-              new_price: element.Price,
-              performance: element.Performance,
-              sales: 0,
-              price: 0,
-              quantity: 0,
-              npd: true
-            };
-            products.push(product);
+        //     var product = {
+        //       tpn: tpnVal,
+        //       description: element.Description,
+        //       similar: similarVal,
+        //       new_price: element.Price,
+        //       performance: element.Performance,
+        //       sales: 0,
+        //       price: 0,
+        //       quantity: 0,
+        //       npd: true
+        //     };
+        //     products.push(product);
 
-          }
+        //   }
 
-          productsObj.forEach(insertProduct);
+        //   // productsObj.forEach(insertProduct);
 
-          var productsSorted = _.sortBy(products, 'sales');
+        //   // var productsSorted = _.sortBy(products, 'sales');
 
-          scenarioRunProducts.set(productsSorted);
-          newProductSubmitModalForm.form('clear');
+        //   // scenarioRunProducts.set(productsSorted);
+        //   newProductSubmitModalForm.form('clear');
 
-          return true;
+        //   return true;
 
-        }
+        // }
       }
     });
   }
@@ -136,7 +121,7 @@ Template.newProductSubmitModal.hooks({
 
 Template.newProductForm.helpers({
   products: function() {
-    return scenarioRunProducts.get();
+      return scenarioRunProducts.find({delisted:{$not:true}},{sort:{sales:-1}});
   },
   performanceError: function() {
     return Session.get('performancePrompt');

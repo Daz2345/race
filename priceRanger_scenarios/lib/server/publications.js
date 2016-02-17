@@ -60,4 +60,6 @@ Meteor.publish('Scenarios.all.basic.withSkip', function(skip, limit, userIdVal) 
 Meteor.publish('Scenarios.all.Count', function() {
   Counts.publish(this, 'total_scenarios', Scenarios.find());
   Counts.publish(this, 'total_scenariosToRun', Scenarios.find({status:0}));
-})
+});
+
+ReactiveTable.publish('scenariosReactive', function () { return Scenarios.find(); }, {});

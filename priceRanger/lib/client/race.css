@@ -132,3 +132,7 @@ div.tooltip {
     right: 15px;
     position:fixed;
 }
+
+.point {
+    cursor:pointer! important;
+}
