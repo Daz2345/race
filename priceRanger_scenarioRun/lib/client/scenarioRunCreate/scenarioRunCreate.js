@@ -27,7 +27,7 @@ Template.scenarioRunCreate.events({
     },
     'click .button.submitScenarioRun': function(e) {
         var scenarioRunForm = document.getElementById('scenarioRunCreateForm');
-            ScenarioRunProductsVal = JSON.stringify(scenarioRunProducts.find().fetch());
+            ScenarioRunProductsVal = scenarioRunProducts.find().fetch();
 
         var isValid = $('.ui.form.scenarioRunCreate').form('is valid');
 
