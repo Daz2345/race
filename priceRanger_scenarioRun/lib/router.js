@@ -29,11 +29,11 @@ loggedIn.route('/scenario/:scenarioId/createscenariorun', {
 loggedIn.route('/scenarioRunsAll', {
     name: 'scenarioRunsAll',
     subscriptions: function(params, queryParams) {
-        var page = parseInt(queryParams.page, 10) || 0;
+        var page = parseInt(queryParams.page, 10);
         if (page < 0) {page = 0}
         var limit = 10,
         offset = page*limit,
-        userId = queryParams.userId || undefined;
+        userId = queryParams.userId;
         this.register("liveScenarioRuns", Meteor.subscribe('ScenarioRuns.all.public.withSkip', offset, limit, userId));        
     },
     action: function(params, queryParams) {

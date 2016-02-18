@@ -31,6 +31,14 @@ Template.scenarioRunsAllBody.helpers({
     }
 });
 
+Template.scenarioRunsAllBody.onCreated(function() {
+  var self = this;
+  self.autorun(function() {
+    self.subscribe('ScenarioRuns.all.public.withSkip');  
+  });
+});
+
+
 Template.scenarioRunsAllRow.helpers({
     pathForScenario: function() {
       var run = this;
@@ -84,6 +92,8 @@ Template.scenarioRunsAllRow.helpers({
         }
     }
   });
+  
+  
   
   Template.scenarioRunsAllFooter.helpers({
       runCount: function(){

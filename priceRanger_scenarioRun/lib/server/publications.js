@@ -3,15 +3,15 @@
 
 
 
-Meteor.publish('ScenarioRuns.lastTen', function() {
-  return ScenarioRuns.find({
+// Meteor.publish('ScenarioRuns.lastTen', function() {
+//   return ScenarioRuns.find({
     
-  }, {
-    fields: ScenarioRuns.publicFields,
-    limit: 10,
-    sort: {createdAt: -1}
-  });
-});
+//   }, {
+//     fields: ScenarioRuns.publicFields,
+//     limit: 10,
+//     sort: {createdAt: -1}
+//   });
+// });
 
 Meteor.publish('ScenarioRun.public', function(params) {
   return ScenarioRuns.find({
@@ -24,25 +24,23 @@ Meteor.publish('ScenarioRun.public', function(params) {
 });
 
 Meteor.publish('ScenarioRuns.all.public.withSkip', function(skip, limit, userIdVal) {
-  Counts.publish(this, 'total_scenarioRuns', ScenarioRuns.find())
- 
-  if (skip < 0) 
-      skip = 0;
-      
-  var options = {};
-  if(skip != 0) 
-    options.skip = skip;
+
+  var options = {
+    sort: {createdAt: -1}
+  };
   
-  options.limit = limit;
-  if (options.limit > 10)  
-    options.limit = 10;
+  if (!isNaN(skip))
+    skip <= 0 ?  options.skip = 0: options.skip = skip;
   
-  options.sort = {createdAt: -1};
-  
+  if (!isNaN(limit))
+    limit > 10 ? options.limit = 10 : options.limit = limit;
+
   var query = {};
-  if (userIdVal !== undefined)
+  if (userIdVal !== undefined) {
     query = {userId: userIdVal};
-    
+  }
+
+  // Counts.publish(this, 'total_scenarioRuns', ScenarioRuns.find())  
   return ScenarioRuns.find(query, options)
 });
 
