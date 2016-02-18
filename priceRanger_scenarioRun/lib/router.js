@@ -29,7 +29,7 @@ loggedIn.route('/scenario/:scenarioId/createscenariorun', {
 loggedIn.route('/scenarioRunsAll', {
     name: 'scenarioRunsAll',
     subscriptions: function(params, queryParams) {
-        var page = parseInt(queryParams.page, 10) | 0;
+        var page = parseInt(queryParams.page, 10) || 0;
         if (page < 0) {page = 0}
         var limit = 10,
         offset = page*limit,

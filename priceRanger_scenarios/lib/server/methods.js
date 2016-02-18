@@ -56,7 +56,7 @@ Meteor.methods({
         scenario._id = Scenarios.insert(scenario);
     },
     'Scenarios.methods.runCount' : function(scenarioIdVal) {
-        var runCount = ScenarioRuns.find({scenarioId : scenarioIdVal}).count() + 1;
+        var runCount = ScenarioRuns.find({scenarioId : scenarioIdVal}).count();
         Scenarios.update({_id : scenarioIdVal},{$set:{runs:runCount}},{upsert:true});
     }
 });

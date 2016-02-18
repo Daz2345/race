@@ -4,30 +4,30 @@
   <div class="animated fadeIn">
     {{ > scenarioRunsAll_table}}
   </div>
+  {{else}}
+  {{>loader}}
   {{/if}}
   {{ > priceHeirarchyChart}}
 </template>
 
 <template name="scenarioRunsAll_table">
-  {{#if Template.subscriptionsReady}}
-    <table class="ui selectable celled striped very unstackable compact table red">
-        {{ > scenarioRunsAllHeader}} {{ > scenarioRunsAllBody}} {{ > scenarioRunsAllFooter}} 
-    </table>
-  {{else}}
-  {{>loader}}
-  {{/if}}    
+
+<!--{{> reactiveTable collection='ScenarioRuns.all.public'}}-->
+  <table class="ui selectable celled striped very unstackable compact table red">
+      {{ > scenarioRunsAllHeader}} {{ > scenarioRunsAllBody}} {{ > scenarioRunsAllFooter}} 
+  </table>
 </template>
 
 <template name="scenarioRunsAllFooter">
-<tfoot class="full-width">
+  <tfoot class="full-width">
     <tr>
       <th>Total Runs:</th>
-      <th  class="center aligned">{{runCount}}</th>
+      <th class="center aligned">{{runCount}}</th>
       <th colspan="7">
         {{> paginationBar itemsPerPage=10 window=5 count='total_scenarioRuns'}}
       </th>
     </tr>
-  </tfoot>  
+  </tfoot>
 </template>
 
 <template name="scenarioRunsAllHeader">

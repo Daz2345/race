@@ -101,3 +101,65 @@ Template.scenarioRunsAllRow.helpers({
         }
     }
   })
+  
+// Template.scenarioRunsAll_table.onCreated(function() {
+//   var self = this;
+//   self.autorun(function() {
+//     self.subscribe('ScenarioRuns.all.public');  
+//   });
+// });
+
+// Template.scenarioRunsAll_table.helpers({
+//     settings: function() {
+//         return {
+//             rowsPerPage: 20,
+//             showFilter: false,
+//             showNavigation: 'auto',
+//             showRowCount: true,
+//             fields: [{
+//                 key: 'scenarioName',
+//                 label: "Scenario Name",
+//                 headerClass: 'center aligned collapsing point',
+//                 // tmpl: Template.tpnElement
+//             }, {
+//                 key: 'runName',
+//                 label: "Run Name",
+//                 headerClass: 'left aligned',
+//                 sortable: false,
+//                 // tmpl: Template.descriptionElement
+//             }, {
+//                 key: 'createdBy',
+//                 label: "Created",
+//                 headerClass: 'center aligned collapsing point',
+//                 // tmpl: Template.quantityElement
+//             }, {
+//                 key: 'description',
+//                 label: "Description",
+//                 headerClass: 'center aligned collapsing point',
+//                 // tmpl: Template.salesElement,
+//                 // sortOrder: 1,
+//                 // sortDirection: 'descending'
+//             }, {
+//                 key: 'delisted',
+//                 label: "Delisted",
+//                 headerClass: 'center aligned collapsing point',                
+//                 // tmpl: Template.currentPriceElement
+//             }, {
+//                 key: 'npd',
+//                 label: "NPD",
+//                 headerClass: 'center aligned collapsing point',                
+//                 // tmpl: Template.newPriceElement
+//             }, {
+//                 key: 'totalSales',
+//                 label: "Total Sales",
+//                 headerClass: 'center aligned collapsing point',                
+//                 // tmpl: Template.delistedElement
+//             }, {
+//                 key: 'totalSales',
+//                 label: "Total Sales",
+//                 headerClass: 'center aligned collapsing point',                
+//                 // tmpl: Template.delistedElement
+//             }]
+//         };
+//     }
+// });
