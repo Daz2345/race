@@ -11,7 +11,7 @@
 //     }
 // });
 
-Template.delistedCreateElement.helpers({
+Template.delistedElement.helpers({
     delistedVal: function() {
         if (this.delisted) {
             return "x";
