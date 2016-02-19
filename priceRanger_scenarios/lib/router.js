@@ -8,7 +8,7 @@ loggedIn.route('/scenarios', {
         var limit = 10,
         offset = page*limit,
         userId = queryParams.userId;
-        this.register("liveScenarios", Meteor.subscribe('Scenarios.all.basic.withSkip', offset, limit, userId));
+        this.register("liveScenarios", ScenariosSubs.subscribe('Scenarios.all.basic.withSkip', offset, limit, userId));
     },
     action: function(params, queryParams) {
         BlazeLayout.render("layout", {left: "left", main: "scenarios"});

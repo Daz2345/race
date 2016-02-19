@@ -20,7 +20,7 @@ loggedIn.route('/scenario/:scenarioId/createscenariorun', {
         BlazeLayout.render("layout", {left: "left", main: "scenarioRunCreate"});
     },
     subscriptions: function(params, queryParams) {
-        this.register("liveScenario", Meteor.subscribe('Scenario.withProducts', params));        
+        this.register("liveScenario", ScenarioRunsSubs.subscribe('Scenario.withProducts', params));        
     }
 });
 
@@ -34,7 +34,7 @@ loggedIn.route('/scenarioRunsAll', {
         var limit = 10,
         offset = page*limit,
         userId = queryParams.userId;
-        this.register("liveScenarioRuns", Meteor.subscribe('ScenarioRuns.all.public.withSkip', offset, limit, userId));        
+        this.register("liveScenarioRuns", ScenarioRunsSubs.subscribe('ScenarioRuns.all.public.withSkip', offset, limit, userId));        
     },
     action: function(params, queryParams) {
         BlazeLayout.render("layout", {left: "left", main: "scenarioRunsAll"});
