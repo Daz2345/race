@@ -26,7 +26,7 @@ Meteor.publish('ScenarioRuns.scenario.public.withSkip', function(params, skip, l
     options.limit = 10
   }
   options.sort = {
-    createdAt: 1
+    createdAt: -1
   };
   return ScenarioRuns.find({
     scenarioId: params.scenarioId

@@ -59,12 +59,12 @@
 
   <tr class="{{runStatus}}">
     <td class="collapsing">
+        {{createdBy}}<br>{{formatDate createdAt}}
+    </td>    
+    <td class="collapsing">
       <a href={{pathForScenarioRun}}> 
         {{runName}}
       </a>
-    </td>
-    <td class="collapsing">
-        {{createdBy}}<br>{{formatDate createdAt}}
     </td>
     <td>{{description}}</td>
     <td class="collapsing center aligned">{{delisted}}</td>

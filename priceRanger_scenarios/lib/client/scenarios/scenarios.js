@@ -50,7 +50,7 @@ Template.scenariosRow.helpers({
     }
   });
   
-    Template.scenariosFooter.helpers({
+  Template.scenariosFooter.helpers({
       scenariosCount: function(){
         return Counts.get('total_scenarios');            
       }
