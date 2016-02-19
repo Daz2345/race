@@ -70,7 +70,7 @@ Template.scenarioRunsAllRow.helpers({
             return "error disabled";
             break;
         case 0:
-            return "warning disabled";
+            return "warning";
             break;
         case 1:
             return "";
