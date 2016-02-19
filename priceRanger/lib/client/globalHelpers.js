@@ -1,11 +1,6 @@
 Template.registerHelper('formatDate', function(date) {
   // return moment(date).format('HH:mm - DD-MM-YYYY');
   return moment(date).calendar(null, {
-    sameDay: '[Today]',
-    nextDay: '[Tomorrow]',
-    nextWeek: 'dddd',
-    lastDay: '[Yesterday]',
-    lastWeek: '[Last] dddd',
     sameElse: 'DD/MM/YYYY'
 });
 });
