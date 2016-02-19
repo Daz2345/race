@@ -21,9 +21,11 @@
 </template>
 
 <template name="scenarioRunTable">
-  <table class="ui selectable celled striped table blue">
-    {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}
-  </table>
+  {{> reactiveTable settings=settings class="ui selectable celled striped very unstackable compact table blue"}}
+
+  <!--<table class="ui selectable celled striped table blue">-->
+  <!--  {{ > scenarioRunHeader}} {{ > scenarioRunBody}} {{ > scenarioRunFooter}}-->
+  <!--</table>-->
 </template>
 
 <template name="scenarioRunFooter">
@@ -79,4 +81,16 @@
     <td class="collapsing center aligned">{{new_price}}</td>
     <td class="collapsing center aligned">{{delistedVal}}</td>
   </tr>
+</template>
+
+<template name="delistedElement">
+  <div id="delist" class="collapsing center aligned">
+      {{delistedVal}}
+  </div>
+</template>
+
+<template name="newPriceElement">
+  <div class="collapsing center aligned">
+    {{new_price}}
+  </div>
 </template>

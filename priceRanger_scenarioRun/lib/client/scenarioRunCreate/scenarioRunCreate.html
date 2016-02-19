@@ -58,40 +58,40 @@
   </div>
 </template>
 
-<template name="delistedElement">
-  <div id="delist" class="collapsing center aligned">
+<template name="delistedCreateElement">
+  <div id="delist" class="collapsing center aligned enabled">
       <input type="checkbox" name="{{_id}}" tabindex="0">
   </div>
 </template>
 
 <template name="quantityElement">
-  <div id="quantity" class="collapsing center aligned {{disableIfDelisted}}">
+  <div id="quantity" class="collapsing center aligned">
     {{formatNoDecimals quantity}} 
   </div>
 </template>
 
 <template name="salesElement">
-  <div id="sales" class="collapsing center aligned {{disableIfDelisted}}">
+  <div id="sales" class="collapsing center aligned">
     {{formatCurrencyNoDecimals sales}}
   </div>
 </template>
     
 <template name="currentPriceElement">
-  <div id="price" class="collapsing center aligned {{disableIfDelisted}}">
+  <div id="price" class="collapsing center aligned">
     {{formatCurrency price}}
   </div>
 </template>    
 
-<template name="newPriceElement">
+<template name="newPriceCreateElement">
   <div class="ui fluid transparent input {{disableIfDelisted}}">
     <input id="priceField" type="number" step=0.01 min="0" value={{new_price}} name="{{_id}}" class="ui new_price new_price{{_id}}">
   </div>
 </template>
 
 <template name="tpnElement">
-  <div id="tpn" class="collapsing center aligned {{disableIfDelisted}}">{{tpn}}</div>
+  <div id="tpn" class="collapsing center aligned">{{tpn}}</div>
 </template>
 
 <template name="descriptionElement">
-  <div id="description" class="left aligned {{disableIfDelisted}}">{{description}}</div>
+  <div id="description" class="left aligned">{{description}}</div>
 </template>

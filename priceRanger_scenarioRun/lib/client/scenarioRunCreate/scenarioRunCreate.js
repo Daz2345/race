@@ -159,11 +159,11 @@ Template.scenarioRunCreateSummary.helpers({
     }
 });
 
-Template.newPriceElement.helpers({
+Template.newPriceCreateElement.helpers({
     disableIfDelisted: function() {
         if (this.delisted) 
             return "disabled";
-    },
+    }
 });
 
 Template.scenarioRunCreateTable.helpers({
@@ -206,12 +206,12 @@ Template.scenarioRunCreateTable.helpers({
                 key: 'new_price',
                 label: "New Price",
                 headerClass: 'center aligned collapsing point',                
-                tmpl: Template.newPriceElement
+                tmpl: Template.newPriceCreateElement
             }, {
                 key: 'delisted',
                 label: "Delisted",
                 headerClass: 'center aligned collapsing point',                
-                tmpl: Template.delistedElement
+                tmpl: Template.delistedCreateElement
             }]
         };
     }

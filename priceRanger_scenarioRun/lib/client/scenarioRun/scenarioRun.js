@@ -1,17 +1,17 @@
-Template.scenarioRunBody.helpers({
-    products: function() {
-        var runIdVal = FlowRouter.getParam("runId"),
-            scenarioIdVal = FlowRouter.getParam("scenarioId"),
-            allProducts = ScenarioRuns.findOne({
-                _id: runIdVal,
-                scenarioId: scenarioIdVal
-            }).products
-            // odds = _.reject(allProducts, function(product){ return product.delisted === true; });    
-        return allProducts;
-    }
-});
+// Template.scenarioRunBody.helpers({
+//     products: function() {
+//         var runIdVal = FlowRouter.getParam("runId"),
+//             scenarioIdVal = FlowRouter.getParam("scenarioId"),
+//             allProducts = ScenarioRuns.findOne({
+//                 _id: runIdVal,
+//                 scenarioId: scenarioIdVal
+//             }).products;
+//             // odds = _.reject(allProducts, function(product){ return product.delisted === true; });    
+//         return allProducts;
+//     }
+// });
 
-Template.scenarioRunRow.helpers({
+Template.delistedCreateElement.helpers({
     delistedVal: function() {
         if (this.delisted) {
             return "x";
@@ -103,8 +103,6 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     document.body.removeChild(link);
 }
 
-
-
 Template.exportScenarioRun.events({
     'click .exportScenarioRun': function(event) {
         var runIdVal = FlowRouter.getParam("runId"),
@@ -116,4 +114,55 @@ Template.exportScenarioRun.events({
 
         JSONToCSVConvertor(exportData, nameFile, true);
     }
-})
+});
+
+Template.scenarioRunTable.helpers({
+    settings: function() {
+        return {
+            collection: ScenarioRuns.findOne().products,
+            rowsPerPage: 20,
+            showFilter: false,
+            showNavigation: 'auto',
+            showRowCount: true,
+            fields: [{
+                key: 'tpn',
+                label: "TPN",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.tpnElement
+            }, {
+                key: 'description',
+                label: "Description",
+                headerClass: 'left aligned',
+                sortable: false,
+                tmpl: Template.descriptionElement
+            }, {
+                key: 'quantity',
+                label: "QTY",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.quantityElement
+            }, {
+                key: 'sales',
+                label: "Sales",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.salesElement,
+                sortOrder: 1,
+                sortDirection: 'descending'
+            }, {
+                key: 'price',
+                label: "Current Price",
+                headerClass: 'center aligned collapsing point',                
+                tmpl: Template.currentPriceElement
+            }, {
+                key: 'new_price',
+                label: "New Price",
+                headerClass: 'center aligned collapsing point',                
+                tmpl: Template.newPriceElement
+            }, {
+                key: 'delisted',
+                label: "Delisted",
+                headerClass: 'center aligned collapsing point',                
+                tmpl: Template.delistedElement
+            }]
+        };
+    }
+});
