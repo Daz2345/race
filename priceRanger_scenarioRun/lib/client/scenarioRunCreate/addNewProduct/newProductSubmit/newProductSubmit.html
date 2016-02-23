@@ -2,12 +2,10 @@
     <div class="ui modal newProductSubmitModal">
         <i class="close icon"></i>
         <div class="header">Add New Product</div>
-
         <div class="ui top attached tabular active menu">
             <a class="item active" data-tab="single">Single</a>
             <a class="item" data-tab="multiple">Multiple</a>
         </div>
-
         <div class="ui tab active" data-tab="single">
             <div class="ui basic segment">
                 {{ > newProductForm}}
@@ -15,31 +13,18 @@
         </div>
         <div class="ui tab" data-tab="multiple">
             <div class="ui basic segment">
-                <div class="ui form">
-                    <div class="field">
-                        <label>Products</label>
-                        <div class="ui warning">
-                            <div class="header">
-                                Still to be completed!
-                            </div>
-                        </div>
-                        <textarea class="inputProducts">Description,Performance,Price,Substitute1,Substitute2,Substitute3</textarea>
-                    </div>
-                </div>
+                {{ > bulkNewProductForm}}
             </div>
         </div>
-
         <div class="actions">
             <div class="ui positive right labeled icon button"><i class="checkmark icon"></i>Add Product{{plural}}</div>
         </div>
-
     </div>
 </template>
 
 <template name="newProductForm">
     <form id="newProductSubmit" class="ui form newProductSubmit submit" autocomplete="off">
         <div class="ui two column grid">
-
             <div class="column">
                 <div class="field">
                     <label>Description:</label>
@@ -71,7 +56,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="column">
                 <div class="field">
                     <label for="similarProducts">Similar Products:</label>
@@ -82,7 +66,6 @@
                 </div>
             </div>
         </div>
-
     </form>
     {{#if validationErrorsVal}}
     <div class="ui error message">
@@ -95,4 +78,13 @@
 
 <template name="similarProduct">
     <option value={{tpn}} data-value={{tpn}}>{{description}} - {{price}}</option>
+</template>
+
+<template name="bulkNewProductForm">
+    <div class="ui form bulkNewProductSubmit submit">
+        <div class="field">
+            <label>Products</label>
+            <textarea class="inputProducts">Description,Performance,Price,Substitute1,Substitute2,Substitute3</textarea>
+        </div>
+    </div>
 </template>

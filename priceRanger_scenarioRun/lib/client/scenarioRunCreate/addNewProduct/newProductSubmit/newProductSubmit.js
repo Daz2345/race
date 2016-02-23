@@ -41,7 +41,7 @@ Template.newProductSubmitModal.hooks({
               tpn: parseInt(tpnVal, 10),
               description: newProductSubmitModalForm.form('get value', 'description'),
               similar: similarTPNS,
-              new_price: parseFloat(newProductSubmitModalForm.form('get value', 'price')),
+              new_price: parseFloat(newProductSubmitModalForm.form('get value', 'price')).toFixed(2),
               performance: performanceVal,
               sales: 0,
               price: 0,
@@ -52,8 +52,9 @@ Template.newProductSubmitModal.hooks({
             scenarioRunProducts.insert(product);
 
             newProductSubmitModalForm.form('clear');
-
+            
             return true;
+            
           }
           else {
             if (performanceVal === undefined) 
@@ -63,6 +64,7 @@ Template.newProductSubmitModal.hooks({
               createError('pricePrompt', "<li>Please enter a price</li>");
             
             return false;
+            
           }
         }
         else {
@@ -70,26 +72,19 @@ Template.newProductSubmitModal.hooks({
               productsObj = Papa.parse(inputProducts, {header: true, dynamicTyping: true}).data,
               products = scenarioRunProducts.find().fetch();
 
-          console.log(inputProducts);
-          console.log(productsObj);
-          console.log(products);
-          
           function insertProduct(element, index, list) {
 
-            tpnVal = _.where(products, {
+            tpnVal = scenarioRunProducts.find({
               "npd": true
-            }).length + 100;
+            }).count() + 100;
 
             var similarVal = [];
             
             // to be checked if it works
-            
             for (var i = 1; i < 4; i++) {
               if (element.Substitute + i !== "")
                 if (_.contains(products, element.Substitute + i)) {
                   similarVal.push(element.Substitute + i);
-                } else {
-                  return true;
                 }
             }
 
@@ -97,22 +92,21 @@ Template.newProductSubmitModal.hooks({
               tpn: tpnVal,
               description: element.Description,
               similar: similarVal,
-              new_price: parseFloat(element.Price),
+              new_price: parseFloat(element.Price).toFixed(2),
               performance: element.Performance.toUpperCase(),
               sales: 0,
               price: 0,
               quantity: 0,
               npd: true
             };
-            return scenarioRunProducts.insert(product);
+            scenarioRunProducts.insert(product);
           }
-
+          
           productsObj.forEach(insertProduct);
-
-          newProductSubmitModalForm.form('clear');
-
+          $('.ui.form.bulkNewProductSubmit.submit').form('clear');
+          $('.inputProducts').val('Description,Performance,Price,Substitute1,Substitute2,Substitute3');
           return true;
-
+          
         }
       }
     });
