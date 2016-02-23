@@ -65,55 +65,55 @@ Template.newProductSubmitModal.hooks({
             return false;
           }
         }
-        // else {
-        //   var inputProducts = $('.inputProducts').val(),
-        //   productsObj = Papa.parse(inputProducts, {header: true, dynamicTyping: true}).data;
+        else {
+          var inputProducts = $('.inputProducts').val(),
+              productsObj = Papa.parse(inputProducts, {header: true, dynamicTyping: true}).data,
+              products = scenarioRunProducts.find().fetch();
 
-        //   console.log(inputProducts);
-        //   console.log(productsObj);
+          console.log(inputProducts);
+          console.log(productsObj);
+          console.log(products);
+          
+          function insertProduct(element, index, list) {
 
-        //   var products = scenarioRunProducts.get()
+            tpnVal = _.where(products, {
+              "npd": true
+            }).length + 100;
 
-        //   function insertProduct(element, index, list) {
-
-        //     tpnVal = _.where(products, {
-        //       "npd": true
-        //     }).length + 100;
-
-        //     var similarVal = [];
+            var similarVal = [];
             
-        //     // to be checked if it works
+            // to be checked if it works
             
-        //     for (var i = 1; i < 4; i++) {
-        //       if (element.Substitute + i !== "")
-        //         similarVal.push(element.Substitute + i);
-        //     }
+            for (var i = 1; i < 4; i++) {
+              if (element.Substitute + i !== "")
+                if (_contains(products, element.Substitute + i)) {
+                  similarVal.push(element.Substitute + i);
+                } else {
+                  return true;
+                }
+            }
 
-        //     var product = {
-        //       tpn: tpnVal,
-        //       description: element.Description,
-        //       similar: similarVal,
-        //       new_price: element.Price,
-        //       performance: element.Performance,
-        //       sales: 0,
-        //       price: 0,
-        //       quantity: 0,
-        //       npd: true
-        //     };
-        //     products.push(product);
+            var product = {
+              tpn: tpnVal,
+              description: element.Description,
+              similar: similarVal,
+              new_price: parseFloat(element.Price),
+              performance: element.Performance.toUpperCase(),
+              sales: 0,
+              price: 0,
+              quantity: 0,
+              npd: true
+            };
+            return scenarioRunProducts.insert(product);
+          }
 
-        //   }
+          productsObj.forEach(insertProduct);
 
-        //   // productsObj.forEach(insertProduct);
+          newProductSubmitModalForm.form('clear');
 
-        //   // var productsSorted = _.sortBy(products, 'sales');
+          return true;
 
-        //   // scenarioRunProducts.set(productsSorted);
-        //   newProductSubmitModalForm.form('clear');
-
-        //   return true;
-
-        // }
+        }
       }
     });
   }

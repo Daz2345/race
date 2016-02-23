@@ -70,7 +70,7 @@ Template.scenarioSubmit.hooks({
 
                 Meteor.call('Scenarios.methods.insert', scenarioObj, function(err, res){
                   if (err) {
-                    alert(err);
+                    Bert.alert(err.reason, 'danger', 'fixed-top' );
                   }
                   else {
                     scenarioForm.reset();

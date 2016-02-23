@@ -40,23 +40,46 @@
 
 
 Meteor.methods({
-    'Scenarios.methods.insert' : function(scenarioObj) {
-
+    'Scenarios.methods.insert': function(scenarioObj) {
+        if (!Meteor.user()) 
+            throw new Meteor.Error("no-user", "You must be logged in to create a scenario");
+        
         var scenarioExtend = {
-          status : 0,
-          productsCount : scenarioObj.products.length,
-          createdAt : new Date(),
-          createdBy : Meteor.user().displayName,
-          userId: Meteor.userId(),
-          runs: 0
-        };
-        
-        var scenario = _.extend(scenarioObj, scenarioExtend);
-        
-        scenario._id = Scenarios.insert(scenario);
+            status: 0,
+            productsCount: scenarioObj.products.length,
+            createdAt: new Date(),
+            createdBy: Meteor.user().displayName,
+            userId: this.userId,
+            live: true,
+            runs: 0
+        },
+        scenario = _.extend(scenarioObj, scenarioExtend);
+        return Scenarios.insert(scenario);
     },
-    'Scenarios.methods.runCount' : function(scenarioIdVal) {
-        var runCount = ScenarioRuns.find({scenarioId : scenarioIdVal}).count();
-        Scenarios.update({_id : scenarioIdVal},{$set:{runs:runCount}},{upsert:true});
+    'Scenarios.methods.remove': function(scenarioId) {
+        var scenarioToRemove =  Scenarios.find({_id: scenarioId});
+        
+        if (scenarioToRemove.userId !== this.userId) 
+            throw new Meteor.Error("not-owned", "You can only delete a Scenario that you have created");
+               
+        return Scenarios.remove({
+            _id: scenarioId
+        });
+    },
+    'Scenarios.methods.runCount': function(scenarioIdVal) {
+        if (Meteor.user() !== null) {
+            var runCount = ScenarioRuns.find({
+                scenarioId: scenarioIdVal
+            }).count();
+            Scenarios.update({
+                _id: scenarioIdVal
+            }, {
+                $set: {
+                    runs: runCount
+                }
+            }, {
+                upsert: true
+            });
+        }
     }
 });
