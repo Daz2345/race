@@ -86,7 +86,7 @@ Template.newProductSubmitModal.hooks({
             
             for (var i = 1; i < 4; i++) {
               if (element.Substitute + i !== "")
-                if (_contains(products, element.Substitute + i)) {
+                if (_.contains(products, element.Substitute + i)) {
                   similarVal.push(element.Substitute + i);
                 } else {
                   return true;
