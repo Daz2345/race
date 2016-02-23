@@ -4,6 +4,7 @@ Template.paginationBar.helpers({
   isRequired: function(count) {
     var total;
     total = Math.ceil(Counts.get(count) / this.itemsPerPage);
+    console.log(count);
     return (total > 0);
   },
   pages: function(count) {

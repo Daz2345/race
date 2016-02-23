@@ -1,5 +1,5 @@
 <template name="paginationBar">
-    {{#if isRequired}}
+    {{#if isRequired this.count}}
     <div class="ui right floated pagination menu">
         {{#if showMinus}}
             <a class="icon item first-button first">

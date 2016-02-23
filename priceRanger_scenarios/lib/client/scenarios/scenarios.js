@@ -15,12 +15,12 @@ Template.scenarios.helpers({
   }
 });
 
-Template.scenariosBody.onCreated(function() {
-  var self = this;
-  self.autorun(function() {
-    self.subscribe('Scenarios.all.basic.withSkip');  
-  });
-});
+// Template.scenariosBody.onCreated(function() {
+//   var self = this;
+//   self.autorun(function() {
+//     self.subscribe('Scenarios.all.basic.withSkip');  
+//   });
+// });
 
 Template.scenariosRow.helpers({
     pathForScenario: function() {
