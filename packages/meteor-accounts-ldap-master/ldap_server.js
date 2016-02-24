@@ -121,10 +121,10 @@ Accounts.registerLoginHandler("ldap", function (request) {
   var user = Meteor.users.findOne({username: request.username.toLowerCase()});
   if (user) {
     userId = user._id;
-    console.log("update")
+    userObj.lastLoggedIn = new Date();
     Meteor.users.update(userId, {$set: userObj});
   } else {
-    console.log("insert")
+    userObj.firstSignIn = new Date();
     userId = Meteor.users.insert(userObj);
   }
   if(Meteor.settings.ldap.autopublishFields) {

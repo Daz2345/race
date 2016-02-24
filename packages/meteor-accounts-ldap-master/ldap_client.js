@@ -1,4 +1,6 @@
-var firstAttempt = true;
+Template.ldapLogin.onCreated(function(){
+  Session.set("firstAttempt", true);
+});
 
 Template.ldapLogin.events({
   'click button[name="login"]': function(e, tpl) {
@@ -27,7 +29,7 @@ Meteor.loginWithLdap = function (username, password, callback) {
 
 Template.ldapLogin.helpers({
   failedLogin : function(){
-    return !firstAttempt; //return true if more than one attempt has been made. Show Error Message
+    return !Session.get("firstAttempt"); //return true if more than one attempt has been made. Show Error Message
   }
 });
 
@@ -41,7 +43,7 @@ initLogin = function(e, tpl) {
         FlowRouter.go('/');
         return true;
       } else {
-        firstAttempt = false;
+        Session.set("firstAttempt", false);
         return false;
       }
     });

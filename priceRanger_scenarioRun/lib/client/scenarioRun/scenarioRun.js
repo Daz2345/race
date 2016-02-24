@@ -130,6 +130,9 @@ Template.scenarioRunTable.helpers({
             rowsPerPage: 20,
             showFilter: false,
             showNavigation: 'auto',
+            rowClass: function(item) {
+                return item.delisted ? 'disabled':"";
+            },
             showRowCount: true,
             fields: [{
                 key: 'tpn',
