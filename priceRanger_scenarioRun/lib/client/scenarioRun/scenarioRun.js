@@ -129,7 +129,6 @@ Template.scenarioRunTable.helpers({
             collection: ScenarioRuns.findOne().products,
             rowsPerPage: 20,
             showFilter: false,
-            showColumnToggles: true,
             showNavigation: 'auto',
             rowClass: function(item) {
                 return item.delisted ? 'disabled':"";
