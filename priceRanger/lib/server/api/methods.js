@@ -1,4 +1,5 @@
 Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
+    
     Scenarios.update({_id : scenarioId}, {$set:scenarioUpdate});
     // if (scenarioUpdate.status > 0) {
     //     var originalScenario = Scenarios.findOne({_id : scenarioId});
@@ -11,6 +12,7 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
         
     //     Messages.insert(messageVal)
     // }
+    
     },{
         url: '/api/scenarioupdate/',
         getArgsFromRequest: function (request) {
@@ -58,18 +60,17 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
     },{
         url: '/api/scenariorunupdate/',
         getArgsFromRequest: function (request) {
-            var content = request.body;
-
-            var originalScenarioRun = ScenarioRuns.findOne({_id : content.scenarioRunId});
+            var content = request.body,
+                originalScenarioRun = ScenarioRuns.findOne({_id : content.scenarioRunId});
 
             function shapeProducts(element, index, list){
-                element.price = parseFloat(element.price.toFixed(2)),
-                element.new_price = parseFloat(element.new_price.toFixed(2)),
+                element.price = parseFloat(element.price).toFixed(2),
+                element.new_price = parseFloat(element.new_price).toFixed(2),
                 element.tpn = parseInt(element.tpn, 10),
-                element.quantity = parseFloat(element.quantity.toFixed(0)),
-                element.sales = parseFloat(element.spend.toFixed(2));
-                element.new_quantity = parseFloat(element.new_quantity.toFixed(0)),
-                element.new_sales = parseFloat(element.new_sales.toFixed(2));
+                element.quantity = parseFloat(element.quantity).toFixed(0),
+                element.sales = parseFloat(element.spend).toFixed(2);
+                element.new_quantity = parseFloat(element.new_quantity).toFixed(0),
+                element.new_sales = parseFloat(element.new_sales).toFixed(2);
             }
             
             if (content.scenarioRunUpdate.products !== undefined)            
@@ -90,6 +91,7 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
                 update.status = content.scenarioRunUpdate.status;
 
             console.log('ScenarioRunUpdate via API');
+            console.log(request.body);            
             console.log(id);
             console.log(update);
                 
