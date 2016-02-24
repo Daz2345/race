@@ -92,7 +92,7 @@ Template.newProductSubmitModal.hooks({
               tpn: tpnVal,
               description: element.Description,
               similar: similarVal,
-              new_price: parseFloat(element.Price).toFixed(2),
+              new_price: parseFloat(element.Price),
               performance: element.Performance.toUpperCase(),
               sales: 0,
               price: 0,

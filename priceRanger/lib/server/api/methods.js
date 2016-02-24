@@ -46,6 +46,7 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
                 update.status = content.scenarioUpdate.status;
 
             console.log('ScenarioUpdate via API');
+            console.log(request.body);
             console.log(id);
             console.log(update);
             
