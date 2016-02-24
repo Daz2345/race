@@ -3,9 +3,8 @@ Template.tableHeader.helpers({
         var route = FlowRouter.getRouteName(),
             Title = route.toProperCase(),
             scenarioId = FlowRouter.getParam("scenarioId"),
-            ScenarioName = Scenarios.findOne({
-                _id: scenarioId
-            }).name.toProperCase() || "";
+            Scenario = Scenarios.findOne({_id: scenarioId}),
+            ScenarioName = (Scenario !== undefined) ? Scenario.name.toProperCase() : "";
 
         if (route === "") {
 
@@ -16,6 +15,7 @@ Template.tableHeader.helpers({
                 return "All Scenario Runs";
                 break;
             case "scenario":
+                
                 return "Scenario Runs for - " + ScenarioName;
                 break;
             case "scenarios":
