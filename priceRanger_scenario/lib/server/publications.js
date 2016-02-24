@@ -17,17 +17,18 @@ Meteor.publish('ScenarioRuns.scenario.public.withSkip', function(params, skip, l
   }));
   
   if (skip < 0) {skip = 0}
-  var options = {};
+  var options = {
+    sort: {createdAt: -1}
+  };
+  
   if (skip != 0) {
     options.skip = skip;
   }
   options.limit = limit;
   if (options.limit > 10) {
-    options.limit = 10
+    options.limit = 10;
   }
-  options.sort = {
-    createdAt: -1
-  };
+
   return ScenarioRuns.find({
     scenarioId: params.scenarioId
   }, options);
