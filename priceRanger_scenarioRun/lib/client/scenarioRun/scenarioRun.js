@@ -129,6 +129,7 @@ Template.scenarioRunTable.helpers({
             collection: ScenarioRuns.findOne().products,
             rowsPerPage: 20,
             showFilter: false,
+            showColumnToggles: true,
             showNavigation: 'auto',
             rowClass: function(item) {
                 return item.delisted ? 'disabled':"";
@@ -154,14 +155,24 @@ Template.scenarioRunTable.helpers({
                 key: 'sales',
                 label: "Sales",
                 headerClass: 'center aligned collapsing point',
-                tmpl: Template.salesElement,
-                sortOrder: 1,
-                sortDirection: 'descending'
+                tmpl: Template.salesElement
             }, {
                 key: 'price',
                 label: "Current Price",
                 headerClass: 'center aligned collapsing point',                
                 tmpl: Template.currentPriceElement
+            }, {
+                key: 'new_quantity',
+                label: "New QTY",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.newQuantityElement
+            }, {
+                key: 'new_sales',
+                label: "New Sales",
+                headerClass: 'center aligned collapsing point',
+                tmpl: Template.newSalesElement,
+                sortOrder: 1,
+                sortDirection: 'descending'
             }, {
                 key: 'new_price',
                 label: "New Price",

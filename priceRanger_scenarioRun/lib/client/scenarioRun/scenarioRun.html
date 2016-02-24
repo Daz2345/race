@@ -94,3 +94,15 @@
     {{new_price}}
   </div>
 </template>
+
+<template name="newQuantityElement">
+  <div id="quantity" class="collapsing center aligned">
+    {{formatNoDecimals new_quantity}} 
+  </div>
+</template>
+
+<template name="newSalesElement">
+  <div id="sales" class="collapsing center aligned">
+    {{formatCurrencyNoDecimals new_sales}}
+  </div>
+</template>

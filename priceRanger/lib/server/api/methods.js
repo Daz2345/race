@@ -21,11 +21,10 @@ Meteor.method('ScenarioUpdate', function(scenarioId, scenarioUpdate){
             var originalScenario = Scenarios.findOne({_id : content.scenarioId});
 
             function shapeProducts(element, index, list){
-                element.price = parseFloat(element.price.toFixed(2)),
+                element.price = parseFloat(element.price),
                 element.tpn = parseInt(element.tpn, 10),
-                element.quantity = parseFloat(element.quantity.toFixed(0)),
-                element.sales = parseFloat(element.spend.toFixed(2)),
-                element.description = element.description;
+                element.quantity = parseFloat(element.quantity),
+                element.sales = parseFloat(element.spend);
             }
 
             if (content.scenarioUpdate.products !== undefined){
@@ -64,13 +63,13 @@ Meteor.method('ScenarioRunUpdate', function(scenarioRunId, scenarioRunUpdate){
                 originalScenarioRun = ScenarioRuns.findOne({_id : content.scenarioRunId});
 
             function shapeProducts(element, index, list){
-                element.price = parseFloat(element.price).toFixed(2),
-                element.new_price = parseFloat(element.new_price).toFixed(2),
+                element.price = parseFloat(element.price),
+                element.new_price = parseFloat(element.new_price),
                 element.tpn = parseInt(element.tpn, 10),
-                element.quantity = parseFloat(element.quantity).toFixed(0),
-                element.sales = parseFloat(element.spend).toFixed(2);
-                element.new_quantity = parseFloat(element.new_quantity).toFixed(0),
-                element.new_sales = parseFloat(element.new_sales).toFixed(2);
+                element.quantity = parseFloat(element.quantity),
+                element.sales = parseFloat(element.spend),
+                element.new_quantity = parseFloat(element.new_quantity),
+                element.new_sales = parseFloat(element.new_sales);
             }
             
             if (content.scenarioRunUpdate.products !== undefined)            
