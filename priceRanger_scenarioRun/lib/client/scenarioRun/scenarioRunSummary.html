@@ -1,0 +1,40 @@
+<template name="scenarioRunSummary">
+
+    <div class="ui tiny statistic">
+      <div class="label">Products</div>
+      <div class="value">{{productsCount}}</div>      
+    </div>
+
+    <div class="ui tiny statistic">
+      <div class="label">Quantity</div>
+      <div class="value">{{formatNoDecimals quantitySum}}</div>
+    </div>
+
+    <div class="ui tiny statistic">
+      <div class="label">Sales</div>
+      <div class="value">{{formatCurrencyNoDecimals salesSum}}</div>
+    </div>
+
+    <div class="ui tiny statistic">
+      <div class="label">Average Price</div>
+      <div class="value">{{formatCurrency priceAverage}}</div>      
+    </div>
+
+    <div class="ui tiny statistic">
+      <div class="label">Delisted</div>
+      <div class="value">{{delistCount}}</div>      
+    </div>
+
+    <div class="ui tiny statistic">
+      <div class="label">NPD</div>
+      <div class="value">{{npdCount}}</div>      
+    </div>
+
+  <!--<div class="label">Total Products : {{productsCount}}</div>-->
+  <!--<div class="item">Quantity Sold : {{formatNoDecimals quantitySum}}</div>-->
+  <!--<div class="item">Sales : {{formatCurrencyNoDecimals salesSum}}</div>-->
+  <!--<div class="item">Average Price : {{formatCurrency priceAverage}}</div>-->
+  <!--<div class="item">Delisted : {{delistCount}}</div>-->
+  <!--<div class="item">NPD : {{npdCount}}</div>-->
+
+</template>

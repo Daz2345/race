@@ -1,31 +1,26 @@
 <template name="scenarioRunCreate">
-    <h1 class="ui header">Create Scenario Run for - {{scenario.name}}</h1> 
-    <form id="scenarioRunCreateForm" class="ui form scenarioRunCreate" autocomplete="off">
-      {{ > CreateScenarioRunActions}}
-      <div class="ui error message"></div>
-      {{ > CreateScenarioRunTextInputs}} 
-      {{#if isReady}}
-        {{ > scenarioRunCreateTable}}
-      {{else}} 
-        {{ > loader}} 
-      {{/if}}
-    </form>
+  <h1 class="ui header">Create Scenario Run for - {{scenario.name}}</h1>
+  <form id="scenarioRunCreateForm" class="ui form scenarioRunCreate" autocomplete="off">
+    {{ > CreateScenarioRunActions}}
+    <div class="ui error message"></div>
+    {{ > CreateScenarioRunTextInputs}}
+
+    <div class="ui top attached tabular menu">
+      <a class="active item" data-tab="first">Data Table</a>
+      <a class="item" data-tab="second">Summary</a>
+    </div>
+
+    <div class="ui bottom attached active tab basic segment" data-tab="first">
+      {{#if isReady}} {{ > scenarioRunCreateTable}} {{else}} {{ > loader}} {{/if}}
+    </div>
+    <div class="ui bottom attached tab basic segment" data-tab="second">
+      {{ > scenarioRunSummary}}
+    </div>
+  </form>
 </template>
 
 <template name="scenarioRunCreateTable">
   {{> reactiveTable settings=settings class="ui selectable celled striped very unstackable compact table blue"}}
-</template>
-
-<template name="scenarioRunCreateSummary">
-  <h1>Summary</h1>
-  <div class="ui list">
-    <div class="item">Total Products : {{productsCount}}</div>
-    <div class="item">Quantity Sold : {{formatNoDecimals quantitySum}} </div>
-    <div class="item">Sales : {{formatCurrencyNoDecimals salesSum}}</div>
-    <div class="item">Average Price : {{formatCurrency priceAverage}}</div>
-    <div class="item">Delisted : {{delistCount}}</div>
-    <div class="item">NPD : {{npdCount}}</div>
-  </div>
 </template>
 
 <template name="CreateScenarioRunActions">

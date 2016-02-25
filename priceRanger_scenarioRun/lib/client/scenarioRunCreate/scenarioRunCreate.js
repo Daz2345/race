@@ -88,6 +88,7 @@ Template.scenarioRunCreate.events({
 // });
 
 Template.scenarioRunCreate.onCreated(function() {
+   
     FlowRouter.subsReady("liveScenario", function() {
 
         scenarioRunProducts.remove({});
@@ -100,11 +101,14 @@ Template.scenarioRunCreate.onCreated(function() {
             doc.new_price = doc.price;
             scenarioRunProducts.insert(doc);
         });
+        
     });
+    
 });
 
 Template.scenarioRunCreate.hooks({
     rendered: function() {
+
         $('.ui.form.scenarioRunCreate')
             .form({
                 fields: {
@@ -124,6 +128,8 @@ Template.scenarioRunCreate.hooks({
                     },
                 }
             });
+        $('.tabular.menu .item').tab();            
+            
     }
 });
 
@@ -132,32 +138,6 @@ Template.scenarioRunCreate.hooks({
 //         $('.ui.checkbox').checkbox();
 //     }
 // });
-
-Template.scenarioRunCreateSummary.helpers({
-    productsCount: function() {
-        return scenarioRunProducts.find({delisted:{$not:true}}).count();
-    },
-    quantitySum : function (){
-        var products = scenarioRunProducts.find({delisted:{$not:true}}).fetch();
-        return _.reduce(products, function(quantityTotal, product){return quantityTotal + product.quantity; }, 0);
-    },
-    salesSum: function (){
-        var products = scenarioRunProducts.find({delisted:{$not:true}}).fetch();        
-        return _.reduce(products, function(salesTotal, product){ return salesTotal + product.sales;}, 0);        
-    },
-    priceAverage: function (){
-        var products = scenarioRunProducts.find({delisted:{$not:true}}).fetch(),       
-         sales = _.reduce(products, function(priceTotal, product){ return priceTotal + product.sales;}, 0),
-         quantity = _.reduce(products, function(quantityTotal, product){return quantityTotal + product.quantity; }, 0);
-        return sales/quantity;
-    },
-    delistCount: function (){
-        return scenarioRunProducts.find({delisted: true}).count()
-    },
-    npdCount: function (){
-        return scenarioRunProducts.find({npd: true}).count()
-    }
-});
 
 Template.newPriceCreateElement.helpers({
     disableIfDelisted: function() {

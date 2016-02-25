@@ -1,5 +1,6 @@
 <template name="scenarioRun">
-  {{#if isReady}} {{ > tableHeader}}
+  
+  {{ > tableHeader}}
 
   <div class="ui top attached compact basic horizontal segments">
     <div class="ui basic compact right aligned segment">
@@ -7,11 +8,18 @@
     </div>
   </div>
 
+    <div class="ui top attached tabular menu">
+      <a class="active item" data-tab="first">Data Table</a>
+      <a class="item" data-tab="second">Summary</a>
+    </div>
 
-  <div class="animated fadeIn">
-    {{ > scenarioRunTable}}
-  </div>
-  {{else}} {{>loader}} {{/if}}
+    <div class="ui bottom attached active tab basic segment" data-tab="first">
+      {{#if isReady}} {{ > scenarioRunTable}} {{else}} {{ > loader}} {{/if}}
+    </div>
+    <div class="ui bottom attached tab basic segment" data-tab="second">
+      {{ > scenarioRunSummary}}
+    </div>
+    
 </template>
 
 <template name="exportScenarioRun">

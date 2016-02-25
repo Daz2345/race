@@ -19,6 +19,25 @@ Template.delistedElement.helpers({
     }
 });
 
+Template.scenarioRun.onCreated(function() {
+   
+    FlowRouter.subsReady("liveScenario", function() {
+
+        scenarioRunProducts.remove({});
+
+        var prods = ScenarioRuns.findOne({
+            _id: FlowRouter.getParam("runId")
+        }).products;
+
+        _.each(prods, function(doc) {
+            doc.new_price = doc.price;
+            scenarioRunProducts.insert(doc);
+        });
+        
+    });
+    
+});
+
 Template.scenarioRun.helpers({
     isReady: function(sub) {
         if (sub) {
@@ -129,6 +148,7 @@ Template.scenarioRunTable.helpers({
             collection: ScenarioRuns.findOne().products,
             rowsPerPage: 20,
             showFilter: false,
+            showColumnToggles: true,
             showNavigation: 'auto',
             rowClass: function(item) {
                 return item.delisted ? 'disabled':"";
